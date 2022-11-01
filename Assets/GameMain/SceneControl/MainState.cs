@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using DataCs;
+
+
 
 namespace MyGameFrameWork
 {
@@ -15,8 +18,15 @@ namespace MyGameFrameWork
         public override void StateBegin(System.Object obj)
         {
             //Debug.Log("MainState");
-            Debug.Log("进入主界面");
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm, obj);
+            SoundSystem.Instance.PlayMusic(Data_AudioID.key_March_of_the_Brave);//播放音乐
+            //UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm, obj);
+
+            Sequence seq = DOTween.Sequence();
+            seq.AppendCallback(() =>
+            {
+                m_Contorller.SetState("StartState", null);
+            })
+            .SetDelay(3f);
         }
 
         public override void StateUpdate()
@@ -26,6 +36,7 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
+            SoundSystem.Instance.StopMusic(Data_AudioID.key_March_of_the_Brave);
             //Debug.Log("MainState End");
         }
     }

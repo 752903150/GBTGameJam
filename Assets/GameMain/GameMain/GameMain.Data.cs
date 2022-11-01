@@ -8,19 +8,26 @@ namespace MyGameFrameWork
     {
         public SceneStateC sceneStateC;
 
-        //public StartState StartState;
-        //public MainState MainState;
+        public StartState StartState;
+        public EndGameState EndGameState;
+        public MainState MainState;
         //public TestState TestState;
 
         public void StateInit()
         {
             sceneStateC = new SceneStateC();
 
-            //StartState = new StartState(sceneStateC);
+            StartState = new StartState(sceneStateC);
+            EndGameState = new EndGameState(sceneStateC);
+            MainState = new MainState(sceneStateC);
             //MainState = new MainState(sceneStateC);
             //TestState = new TestState(sceneStateC);
 
-            //sceneStateC.AddState(Data_StateName.StartState_name, StartState);
+            sceneStateC.AddState(StartState.StateName, StartState);
+            sceneStateC.AddState(EndGameState.StateName, EndGameState);
+            sceneStateC.AddState(MainState.StateName, MainState);
+
+            sceneStateC.SetState(StartState.StateName);
             //sceneStateC.AddState(Data_StateName.MainState_name, MainState);
             //sceneStateC.AddState(Data_StateName.TestState_name, TestState);
         }

@@ -3,6 +3,6 @@
 #test,,,
 !,int,string,int
 !,ID,path,root
-LoginForm,1000,UI/UIForm/LoginForm,1
-MainForm,1001,UI/UIForm/MainForm,1
-TestForm,1001,UI/UIForm/TestForm,1
+StartGameForm,1000,ZKW/StartGameForm,1
+MainForm,1001,ZKW/MainForm,1
+DeveloperForm,1002,ZKW/DeveloperForm,1

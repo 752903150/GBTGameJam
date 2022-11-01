@@ -14,7 +14,7 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_TestForm);
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_StartGameForm);
 
         }
 

@@ -51,7 +51,6 @@ namespace MyGameFrameWork
 
         public void CloseUIForm(string UIFormName, UIForm obj)
         {
-            Debug.LogError("¹Ø±Õ" + UIFormName);
             int id = Data_UIFormID.Dic[UIFormName].ID;
             obj.OnClose();
             ObjectPoolSystem.Instance.ReBackUIFormPool(id, obj);

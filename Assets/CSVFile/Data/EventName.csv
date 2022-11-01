@@ -3,4 +3,7 @@
 #test,
 @,string
 @,str
-OnLoginSucceed,OnLoginSucceed
+StartGame,StartGame
+ExitGame,ExitGame
+Developer,Developer
+BackStartGame,BackStartGame
