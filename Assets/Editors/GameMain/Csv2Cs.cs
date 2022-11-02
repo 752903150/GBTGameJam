@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -23,9 +23,9 @@ public class Csv2Cs : EditorWindow
         csvpath = Data_FilePath.CsvPathWithCs_Path;
         cspath = Data_FilePath.CsDataSavePath_Path;
 
-        myWindow = (Csv2Cs)EditorWindow.GetWindow(typeof(Csv2Cs), false, "CsvToCs", true);//´´½¨´°¿Ú
+        myWindow = (Csv2Cs)EditorWindow.GetWindow(typeof(Csv2Cs), false, "CsvToCs", true);//åˆ›å»ºçª—å£
         myWindow.position = new Rect(0, 0, 200, 0);
-        myWindow.Show();//Õ¹Ê¾
+        myWindow.Show();//å±•ç¤º
     }
 
     void OnEnable()
@@ -38,17 +38,17 @@ public class Csv2Cs : EditorWindow
         EditorGUILayout.BeginVertical();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("ÇëÊäÈë´æ·ÅcsvÂ·¾¶");
+        GUILayout.Label("è¯·è¾“å…¥å­˜æ”¾csvè·¯å¾„");
         csvpath = EditorGUILayout.TextField(csvpath);
         EditorGUILayout.EndHorizontal(); 
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("ÇëÊäÈë´æ·ÅcsÂ·¾¶");
+        GUILayout.Label("è¯·è¾“å…¥å­˜æ”¾csè·¯å¾„");
         cspath = EditorGUILayout.TextField(cspath);
         EditorGUILayout.EndHorizontal();
         
         
-        if (GUILayout.Button("Éú³ÉÊı¾İÀà"))
+        if (GUILayout.Button("ç”Ÿæˆæ•°æ®ç±»"))
         {
             if (csvpath.Contains("Assets") && cspath.Contains("Assets"))
             {
@@ -59,7 +59,7 @@ public class Csv2Cs : EditorWindow
 
     static void CreateFile(string datacsvpath,string datapath)
     {
-        if (Directory.Exists(datacsvpath)&& Directory.Exists(datapath))//Èç¹û´æÔÚCSVµÄÎÄ¼ş¼Ğ
+        if (Directory.Exists(datacsvpath)&& Directory.Exists(datapath))//å¦‚æœå­˜åœ¨CSVçš„æ–‡ä»¶å¤¹
         {
             DirectoryInfo direction = new DirectoryInfo(datacsvpath);
             FileInfo[] files = direction.GetFiles("*.csv");
@@ -79,7 +79,7 @@ public class Csv2Cs : EditorWindow
         }
         else
         {
-            Debug.LogError("²»´æÔÚÖ¸¶¨µÄÎÄ¼ş¼Ğ£¬ĞèÒªÊÖ¶¯´´½¨£¡");
+            Debug.LogError("ä¸å­˜åœ¨æŒ‡å®šçš„æ–‡ä»¶å¤¹ï¼Œéœ€è¦æ‰‹åŠ¨åˆ›å»ºï¼");
         }
     }
 
@@ -88,33 +88,33 @@ public class Csv2Cs : EditorWindow
         string[] true_txt = null;
         try
         {
-            true_txt = System.IO.File.ReadAllLines(path + "\\" + name + ".csv");//°üº¬×¢ÊÍµÄËùÓĞÎÄ±¾Ïî
+            true_txt = System.IO.File.ReadAllLines(path + "\\" + name + ".csv");//åŒ…å«æ³¨é‡Šçš„æ‰€æœ‰æ–‡æœ¬é¡¹
         }
         catch
         {
-            Debug.LogError("ÇëÈ·±£ÎÄ¼şÒÑ±£´æ»òÕßÒÑ¹Ø±Õ");
+            Debug.LogError("è¯·ç¡®ä¿æ–‡ä»¶å·²ä¿å­˜æˆ–è€…å·²å…³é—­");
         }
 
         if (true_txt == null)
         {
-            return "!ÇëÈ·±£ÎÄ¼şÒÑ±£´æ»òÕßÒÑ¹Ø±Õ";
+            return "!è¯·ç¡®ä¿æ–‡ä»¶å·²ä¿å­˜æˆ–è€…å·²å…³é—­";
         }
 
-        string[] arr_type_list = null;//ÀàĞÍÁĞ±í
-        string[] arr_name_list = null;//ÀàĞÍÃû³Æ
-        string[] temp_list;//ÁÙÊ±ÁĞ±í
-        List<string[]> temp_lists = new List<string[]>();//ÁÙÊ±ÁĞ±í×é£»
+        string[] arr_type_list = null;//ç±»å‹åˆ—è¡¨
+        string[] arr_name_list = null;//ç±»å‹åç§°
+        string[] temp_list;//ä¸´æ—¶åˆ—è¡¨
+        List<string[]> temp_lists = new List<string[]>();//ä¸´æ—¶åˆ—è¡¨ç»„ï¼›
 
-        int num = 0;//0±íÊ¾ÀàĞÍÁĞ±í£¬1±íÊ¾ÀàĞÍÃû³Æ
-        int model = 0;//0±íÊ¾ÎŞ¹ØÁªÉú³É£¬1±íÊ¾¹ØÁªÉú³É
+        int num = 0;//0è¡¨ç¤ºç±»å‹åˆ—è¡¨ï¼Œ1è¡¨ç¤ºç±»å‹åç§°
+        int model = 0;//0è¡¨ç¤ºæ— å…³è”ç”Ÿæˆï¼Œ1è¡¨ç¤ºå…³è”ç”Ÿæˆ
 
         for (int i = 0; i < true_txt.Length; i++)
         {
-            if (true_txt[i].Length == 0 || true_txt[i][0] == '#')//ºöÂÔ×¢ÊÍºÍ¿ÕĞĞ
+            if (true_txt[i].Length == 0 || true_txt[i][0] == '#')//å¿½ç•¥æ³¨é‡Šå’Œç©ºè¡Œ
             {
                 continue;
             }
-            if ((true_txt[i][0] == '@' || true_txt[i][0] == '!') && num < 2)//ÀàĞÍĞĞ
+            if ((true_txt[i][0] == '@' || true_txt[i][0] == '!') && num < 2)//ç±»å‹è¡Œ
             {
                 if (num == 0)
                 {

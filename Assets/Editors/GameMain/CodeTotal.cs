@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEditor;
 using System.IO;
 
@@ -19,9 +19,9 @@ public class CodeTotal
     }
 
     /// <summary>
-    /// »ñÈ¡Ö¸¶¨ÎÄ¼ş¼ĞµÄcsÎÄ¼ş
+    /// è·å–æŒ‡å®šæ–‡ä»¶å¤¹çš„csæ–‡ä»¶
     /// </summary>
-    /// <param name="path">ÎÄ¼ş¼ĞÂ·¾¶</param>
+    /// <param name="path">æ–‡ä»¶å¤¹è·¯å¾„</param>
     static void TotalCs(string path)
     {
         if (Directory.Exists(path))
@@ -53,7 +53,7 @@ public class CodeTotal
     }
 
     /// <summary>
-    /// »ñÈ¡ÎÄ¼şµÄĞĞÊı
+    /// è·å–æ–‡ä»¶çš„è¡Œæ•°
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>

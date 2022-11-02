@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -22,9 +22,9 @@ public class EventCreate: EditorWindow
         argsnum = 0;
         arg_names.Clear();
         type_names.Clear();
-        myWindow = (EventCreate)EditorWindow.GetWindow(typeof(EventCreate), false, "EventCreate", true);//¥¥Ω®¥∞ø⁄
+        myWindow = (EventCreate)EditorWindow.GetWindow(typeof(EventCreate), false, "EventCreate", true);//ÂàõÂª∫Á™óÂè£
         myWindow.position = new Rect(0, 0, 200, height);
-        myWindow.Show();//’π æ
+        myWindow.Show();//Â±ïÁ§∫
     }
 
     void OnEnable()
@@ -36,10 +36,10 @@ public class EventCreate: EditorWindow
     {
         EditorGUILayout.BeginVertical();
         //EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("ÃÓ–¥ ¬º˛¿‡√˚£∫");
+        EditorGUILayout.LabelField("Â°´ÂÜô‰∫ã‰ª∂Á±ªÂêçÔºö");
         //EditorGUILayout.EndHorizontal();
-        classname = EditorGUILayout.TextField(classname);//µ•––
-        if(GUILayout.Button("ÃÌº”≤Œ ˝"))
+        classname = EditorGUILayout.TextField(classname);//ÂçïË°å
+        if(GUILayout.Button("Ê∑ªÂä†ÂèÇÊï∞"))
         {
             argsnum++;
             arg_names.Add("");
@@ -47,7 +47,7 @@ public class EventCreate: EditorWindow
             height += 20;
             myWindow.position = new Rect(myWindow.position.x, myWindow.position.y, 200, height);
         }
-        if(GUILayout.Button("ºı…Ÿ≤Œ ˝"))
+        if(GUILayout.Button("ÂáèÂ∞ëÂèÇÊï∞"))
         {
             if(argsnum>=1)
             {
@@ -60,8 +60,8 @@ public class EventCreate: EditorWindow
         }
         
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("¿‡–Õ");
-        GUILayout.Label("√˚≥∆");
+        GUILayout.Label("Á±ªÂûã");
+        GUILayout.Label("ÂêçÁß∞");
         EditorGUILayout.EndHorizontal();
         for (int i=0;i<argsnum;i++)
         {
@@ -70,10 +70,10 @@ public class EventCreate: EditorWindow
             arg_names[i] = EditorGUILayout.TextField(arg_names[i]);
             EditorGUILayout.EndHorizontal();
         }
-        if (GUILayout.Button("…˙≥…¥˙¬Î"))
+        if (GUILayout.Button("ÁîüÊàê‰ª£Á†Å"))
         {
             CodeCreate.CreateORwriteConfigFile(Data_FilePath.Event_Path,classname+"EventArgs.cs", CodeCreate.EventArgsGenertion(arg_names, type_names, classname));
-            Debug.Log("¥˙¬Î…˙≥… OK!");
+            Debug.Log("‰ª£Á†ÅÁîüÊàê OK!");
         }
         EditorGUILayout.EndVertical();
     }
