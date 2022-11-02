@@ -1,9 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System;
-using System.Threading.Tasks; //�ؼ��İ�
+using System.Threading.Tasks; //关键的包
 
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -18,7 +18,7 @@ namespace MyGameFrameWork
         {
             instance = this;
         }
-        //����ģʽ
+        //单例模式
         private static NetSystem instance;
         public static NetSystem Instance
         {
@@ -26,11 +26,11 @@ namespace MyGameFrameWork
         }
 
         /// <summary>
-        /// �޲η��ʽӿ�
+        /// 无参访问接口
         /// </summary>
-        /// <typeparam name="T">����ʵ��NetObj�ӿ�</typeparam>
-        /// <param name="url">�ӿڵ�ַ</param>
-        /// <returns>һ��T���͵Ľ��������null</returns>
+        /// <typeparam name="T">必须实现NetObj接口</typeparam>
+        /// <param name="url">接口地址</param>
+        /// <returns>一个T类型的结果，或者null</returns>
         public async Task<NetObj> LoadDataSimple<T>(string url) where T : NetObj
         {
             var Request = UnityWebRequest.Post(url, "");
@@ -49,14 +49,14 @@ namespace MyGameFrameWork
         }
 
         /// <summary>
-        /// �вη��ʽӿ�
+        /// 有参访问接口
         /// </summary>
-        /// <typeparam name="T">����ʵ��NetObj�ӿ�</typeparam>
-        /// <param name="url">�ӿڵ�ַ</param>
-        /// <param name="form">��������</param>
-        /// <param name="succeed">�ɹ����ʺ���</param>
-        /// <param name="fail">ʧ�ܷ��ʺ���</param>
-        /// <returns>һ��T���͵Ľ��������null</returns>
+        /// <typeparam name="T">必须实现NetObj接口</typeparam>
+        /// <param name="url">接口地址</param>
+        /// <param name="form">参数表单</param>
+        /// <param name="succeed">成功访问函数</param>
+        /// <param name="fail">失败访问函数</param>
+        /// <returns>一个T类型的结果，或者null</returns>
         public async Task<NetObj> LoadData<T>(string url, WWWForm form = null, Action<System.Object> succeed = null, Action fail = null) where T : NetObj
         {
             UnityWebRequest Request = null;
