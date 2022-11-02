@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataCs;
@@ -16,7 +16,7 @@ namespace MyGameFrameWork
         {
             Debug.Log("GameMainStart");
 
-            StateInit();//״̬��ʼ��
+            StateInit();//状态初始化
 
         }
 
