@@ -1,55 +1,77 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using DataCs;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-public enum EMonster
+
+public static class TOOLS
 {
-    EMA,
-    EMB,
-    EMC,
-    None,
-}
+	private static Dictionary<uint, MonsterData> monsterIdMap;
 
-public class Player
-{
-    int MaxHp;
-    int CurrExp;
-    int CurrLevel;
-    int CurrGoal;
-}
+	static TOOLS()
+	{
+		var data = Data_Empyrean.GetDefaultObject();
+		monsterIdMap = new Dictionary<uint, MonsterData>()
+		{
+			{1u, data.MonsterDatas[0]},
+			{2u, data.MonsterDatas[1]},
+			{3u, data.MonsterDatas[2]},
+			{4u, data.MonsterDatas[3]},
+		};
+	}
 
-public class TOOLS 
-{
-    static int GetPlayerDps(EMonster monster)//Attack monster damage
+	/// <summary>
+	/// 通过怪物ID获取怪物信息类对象
+	/// </summary>
+	/// <param name="id">怪物ID</param>
+	/// <returns></returns>
+	public static MonsterData GetMonsterDataById(uint id)
+	{
+		return monsterIdMap[id];
+	}
+	
+    public static float GetPlayerDps(PlayerHpState stateWhenFire, uint monsterId, float monsterCurrHp, float monsterCurrDefense)//Attack monster damage
     {
-        return 1;
+	    PlayerData playerData = PlayerData.GetDefaultObject();
+	    float originalDamage = playerData.NormalDamage;
+	    if (stateWhenFire == PlayerHpState.Fever)
+	    {
+		    originalDamage = playerData.FeverDamage;
+	    }
+	    else if (stateWhenFire == PlayerHpState.Overheating)
+	    {
+		    originalDamage = playerData.OverheatingDamage;
+	    }
+	    
+	    return GetMonsterDataById(monsterId)
+		    .ApplyDamage(originalDamage * (1.0f + SkillAdditionSystem.Instance.DamageIncrease), monsterCurrHp, monsterCurrDefense);
     }
 
-    static int GetMonsterDps(EMonster monster)//Take damage from monsters
+    public static float GetMonsterDps(uint monsterId, float playerCurrHp)//Take damage from monsters
     {
-        return 1;
+	    MonsterData monsterData = GetMonsterDataById(monsterId);
+	    PlayerData playerData = PlayerData.GetDefaultObject();
+
+	    return playerData.ApplyDamage(monsterData.Damage, playerCurrHp,
+		    playerData.InitialDefense + SkillAdditionSystem.Instance.DefenseIncrease, monsterData);
     }
 
-    static int GetPlayerMaxHp()//Gain player health
+    public static float GetPlayerMaxHp()//Gain player health
     {
-        return 100;
+	    return PlayerData.GetDefaultObject().MaxHp;
     }
 
-    static int GetMonsterExp(EMonster monster)//Get Moster Exp
+    public static int GetMonsterExp(uint monsterId)//Get Moster Exp
     {
-        return 1;
+	    return GetMonsterDataById(monsterId).OfferedExp;
     }
 
-    static int GetPlayerNextExp()
+    public static string[] GetDialoguefirstlevel()//Get the dialogue from the first level
     {
-        return 100;
-    }
-
-    static string[] GetDialoguefirstlevel()//Get the dialogue from the first level
-    {
-        return new string[] { 
+        return new string[] 
+        { 
             "1",
             "2",
             "3",
@@ -57,12 +79,12 @@ public class TOOLS
         };
     }
 
-    static List<List<EMonster>> GetFirstMonsters()
+    public static List<List<uint>> GetFirstMonsters()
     {
-        List<List<EMonster>> monsters = new List<List<EMonster>>();
+        List<List<uint>> monsters = new List<List<uint>>();
 
-        List<EMonster> list = new List<EMonster>();
-        list.Add(EMonster.EMB);
+        List<uint> list = new List<uint>();
+        /*list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
@@ -88,7 +110,7 @@ public class TOOLS
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
-        list.Add(EMonster.EMC);
+        list.Add(EMonster.EMC);*/
 
         return monsters;
     }
