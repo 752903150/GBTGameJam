@@ -7,3 +7,5 @@ StartGame,StartGame
 ExitGame,ExitGame
 Developer,Developer
 BackStartGame,BackStartGame
+GameOver,GameOver
+KillMonster,KillMonster

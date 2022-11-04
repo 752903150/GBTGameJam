@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
     float distance;
 
     Vector2[] directs;
-
+    int layermask;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
             new Vector2(1,0),
             new Vector2(-1,0),
         };
+        layermask = (1 << 7) | (1 << 10);
     }
 
     // Update is called once per frame
@@ -38,7 +39,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             Debug.DrawRay(Player.localPosition, directs[0],Color.blue, distance);
-            hit = Physics2D.Raycast(temp2 , directs[0], distance, 1 << 7);
+            hit = Physics2D.Raycast(temp2 , directs[0], distance, layermask);
             if (!hit.collider)
             {
                 
@@ -46,14 +47,14 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("CrushW");
+                //Debug.Log("CrushW");
             }
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             Debug.DrawRay(Player.localPosition, directs[3], Color.blue, distance);
-            hit = Physics2D.Raycast(temp2 , directs[3], distance, 1 << 7);
+            hit = Physics2D.Raycast(temp2 , directs[3], distance, layermask);
             if (!hit.collider)
             {
                 temp.x -= Time.deltaTime * speed;
@@ -61,14 +62,14 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("CrushA");
+                //Debug.Log("CrushA");
             }
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             Debug.DrawRay(Player.localPosition, directs[1], Color.blue, distance);
-            hit = Physics2D.Raycast(temp2 , directs[1], distance, 1 << 7);
+            hit = Physics2D.Raycast(temp2 , directs[1], distance, layermask);
             if (!hit.collider)
             {
                 temp.y -= Time.deltaTime * speed;
@@ -76,21 +77,21 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("CrushS");
+                //Debug.Log("CrushS");
             }
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             Debug.DrawRay(Player.localPosition, directs[2], Color.blue, distance);
-            hit = Physics2D.Raycast(temp2, directs[2], distance, 1 << 7);
+            hit = Physics2D.Raycast(temp2, directs[2], distance, layermask);
             if (!hit.collider)
             {
                 temp.x += Time.deltaTime * speed;
             }
             else
             {
-                Debug.Log("CrushD");
+                //Debug.Log("CrushD");
             }
         }
         Player.localPosition = temp;

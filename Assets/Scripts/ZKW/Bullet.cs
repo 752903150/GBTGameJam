@@ -15,9 +15,12 @@ public class Bullet : MonoBehaviour
     float distance;
 
     float curr_time;
+    int layermask;
+    bool isDead;
     // Start is called before the first frame update
     void Start()
     {
+        isDead = false;
         curr_time = 0f;
 
         speed = 20f;
@@ -30,6 +33,7 @@ public class Bullet : MonoBehaviour
             new Vector2(-1,0),
         };
         distance = 0.05f;
+        layermask = (1 << 7) | (1 << 8) | (1 << 10);
     }
 
     // Update is called once per frame
@@ -44,11 +48,17 @@ public class Bullet : MonoBehaviour
         ts.localPosition += direct * speed * Time.deltaTime;
         for(int i = 0; i < 4; i++)
         {
-            hit = Physics2D.Raycast(this.transform.localPosition, directs[i], distance, (1 << 7)|(1 << 8));
+            hit = Physics2D.Raycast(this.transform.localPosition, directs[i], distance, layermask);
             if (hit.collider)
             {
+                if(hit.collider.tag == "Enemy" && !isDead)
+                {
+                    isDead = true;
+                    hit.collider.gameObject.GetComponent<EnemyMove>().Injure();
+                }
                 Back();
             }
+            break;
         }
     }
 
@@ -63,5 +73,6 @@ public class Bullet : MonoBehaviour
     void Back()
     {
         ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_FireBullet].ID, this.gameObject);
+        isDead = false;
     }
 }
