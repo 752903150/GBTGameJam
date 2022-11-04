@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/1 16:29:29
+//CreateTime：2022/11/4 21:42:36
 namespace DataCs
 {
 	public struct Data_Localization_Struct

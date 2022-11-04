@@ -30,7 +30,6 @@ public class CameraFollw : MonoBehaviour
 
     void LateUpdate()
     {
-        Debug.Log(1231);
         oldPosition = transform.position;
 
         if (!freazeX)

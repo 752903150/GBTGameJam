@@ -17,7 +17,7 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         Player = GetComponent<Transform>();
-        speed = 10f;
+        speed = 8f;
         distance = 1f;
         directs = new Vector2[4]
         {
