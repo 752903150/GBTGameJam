@@ -1,7 +1,7 @@
 using DataCs;
 using UnityEngine;
 
-public enum PlayerHpState : uint
+public enum EPlayerHpState : uint
 {
 	Dead = 0u,					//死亡
 	Freezing = 1u,				//热量不足(1状态)
@@ -49,7 +49,7 @@ public class PlayerData
 	/// </summary>
 	/// <param name="currHp">当前HP</param>
 	/// <returns>HP对应的状态枚举值</returns>
-	public PlayerHpState GetHpState(float currHp)
+	public EPlayerHpState GetHpState(float currHp)
 	{
 		float hpPercentage = currHp / MaxHp;
 		uint result = 0u;
@@ -67,7 +67,7 @@ public class PlayerData
     
 		} while (false);
     
-		return (PlayerHpState)result;
+		return (EPlayerHpState)result;
 	}
     
 	/// <summary>
@@ -84,7 +84,7 @@ public class PlayerData
 		
 		float actuallyCaused = dmg * (1.0f - currDefense);
 		//Debug.LogError(actuallyCaused);
-		if (GetHpState(currHp) == PlayerHpState.Overheating)
+		if (GetHpState(currHp) == EPlayerHpState.Overheating)
 		{
 			var data = Data_Empyrean.GetDefaultObject();
 			actuallyCaused *=
