@@ -16,6 +16,10 @@ namespace DataCs
 
 		public TurrutData[] NormalTurrutDatas;
 
+		public int BasicRequiredExp;
+
+		public int RequiredExpIncreasePerLevel;
+
 		public static Data_Empyrean GetDefaultObject()
 		{
 			var result = new Data_Empyrean();
@@ -24,9 +28,9 @@ namespace DataCs
 			result.MaxDamageIncreaseWhenOverheating = 8.0f;
 			result.MonsterDatas = new[]
 			{
-				new MonsterData("近战法师", 100.0f, 5, 1, 0.0f, 60.0f),
-				new MonsterData("自爆冰怪", 100.0f, 5, 1, 0.0f, 150.0f),
-				new MonsterData("冰石巨兽", 100.0f, 5, 1, 0.0f, 17.0f),
+				new MonsterData("近战法师", 220.0f, 5, 22.0f, 0.0f, 30.0f),
+				new MonsterData("自爆冰怪", 120.0f, 8, 12.0f, 0.0f, 75.0f),
+				new MonsterData("冰石巨兽", 400.0f, 12, 30.0f, 0.0f, 21.0f),
 				new MonsterData("寒冰射手", 100.0f, 5, 1, 0.0f, 55.0f),
 			};
 
@@ -106,6 +110,9 @@ namespace DataCs
 					8.0f
 				),
 			};
+
+			result.BasicRequiredExp = 30;
+			result.RequiredExpIncreasePerLevel = 8;
 
 			return result;
 		}

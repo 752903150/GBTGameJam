@@ -107,6 +107,16 @@ public static class TOOLS
 	    return GetMonsterDataById(monsterId).OfferedExp;
     }
 
+    /// <summary>
+    /// 获取击杀怪物返还的HP
+    /// </summary>
+    /// <param name="monsterId"></param>
+    /// <returns></returns>
+    public static float GetMonsterOfferedHp(uint monsterId)
+    {
+	    return GetMonsterDataById(monsterId).OfferedHp;
+    }
+
     private static TurrutData GetTurrutData(ETurrutType turrutType, uint level)
     {
 	    if (turrutType == ETurrutType.Center)
