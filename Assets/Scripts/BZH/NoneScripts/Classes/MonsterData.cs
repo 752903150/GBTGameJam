@@ -5,16 +5,16 @@ public class MonsterData
 	public string MonsterName { get; private set; }
 	public float MaxHp { get; private set; }
 	public int OfferedExp { get; private set; }
-	public int OfferedGold { get; private set; }
+	public float OfferedHp { get; private set; }
 	public float InitialDefense { get; private set; }
 	public float Damage { get; private set; }
 
-	public MonsterData(string mName, float mHp, int oExp, int oGold, float iDefense, float dmg)
+	public MonsterData(string mName, float mHp, int oExp, float oHp, float iDefense, float dmg)
 	{
 		MonsterName = mName;
 		MaxHp = mHp;
 		OfferedExp = oExp;
-		OfferedGold = oGold;
+		OfferedHp = oHp;
 		InitialDefense = iDefense;
 		Damage = dmg;
 	}
@@ -28,13 +28,14 @@ public class MonsterData
 	/// <returns>实际应造成的伤害</returns>
 	public virtual float ApplyDamage(float dmg, float currHp, float currDefense)
 	{
+		Debug.LogError("MonsterData.ApplyDamage");
 		if (currHp <= 0.0f)
 		{
 			return 0.0f;
 		}
 		float actuallyCaused = dmg * (1.0f - currDefense);
 		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
-		Debug.LogWarning(actuallyCaused);
+		//Debug.LogWarning(actuallyCaused);
 		return actuallyCaused;
 	}
 }

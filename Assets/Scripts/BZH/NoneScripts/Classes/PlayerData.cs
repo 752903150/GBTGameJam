@@ -19,8 +19,11 @@ public class PlayerData
 	public float FeverDamage { get; private set; }
 	public float OverheatingDamage { get; private set; }
 	public float InitialMoveSpeed { get; private set; }
+	public float NormalAttSpeed { get; private set; }
+	public float SlowedAttSpeed { get; private set; }
+	public float FastAttSpeed { get; private set; }
     
-	public PlayerData(float mHp, float iDefense, float nDmg, float fDmg, float oDmg, float iSpeed)
+	public PlayerData(float mHp, float iDefense, float nDmg, float fDmg, float oDmg, float iSpeed, float nAttSpeed, float sAttSpeed, float fAttSpeed)
 	{
 		MaxHp = mHp;
 		InitialHp = 0.5f * MaxHp;
@@ -29,6 +32,9 @@ public class PlayerData
 		FeverDamage = fDmg;
 		OverheatingDamage = oDmg;
 		InitialMoveSpeed = iSpeed;
+		NormalAttSpeed = nAttSpeed;
+		SlowedAttSpeed = sAttSpeed;
+		FastAttSpeed = fAttSpeed;
 	}
 
 	public static PlayerData GetDefaultObject()
@@ -40,6 +46,9 @@ public class PlayerData
 			72.0f,
 			32.0f,
 			75.0f,
+			8.0f,
+			5.0f,
+			3.0f,
 			8.0f
 		);
 	}
@@ -80,16 +89,20 @@ public class PlayerData
 	/// <returns>实际应造成的伤害</returns>
 	public float ApplyDamage(float dmg, float currHp, float currDefense, MonsterData damageTaker)
 	{
+		Debug.LogWarning("PlayerData.ApplyDamage");
 		if (currHp <= 0.0f) return 0.0f;
 		
 		float actuallyCaused = dmg * (1.0f - currDefense);
+		//Debug.Log(actuallyCaused);
 		if (GetHpState(currHp) == EPlayerHpState.Overheating)
 		{
 			var data = Data_Empyrean.GetDefaultObject();
 			actuallyCaused *=
 				Random.Range(data.MinDamageIncreaseWhenOverheating, data.MaxDamageIncreaseWhenOverheating);
 		}
+		//Debug.LogWarning(actuallyCaused);
 		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
+		//Debug.LogError(actuallyCaused);
 		return actuallyCaused;
 		
 	}
