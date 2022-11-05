@@ -28,6 +28,7 @@ public class Tower : MonoBehaviour
 
     public void init(ETurrutType eTurrutType,int level)
     {
+        this.gameObject.SetActive(true);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver2);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOver2);
         turrutType = eTurrutType;

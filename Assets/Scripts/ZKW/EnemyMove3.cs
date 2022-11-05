@@ -7,13 +7,16 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Security.Cryptography;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyMove3 : MonoBehaviour
 {
 
     // Start is called before the first frame update
     public float speed = 20f;
     Transform ts;
     public Tower Tower1;
+    public Tower Tower2;
+    public Tower Tower3;
+    public Tower Tower4;
     public Tower BigTower2;
     public Transform Player;
     Vector2[] directs;
@@ -47,12 +50,15 @@ public class EnemyMove : MonoBehaviour
     Animator an;
     //string WalkString;
     //string AtttackString;
-    Vector3 XAV3;//Áî®‰∫éÂèçËΩ¨
+    Vector3 XAV3;//”√”⁄∑¥◊™
     Vector3 XBV3;
 
-    SpriteRenderer OBJASp;
-    Animator OBJAnimator;
-    GameObject SubObj;
+    //SpriteRenderer OBJASp;
+    //Animator OBJAnimator;
+    //GameObject SubObj;
+
+    float curr_time;
+    float attack_time;
 
 
     void Start()
@@ -63,7 +69,8 @@ public class EnemyMove : MonoBehaviour
         //SubObj = OBJAnimator.gameObject;
         //WalkString = "EnemyAWalk";
         //AtttackString = "EnemyAAtack";
-
+        curr_time = 0f;
+        attack_time = 1f;
 
         float rx = Random.Range(0, 1);
         float ry = Random.Range(0, 1);
@@ -72,14 +79,14 @@ public class EnemyMove : MonoBehaviour
         isDead = false;
         isAttack = false;
         an.SetBool("isAttack", isAttack);
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
         attack_mode = 1;//mode 1 = small 2 = big 3 = player;
         GetComponent<CircleCollider2D>().enabled = true;
 
-        MaxHp = TOOLS.GetMonsterDataById(1).MaxHp;
+        MaxHp = TOOLS.GetMonsterDataById(3).MaxHp;
         CurrHp = MaxHp;
-        CurrDenfense = TOOLS.GetMonsterDataById(1).InitialDefense;
+        CurrDenfense = TOOLS.GetMonsterDataById(3).InitialDefense;
 
         cam = Camera.main;
 
@@ -122,29 +129,34 @@ public class EnemyMove : MonoBehaviour
         {
             follow_location = Player.localPosition;
         }
-        Attack(follow_location);
+        Attack();
         Move(follow_location);
         HpBarMove();
         HpBar.value = 1f;
 
     }
 
-    public void init(Tower stower, Tower btower, Transform player, GameObject canva)
+    public void init(Tower tower1, Tower tower2, Tower tower3, Tower tower4, Tower btower, Transform player, GameObject canva)
     {
-        Tower1 = stower;
+        Tower1 = tower1;
+        Tower2 = tower2;
+        Tower3 = tower3;
+        Tower4 = tower4;
         BigTower2 = btower;
         Player = player;
         Canva = canva;
         isDead = false;
         isAttack = false;
         attack_mode = 1;
+        curr_time = 0f;
+        attack_time = 1f;
         XAV3 = new Vector3(-0.5f, 0.5f);
         XBV3 = new Vector3(0.5f, 0.5f);
         an = GetComponent<Animator>();
 
         int id = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID;
-        
-        if (ObjectPoolSystem.Instance.TestGameObjectPool(id))
+
+        /*if (ObjectPoolSystem.Instance.TestGameObjectPool(id))
         {
             SubObj = ObjectPoolSystem.Instance.GetGameObjectFormPool(id);
         }
@@ -153,28 +165,29 @@ public class EnemyMove : MonoBehaviour
             string path = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].path;
             SubObj = GameObject.Instantiate((GameObject)Resources.Load(path));
         }
-        SubObj.transform.localPosition =Vector3.zero;
+        SubObj.transform.localPosition = Vector3.zero;
 
         OBJAnimator = SubObj.GetComponent<Animator>();
         OBJASp = SubObj.GetComponent<SpriteRenderer>();
-        SubObj = OBJAnimator.gameObject;
+        SubObj = OBJAnimator.gameObject;*/
         an.SetBool("isAttack", isAttack);
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
         isGameOver = false;
         GetComponent<CircleCollider2D>().enabled = true;
         CreateHPBar();
         HpBar.size = 1f;
-        MaxHp = TOOLS.GetMonsterDataById(1).MaxHp;
+        MaxHp = TOOLS.GetMonsterDataById(3).MaxHp;
         CurrHp = MaxHp;
-        CurrDenfense = TOOLS.GetMonsterDataById(1).InitialDefense;
+        CurrDenfense = TOOLS.GetMonsterDataById(3).InitialDefense;
 
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
     }
 
-    void Anim(){
+    void Anim()
+    {
         //if()
-        
+
     }
 
 
@@ -189,39 +202,89 @@ public class EnemyMove : MonoBehaviour
         {
             attack_mode = 3;
         }
-        else if (attack_mode == 1)//ÂΩìÂâçÊîªÂáªÂ°î
+        else if (attack_mode == 1)//µ±«∞π•ª˜À˛
         {
-            if (Tower1.isDead)//Â∞èÂ°îÊ≠ª‰∫Ü
+            if (Tower1.isDead)//–°À˛À¿¡À
             {
-                attack_mode = 2;//ÊîªÂáª‰∏ªÂ°î
+                attack_mode = 2;//π•ª˜÷˜À˛
             }
         }
     }
 
-    void Attack(Vector3 pos)
+    void Attack()
     {
         if (isDead || isAttack)
         {
             return;
         }
-        Vector3 direct = pos - this.transform.position;
+        curr_time += Time.deltaTime;
+        if (curr_time < attack_time)
+        {
+            return;
+        }
+        curr_time = 0f;
+
+        float attack1 = 4.5f*4.5f;
+        float attack2 = 2.5f * 2.5f;
+
+        Vector3 direct1 = Tower1.transform.localPosition - this.transform.position;
+        Vector3 direct2 = Tower2.transform.localPosition - this.transform.position;
+        Vector3 direct3 = Tower3.transform.localPosition - this.transform.position;
+        Vector3 direct4 = Tower4.transform.localPosition - this.transform.position;
+        Vector3 direct5 = BigTower2.transform.localPosition - this.transform.position;
+        Vector3 direct6 = Player.localPosition - this.transform.position;
+
+        Debug.Log(attack1);
+        Debug.Log(v3dis(direct1));
+
+        if (attack1 > v3dis(direct1))
+        {
+            AttackTower(Tower1);
+        }
+        if (attack1 > v3dis(direct2))
+        {
+            AttackTower(Tower2);
+        }
+        if (attack1 > v3dis(direct3))
+        {
+            AttackTower(Tower3);
+        }
+        if (attack1 > v3dis(direct4))
+        {
+            AttackTower(Tower4);
+        }
+        if (attack1 > v3dis(direct5))
+        {
+            AttackTower(BigTower2);
+        }
+        if (attack2 > v3dis(direct6))
+        {
+            Attack(Player.gameObject);
+        }
+
+
         //Debug.Log(direct.z * direct.z + direct.y * direct.y + direct.x * direct.x);
-        if(attack_big_tower_distance * attack_big_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 2)
+       /* if (attack_big_tower_distance * attack_big_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 2)
         {
             //SubObj.transform.localPosition = pos;// BigTower2.transform.localPosition+this.transform.localPosition;
             UseObject(pos);
-           // AttackTower(BigTower2);
+            // AttackTower(BigTower2);
         }
-        if(attack_tower_distance * attack_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 1)
+        if (attack_tower_distance * attack_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 1)
         {
             UseObject(pos);
             //AttackTower(Tower1);
         }
-        else if (attack_distance * attack_distance > direct.z* direct.z+ direct.y* direct.y+ direct.x* direct.x && attack_mode == 3)
+        else if (attack_distance * attack_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 3)
         {
             UseObject(pos);
             //Attack(Player.gameObject);
-        }
+        }*/
+    }
+
+    float v3dis(Vector3 v3)
+    {
+        return v3.x * v3.x + v3.y * v3.y + v3.z * v3.z;
     }
 
     void Move(Vector3 pos)
@@ -230,7 +293,7 @@ public class EnemyMove : MonoBehaviour
         {
             return;
         }
-        Vector3 direct = pos - this.transform.position ;
+        Vector3 direct = pos - this.transform.position;
         direct.z = 0;
         direct.x += rv2.x;
         direct.y += rv2.y;
@@ -242,12 +305,12 @@ public class EnemyMove : MonoBehaviour
             hit = Physics2D.Raycast(this.transform.localPosition, directs[i], distance, layermask);
             if (hit.collider)
             {
-                if (directs[i].x * direct.x> 0f)
+                if (directs[i].x * direct.x > 0f)
                 {
                     direct.y += direct.x;
                     direct.x = 0;
                 }
-                else if(directs[i].y * direct.y > 0f)
+                else if (directs[i].y * direct.y > 0f)
                 {
                     direct.x += direct.y;
                     direct.y = 0;
@@ -268,8 +331,8 @@ public class EnemyMove : MonoBehaviour
         Vector3 playerScreenPos = Vector3.zero;
         if (cam != null)
             playerScreenPos = cam.WorldToScreenPoint(this.transform.position);
-        //ÂÜçÊää‰∫∫Áâ©ÂùêÊ†áYÂä†‰∏Ä‰∏™È´òÂ∫¶ÁªôÂà∞‰∫∫Áâ©
-        if(HpBar!=null)
+        //‘Ÿ∞—»ÀŒÔ◊¯±ÍYº”“ª∏ˆ∏ﬂ∂»∏¯µΩ»ÀŒÔ
+        if (HpBar != null)
             HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 70f, playerScreenPos.z);
 
     }
@@ -298,7 +361,7 @@ public class EnemyMove : MonoBehaviour
     {
         Debug.Log(DPS);
         Debug.Log(MaxHp);
-        CurrHp-=DPS;
+        CurrHp -= DPS;
         if (CurrHp <= 0)
         {
             HpBar.size = CurrHp / MaxHp;
@@ -308,7 +371,7 @@ public class EnemyMove : MonoBehaviour
         {
             HpBar.size = CurrHp / MaxHp;
         }
-        
+
         if (CurrHp == 0)
         {
             Dead();
@@ -327,7 +390,7 @@ public class EnemyMove : MonoBehaviour
             {
                 Destroy(HpBar.gameObject);
                 Destroy(this.gameObject);
-                Destroy(SubObj);
+                //Destroy(SubObj);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
@@ -339,34 +402,34 @@ public class EnemyMove : MonoBehaviour
 
     void Attack(GameObject Player)
     {
-        float DPS = TOOLS.GetMonsterDps(1, Player.GetComponent<PlayerMove>().CurrPlayerHp);
+        float DPS = TOOLS.GetMonsterDps(3, Player.GetComponent<PlayerMove>().CurrPlayerHp);
         //Debug.Log(DPS);
         //isAttack = true;
         //an.SetBool("isAttack", isAttack);
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
         Player.GetComponent<PlayerMove>().Injure(DPS);// -= DPS;
         EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
         //Sequence seq = DOTween.Sequence();
         //isAttack = false;
         //an.SetBool("isAttack", isAttack);
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
     }
 
     void AttackTower(Tower tower)
     {
         //Debug.Log("AttackTower");
         //isAttack = true;
-        
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
-        int DPS = (int)TOOLS.GetMonsterDps(1, tower.CurrHp);
-        tower.Injure(1);//
-                          //isAttack = false;
 
-        OBJAnimator.enabled = isAttack;
-        OBJASp.enabled = isAttack;
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
+        //int DPS = (int)TOOLS.GetMonsterDps(3, tower.CurrHp);
+        tower.Injure(3);// -= DPS;
+                        //isAttack = false;
+
+        //OBJAnimator.enabled = isAttack;
+        //OBJASp.enabled = isAttack;
     }
 
     void GameOver(IEventArgs eventArgs)
@@ -375,60 +438,60 @@ public class EnemyMove : MonoBehaviour
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
         Destroy(HpBar.gameObject);
         Destroy(this.gameObject);
-        Destroy(SubObj);
+        //Destroy(SubObj);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
     }
 
-    void UseObject(Vector3 pos)
+    /*void UseObject(Vector3 pos)
     {
         isAttack = true;
         an.SetBool("isAttack", isAttack);
-        
+
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(1f);
-         seq.AppendCallback(() =>
-         {
-             
-             if (!isGameOver&&!isDead)
-             {
-                 OBJAnimator.enabled = true;
-                 OBJASp.enabled = true;
-                 SubObj.transform.localPosition = pos;
-                 if (attack_mode == 1)
-                 {
-                     pos = Tower1.transform.localPosition;
-                 }
-                 else if (attack_mode == 2)
-                 {
-                     pos = BigTower2.transform.localPosition;
-                 }
-                 else
-                 {
-                     pos = Player.localPosition;
-                 }
-                 Vector3 direct = pos - this.transform.position;
-                 //Debug.Log(direct.z * direct.z + direct.y * direct.y + direct.x * direct.x);
-                 if (attack_big_tower_distance * attack_big_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 2)
-                 {
-                     //SubObj.transform.localPosition = pos;// BigTower2.transform.localPosition+this.transform.localPosition;
-                     //UseObject(pos);
-                     AttackTower(BigTower2);
-                 }
-                 if (attack_tower_distance * attack_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 1)
-                 {
-                     //UseObject(pos);
-                     AttackTower(Tower1);
-                 }
-                 else if (attack_distance * attack_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 3)
-                 {
-                     //UseObject(pos);
-                     Attack(Player.gameObject);
-                 }
-             }
-             
-         });
+        seq.AppendCallback(() =>
+        {
+
+            if (!isGameOver && !isDead)
+            {
+                OBJAnimator.enabled = true;
+                OBJASp.enabled = true;
+                SubObj.transform.localPosition = pos;
+                if (attack_mode == 1)
+                {
+                    pos = Tower1.transform.localPosition;
+                }
+                else if (attack_mode == 2)
+                {
+                    pos = BigTower2.transform.localPosition;
+                }
+                else
+                {
+                    pos = Player.localPosition;
+                }
+                Vector3 direct = pos - this.transform.position;
+                //Debug.Log(direct.z * direct.z + direct.y * direct.y + direct.x * direct.x);
+                if (attack_big_tower_distance * attack_big_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 2)
+                {
+                    //SubObj.transform.localPosition = pos;// BigTower2.transform.localPosition+this.transform.localPosition;
+                    //UseObject(pos);
+                    AttackTower(BigTower2);
+                }
+                if (attack_tower_distance * attack_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 1)
+                {
+                    //UseObject(pos);
+                    AttackTower(Tower1);
+                }
+                else if (attack_distance * attack_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x && attack_mode == 3)
+                {
+                    //UseObject(pos);
+                    Attack(Player.gameObject);
+                }
+            }
+
+        });
         seq.AppendInterval(0.5f);
         seq.AppendCallback(() => {
             isAttack = false;
@@ -436,6 +499,6 @@ public class EnemyMove : MonoBehaviour
             OBJAnimator.enabled = isAttack;
             OBJASp.enabled = isAttack;
         });
-    }
-    
+    }*/
+
 }

@@ -6,7 +6,7 @@ using DataCs;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed;
+    float speed;
     Vector3 direct;
     Transform ts;
     Vector3 temp;
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
         isDead = false;
         curr_time = 0f;
 
-        speed = 20f;
+        speed = 10f;
         ts = GetComponent<Transform>();
         directs = new Vector2[4]
         {
@@ -69,8 +69,18 @@ public class Bullet : MonoBehaviour
                         if (em2 != null)
                         {
                             
-                            float DPS2 = TOOLS.GetPlayerDps(pm.playerState, 1, em2.CurrHp, em2.CurrDenfense);
+                            float DPS2 = TOOLS.GetPlayerDps(pm.playerState, 2, em2.CurrHp, em2.CurrDenfense);
                             em2.Injure(DPS2);
+                        }
+                        else
+                        {
+                            EnemyMove3 em3 = hit.collider.gameObject.GetComponent<EnemyMove3>();
+                            if (em3 != null)
+                            {
+
+                                float DPS3 = TOOLS.GetPlayerDps(pm.playerState, 3, em3.CurrHp, em3.CurrDenfense);
+                                em3.Injure(DPS3);
+                            }
                         }
                     }
 

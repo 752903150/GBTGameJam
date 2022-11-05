@@ -7,6 +7,8 @@ using DG.Tweening;
 
 public class EnemySpawn : MonoBehaviour
 {
+    public Tower[] towers;
+
     public Tower smallTower;
     public Tower BigTower;
     public Transform Player;
@@ -79,6 +81,25 @@ public class EnemySpawn : MonoBehaviour
         temp.GetComponent<EnemyMove2>().init(smallTower, BigTower, Player, Canvas);
     }
 
+    public void CreateEnemyC()
+    {
+        int id = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyC].ID;
+        GameObject temp;
+        if (ObjectPoolSystem.Instance.TestGameObjectPool(id))
+        {
+            temp = ObjectPoolSystem.Instance.GetGameObjectFormPool(id);
+        }
+        else
+        {
+            string path = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyC].path;
+            temp = GameObject.Instantiate((GameObject)Resources.Load(path));
+        }
+        temp.SetActive(true);
+        temp.transform.SetParent(RootParent.transform);
+        temp.transform.localPosition = this.gameObject.transform.localPosition;
+        temp.GetComponent<EnemyMove3>().init(towers[0], towers[1], towers[2], towers[3], BigTower, Player, Canvas);
+    }
+
     private void Update()
     {
         curr_time += Time.deltaTime;
@@ -98,7 +119,7 @@ public class EnemySpawn : MonoBehaviour
                 }
                 if (id == 3)
                 {
-                    CreateEnemyA();
+                    CreateEnemyC();
                 }
             }
         }

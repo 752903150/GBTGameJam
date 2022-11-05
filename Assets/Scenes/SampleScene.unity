@@ -403,6 +403,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -602,6 +622,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -887,6 +927,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1032,6 +1092,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 1201676155}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1130,6 +1210,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1300,6 +1400,26 @@ PrefabInstance:
       propertyPath: smallTower
       value: 
       objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[0]
+      value: 
+      objectReference: {fileID: 322455572}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1264099031}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 1542206308}
+    - target: {fileID: 5819896247345666086, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
+      propertyPath: towers.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201676155}
     - target: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
       propertyPath: m_RootOrder
       value: 0
