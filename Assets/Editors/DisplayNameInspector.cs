@@ -6,8 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(DisplayNameAttribute))]
+
 public class DisplayNameInspector : PropertyDrawer
 {
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -23,3 +24,4 @@ public class DisplayNameInspector : PropertyDrawer
 		EditorGUI.PropertyField(position, property, label);
 	}
 }
+#endif

@@ -11,10 +11,11 @@ public class JsonEditor
     static string path = Data_FilePath.JsonSavePath_Path;
     static string csvpath = Data_FilePath.CsvPathWithJson_Path;
 
-    
 
 
+#if UNITY_EDITOR
     [MenuItem("Tool/Json/CSVTOJson")]
+#endif
     static void CSVTOJson()
     {
         if (Directory.Exists(csvpath))

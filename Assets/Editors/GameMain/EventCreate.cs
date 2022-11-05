@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using DataCs;
 using MyGameFrameWork;
-
+#if UNITY_EDITOR
 public class EventCreate: EditorWindow
 {
     static EventCreate myWindow; 
@@ -16,6 +16,7 @@ public class EventCreate: EditorWindow
     static float height = 150;
 
     [MenuItem("Tool/EventCreate")]
+
     static void Main()
     {
         classname = "";
@@ -79,3 +80,4 @@ public class EventCreate: EditorWindow
     }
 
 }
+#endif

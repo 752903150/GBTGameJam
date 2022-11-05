@@ -6,8 +6,9 @@ using System.IO;
 using DataCs;
 using MyGameFrameWork;
 
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(AutoBind))]
+
 public class AutoBindInspector : Editor
 {
     string UIFormPath = Data_FilePath.AutoUIFormCS_Path;
@@ -268,3 +269,4 @@ public class AutoBindInspector : Editor
         CodeCreate.CreateORwriteConfigFile(UIFormBindPath, Root.name + ".Bind.cs", CodeCreate.XLUAUIFormBindGenertion(name_list, type_list, Root.name), 0);
     }
 }
+#endif

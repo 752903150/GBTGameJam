@@ -8,7 +8,7 @@ using System;
 using System.Text;
 using DataCs;
 using MyGameFrameWork;
-
+#if UNITY_EDITOR
 public class Csv2Cs : EditorWindow
 {
     static Csv2Cs myWindow;
@@ -17,7 +17,9 @@ public class Csv2Cs : EditorWindow
 
     static string cspath = "";
 
+
     [MenuItem("Tool/Data/CSV2CS")]
+
     static void Main()
     {
         csvpath = Data_FilePath.CsvPathWithCs_Path;
@@ -158,3 +160,4 @@ public class Csv2Cs : EditorWindow
         }
     }
 }
+#endif

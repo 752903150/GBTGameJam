@@ -6,7 +6,9 @@ using System.IO;
 
 namespace MyGameFrameWork
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(SoundSystem))]
+
     public class SoundSystemInspector : Editor
     {
         SoundSystem soundSystem;
@@ -129,6 +131,7 @@ namespace MyGameFrameWork
             serializedObject.ApplyModifiedProperties();
         }
     }
+#endif
 }
 
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
-
+#if UNITY_EDITOR
 public class CodeTotal
 {
     static int code_num = 0;
@@ -70,3 +70,4 @@ public class CodeTotal
         return num;
     }
 }
+#endif

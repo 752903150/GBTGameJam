@@ -4,6 +4,7 @@ using UnityEditor;
 using System.IO;
 using DataCs;
 using MyGameFrameWork;
+#if UNITY_EDITOR
 public class Csv2CsSimple
 {
     static string datacsvpath = Data_FilePath.CsvPathWithCs_Path;//csv文件储存地址
@@ -120,3 +121,4 @@ public class Csv2CsSimple
         }
     }
 }
+#endif
