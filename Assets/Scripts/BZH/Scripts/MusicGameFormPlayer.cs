@@ -166,6 +166,4 @@ public class MusicGameFormPlayer : MonoBehaviour
 	    backupSource.DOFade(0.0f, ToLength(0.5f));
 	    source.time = PlayDelayInSeconds + ToPlayTime(beat);
     }
-
-    public TMP_Text Displayer;
 }
