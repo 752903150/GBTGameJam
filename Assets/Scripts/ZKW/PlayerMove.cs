@@ -1,10 +1,15 @@
+using MyGameFrameWork;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMove : MonoBehaviour
 {
     Transform Player;
+
+    public float PlayerHp;
+    public float CurrPlayerHp;
 
     float speed;
     Vector3 temp;
@@ -16,14 +21,16 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerHp = TOOLS.GetPlayerMaxHp();
+        CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
         Player = GetComponent<Transform>();
         speed = 8f;
         distance = 1f;
         directs = new Vector2[4]
         {
-            new Vector2(0,1),
+            new Vector2(0, 1),
             new Vector2(0,-1),
-            new Vector2(1,0),
+            new Vector2(1, 0),
             new Vector2(-1,0),
         };
         layermask = (1 << 7) | (1 << 10);
@@ -95,5 +102,15 @@ public class PlayerMove : MonoBehaviour
             }
         }
         Player.localPosition = temp;
+    }
+
+    public void Injure(float DPS)
+    {
+        CurrPlayerHp -= DPS;
+        
+        if (CurrPlayerHp == 0)
+        {
+            EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());
+        }
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Security.Cryptography;
+using static UnityEditor.PlayerSettings;
 
 public class EnemyMove : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class EnemyMove : MonoBehaviour
     Vector2[] directs;
 
     float distance;
+    float attack_distance;
 
     int layermask;
     private Camera cam;
@@ -28,10 +31,21 @@ public class EnemyMove : MonoBehaviour
     private int CurrHp;
 
     bool isDead;
+    bool isAttack;
+
+    Vector2 rv2;
+
+    int attack_mode;
 
     void Start()
     {
+        float rx = Random.Range(0, 1);
+        float ry = Random.Range(0, 1);
+        rv2.x = rx;
+        rv2.y = ry;
         isDead = false;
+        isAttack = false;
+        attack_mode = 3;//mode 1 = small 2 = big 3 = player;
         GetComponent<CircleCollider2D>().enabled = true;
 
         MaxHp = 10;
@@ -40,6 +54,7 @@ public class EnemyMove : MonoBehaviour
         cam = Camera.main;
 
         distance = 0.5f;
+        attack_distance = 1.5f;
         ts = GetComponent<Transform>();
         directs = new Vector2[8]
         {
@@ -60,8 +75,11 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Attack(Player.localPosition);
         Move(Player.localPosition);
         HpBarMove();
+        HpBar.value = 1f;
+        
     }
 
     public void init(Tower stower,Tower btower,Transform player,GameObject canva)
@@ -71,17 +89,51 @@ public class EnemyMove : MonoBehaviour
         Player = player;
         Canva = canva;
         isDead = false;
+        isAttack = false;
         GetComponent<CircleCollider2D>().enabled = true;
+        CreateHPBar();
+        HpBar.size = 1f;
+        MaxHp = 10;
+        CurrHp = MaxHp;
+    }
+
+    void Attack(Vector3 pos)
+    {
+        if (isDead || isAttack)
+        {
+            return;
+        }
+        Vector3 direct = pos - this.transform.position;
+        if (attack_distance * attack_distance > direct.z* direct.z+ direct.y* direct.y+ direct.x* direct.x)
+        {
+            
+            if (attack_mode == 3)
+            {
+                Debug.Log("Attack3");
+                Attack(Player.gameObject);
+            }
+            else if(attack_mode == 2)
+            {
+                //Attack(Tower1.gameObject);
+            }
+            else
+            {
+                //Attack
+            }
+        }
+        
     }
 
     void Move(Vector3 pos)
     {
-        if (isDead)
+        if (isDead || isAttack)
         {
             return;
         }
         Vector3 direct = pos - this.transform.position ;
         direct.z = 0;
+        direct.x += rv2.x;
+        direct.y += rv2.y;
         direct = Vector3.Normalize(direct);
 
         RaycastHit2D hit;
@@ -132,11 +184,13 @@ public class EnemyMove : MonoBehaviour
         temp.SetActive(true);
         temp.transform.SetParent(Canva.transform);
         HpBar = temp.GetComponent<Scrollbar>();
+        HpBar.value = 1f;
     }
 
     public void Injure()
     {
         CurrHp--;
+        
         HpBar.size = CurrHp / (float)MaxHp;
         if (CurrHp == 0)
         {
@@ -155,5 +209,24 @@ public class EnemyMove : MonoBehaviour
             ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
         })
         .SetDelay(1f);
+    }
+
+    void Attack(GameObject Player)
+    {
+        float DPS = TOOLS.GetMonsterDps(1, Player.GetComponent<PlayerMove>().CurrPlayerHp);
+        
+        isAttack = true;
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            Player.GetComponent<PlayerMove>().Injure(DPS);// -= DPS;
+            EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
+        });
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            isAttack = false;
+        });
     }
 }

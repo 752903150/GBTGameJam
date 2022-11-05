@@ -15,26 +15,35 @@ public class EnemySpawn : MonoBehaviour
     private void Start()
     {
         Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(1f);
         seq.AppendCallback(() =>
         {
             CreateEnemyA();
-        })
-        .SetDelay(1f);
-        /*seq.AppendCallback(() =>
-        {
-            CreateEnemyA();
-        })
-        .SetDelay(1f);
+        });
+
+        seq.AppendInterval(1f);
         seq.AppendCallback(() =>
         {
             CreateEnemyA();
-        })
-        .SetDelay(1f);
+        });
+
+        seq.AppendInterval(1f);
         seq.AppendCallback(() =>
         {
             CreateEnemyA();
-        })
-        .SetDelay(1f);*/
+        });
+
+        seq.AppendInterval(1f);
+        seq.AppendCallback(() =>
+        {
+            CreateEnemyA();
+        });
+
+        seq.AppendInterval(1f);
+        seq.AppendCallback(() =>
+        {
+            CreateEnemyA();
+        });
 
     }
     public void CreateEnemyA()

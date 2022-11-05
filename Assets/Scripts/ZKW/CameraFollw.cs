@@ -24,8 +24,8 @@ public class CameraFollw : MonoBehaviour
 
     void Start()
     {
-        startPosition = transform.position;
-        offset = transform.position - target.position;
+        transform.position = target.position;
+        offset = Vector3.zero;
     }
 
     void LateUpdate()
@@ -44,7 +44,7 @@ public class CameraFollw : MonoBehaviour
 
         if (!freazeZ)
         {
-            oldPosition.z = Mathf.SmoothDamp(transform.position.z, target.position.z + offset.z, ref zVelocity, smoothTime);
+            oldPosition.z = -10f;
         }
 
         transform.position = oldPosition;
@@ -55,6 +55,7 @@ public class CameraFollw : MonoBehaviour
     /// </summary>
     public void ResetPosition()
     {
-        transform.position = startPosition;
+        target.position = target.position;
+        
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/5 1:02:40
+//CreateTime：2022/11/5 9:17:33
 namespace DataCs
 {
 	public static class Data_EventName
@@ -17,6 +17,8 @@ namespace DataCs
 		public static string GameOver_str = "GameOver";
 
 		public static string KillMonster_str = "KillMonster";
+
+		public static string PlayerInjure_str = "PlayerInjure";
 
 	}
 }

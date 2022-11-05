@@ -17,9 +17,12 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
+            SkillAdditionSystem.CreateInstance(0,0,0);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
-            
+            GameObject temp = m_Contorller.GetData("Enity1") as GameObject;
+            temp?.SetActive(true);
+            CreateMainUI();
         }
 
         public override void StateUpdate()
@@ -29,13 +32,13 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
-            //SoundSystem.Instance.StopMusic(Data_AudioID.key_March_of_the_Brave);
-            //Debug.Log("MainState End");
+            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
+            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
         }
 
         void CreateMainUI()
         {
-
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm);
         }
 
         void CreatePlayer()
@@ -56,7 +59,7 @@ namespace MyGameFrameWork
         void GameOver(IEventArgs eventArgs)
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
-            
+            Debug.Log("Dead");
         }
 
         void KillMonster(IEventArgs eventArgs)
