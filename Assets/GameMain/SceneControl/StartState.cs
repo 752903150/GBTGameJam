@@ -14,9 +14,9 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-            //¿ªÊ¼Ê±
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_StartGameForm);//´ò¿ªUI
-            SoundSystem.Instance.PlayMusic(Data_AudioID.key_Solemn_Place);//²¥·ÅÒôÀÖ
+            //å¼€å§‹æ—¶
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_StartGameForm);//æ‰“å¼€UI
+            SoundSystem.Instance.PlayMusic(Data_AudioID.key_GameBgm);//æ’­æ”¾éŸ³ä¹
             EventManagerSystem.Instance.Add2(Data_EventName.StartGame_str, OnStartGame);
             EventManagerSystem.Instance.Add2(Data_EventName.ExitGame_str, OnExitGame);
             EventManagerSystem.Instance.Add2(Data_EventName.Developer_str, OnDevelopers);
@@ -29,25 +29,25 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
-            //½áÊøÊ±
-            SoundSystem.Instance.StopMusic(Data_AudioID.key_Solemn_Place);//½áÊøÒôÀÖ
+            //ç»“æŸæ—¶
+            SoundSystem.Instance.StopMusic(Data_AudioID.key_Solemn_Place);//ç»“æŸéŸ³ä¹
             EventManagerSystem.Instance.Delete2(Data_EventName.StartGame_str, OnStartGame);
             EventManagerSystem.Instance.Delete2(Data_EventName.ExitGame_str, OnExitGame);
             EventManagerSystem.Instance.Delete2(Data_EventName.Developer_str, OnDevelopers);
         }
 
-        private void OnStartGame(IEventArgs eventArgs)//ÓÎÏ·¿ªÊ¼
+        private void OnStartGame(IEventArgs eventArgs)//æ¸¸æˆå¼€å§‹
         {
             m_Contorller.SetState("MenuState", null);
 
         }
 
-        private void OnDevelopers(IEventArgs eventArgs)//¿ª·¢Õß½çÃæ
+        private void OnDevelopers(IEventArgs eventArgs)//å¼€å‘è€…ç•Œé¢
         {
             m_Contorller.SetState("EndGameState", null);
         }
 
-        private void OnExitGame(IEventArgs eventArgs)//ÓÎÏ·½áÊø
+        private void OnExitGame(IEventArgs eventArgs)//æ¸¸æˆç»“æŸ
         {
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/5 11:02:50
+//CreateTime：2022/11/5 12:49:17
 namespace DataCs
 {
 	public struct Data_AudioID_Struct
@@ -31,6 +31,7 @@ namespace DataCs
 			{"Sleeping",new Data_AudioID_Struct("Sleeping",1006,"Audio/Effect/Sleeping")},
 			{"Turn_to_stone",new Data_AudioID_Struct("Turn_to_stone",1007,"Audio/Effect/Turn_to_stone")},
 			{"Swoosh",new Data_AudioID_Struct("Swoosh",1008,"Audio/Effect/Swoosh")},
+			{"GameBgm",new Data_AudioID_Struct("GameBgm",1009,"Audio/Music/GameBgm")},
 		};
 		public static string key_Bright_Beginning = "Bright_Beginning";
 		public static string key_Dark_Journey = "Dark_Journey";
@@ -41,6 +42,7 @@ namespace DataCs
 		public static string key_Sleeping = "Sleeping";
 		public static string key_Turn_to_stone = "Turn_to_stone";
 		public static string key_Swoosh = "Swoosh";
+		public static string key_GameBgm = "GameBgm";
 	}
 }
 

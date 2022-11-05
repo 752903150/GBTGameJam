@@ -119,7 +119,7 @@ public class TimerManager : MonoBehaviour
     {
         if (!instance)
         {
-            GameObject obj = Instantiate(Resources.Load("TimerManagerObject", typeof(GameObject)) as GameObject);
+            GameObject obj = Instantiate(Resources.Load("BZH/TimerManagerObject", typeof(GameObject)) as GameObject);
             instance = obj.GetComponent<TimerManager>();
         }
 
