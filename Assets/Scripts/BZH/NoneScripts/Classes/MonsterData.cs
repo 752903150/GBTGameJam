@@ -28,8 +28,13 @@ public class MonsterData
 	/// <returns>实际应造成的伤害</returns>
 	public virtual float ApplyDamage(float dmg, float currHp, float currDefense)
 	{
+		if (currHp <= 0.0f)
+		{
+			return 0.0f;
+		}
 		float actuallyCaused = dmg * (1.0f - currDefense);
-		actuallyCaused = Mathf.Clamp(actuallyCaused, currHp, 9999.0f);
+		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
+		Debug.LogWarning(actuallyCaused);
 		return actuallyCaused;
 	}
 }
