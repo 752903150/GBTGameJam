@@ -34,6 +34,13 @@ public class MusicGameFormPlayer : MonoBehaviour
 
 	private float durationPerBeat;
 
+	private IntChangedEventsWithPresets fEve;
+
+	private int beatCount;
+
+	[SerializeField]
+	private int revertingBeat;
+
 	public float Bpm
 	{
 		get => bpm;
@@ -91,6 +98,7 @@ public class MusicGameFormPlayer : MonoBehaviour
 		realClip = null;
 		bpm = 100.0f;
 		playDelay = 0.0f;
+		beatCount = 0;
 	}
 
 	private void Awake()
@@ -107,20 +115,24 @@ public class MusicGameFormPlayer : MonoBehaviour
 	    if (playOnStart)
 	    {
 		    Invoke("Play", 2.0f);
+		    fEve = new IntChangedEventsWithPresets(ref beatCount,
+			    new CommonPresetEventList<int>(revertingBeat, RevertToStart));
+		    fEve.BeginMonitor();
 	    }
 
 	    //Debug.Log(durationPerBeat);
 	    
     }
 
+    void RevertToStart()
+    {
+	    RevertTo(2.0f);
+    }
+
     // Update is called once per frame
     void Update()
     {
-	    if (Mathf.Round(Beat) == 5)
-	    {
-		    Debug.LogWarning("5Beat");
-	    }
-	    //Displayer.text = $"{Beat}\n{Section}\n{Section * molecule}\n{BeatInSection}";
+	    beatCount = (int)Beat;
     }
 
     public float ToPlayTime(float beat)
@@ -166,8 +178,6 @@ public class MusicGameFormPlayer : MonoBehaviour
 	    {
 		    source.PlayDelayed(PlayDelayInSeconds);
 	    }
-	    
-	    TimerManager.GetTimerManager().SetTimer(() => Debug.LogWarning(Mathf.Round(Beat)), durationPerBeat, durationPerBeat);
 	    
 	    //TimerManager.GetTimerManager().SetTimer(AddBomb, 0.0f, addEvent.BeginTime, 1L);
 	    //TimerManager.GetTimerManager().SetTimer(AddBeat, durationPerBeat, 0.0f, 32L);

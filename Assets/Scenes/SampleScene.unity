@@ -489,6 +489,7 @@ MonoBehaviour:
   deno: 4
   playDelay: 550
   playOnStart: 1
+  revertingBeat: 186
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
