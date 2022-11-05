@@ -40,12 +40,14 @@ public partial class MainForm : UIForm
 	{
 		EventManagerSystem.Instance.Add2(Data_EventName.PlayerInjure_str, PlayerInjure);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOK);
     }
 
 	private void ReleaseEvent()
 	{
         EventManagerSystem.Instance.Delete2(Data_EventName.PlayerInjure_str, PlayerInjure);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOK);
     }
 
 	void PlayerInjure(IEventArgs eventArgs)
@@ -68,6 +70,12 @@ public partial class MainForm : UIForm
     {
         GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
 		UISystem.Instance.CloseUIForm(Data_UIFormID.key_MainForm, this);
+    }
+
+    void GameOK(IEventArgs eventArgs)
+    {
+        
+        UISystem.Instance.CloseUIForm(Data_UIFormID.key_MainForm, this);
     }
 }
 
