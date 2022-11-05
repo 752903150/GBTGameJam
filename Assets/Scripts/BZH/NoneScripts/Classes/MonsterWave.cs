@@ -59,4 +59,9 @@ public class LevelMonsterWaves
 	{
 		get => monsterWaves[waveIndex].AllMonsters;
 	}
+	
+	public List<uint> this[uint waveIndex]
+	{
+		get => monsterWaves[waveIndex].AllMonsters;
+	}
 }

@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ public static class TOOLS
 {
 	private static Dictionary<uint, MonsterData> monsterIdMap;
 
+	private static Data_Empyrean empyreanData;
+
 	static TOOLS()
 	{
 		var data = Data_Empyrean.GetDefaultObject();
@@ -20,6 +23,7 @@ public static class TOOLS
 			{3u, data.MonsterDatas[2]},
 			{4u, data.MonsterDatas[3]},
 		};
+		empyreanData = Data_Empyrean.GetDefaultObject();
 	}
 
 	/// <summary>
@@ -81,41 +85,44 @@ public static class TOOLS
         };
     }
 
-    public static List<List<uint>> GetFirstMonsters(uint level, uint waveCount)
+    public static List<uint> GetFirstMonsters(uint level, uint waveIndex)
     {
-        List<List<uint>> monsters = new List<List<uint>>();
+	    if (level < 2u)
+	    {
+		    return empyreanData.MonstersInLevels[level][waveIndex];
+	    }
 
-        List<uint> list = new List<uint>();
-        /*list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
+	    var waves = empyreanData.MonstersInLevels[2];
+	    if (waveIndex < waves.WavesCount)
+	    {
+		    return waves[waveIndex];
+	    }
 
-        List<EMonster> list2 = new List<EMonster>();
-        list.Add(EMonster.EMA);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMB);
-        list.Add(EMonster.EMC);*/
-        
-        
+	    return GenerateRandomMonsters(waveIndex);
+    }
 
-        return monsters;
+    private static uint GenerateMonsterCount(uint waveIndex)
+    {
+	    System.Random rand = new System.Random();
+	    if (waveIndex < 15u)
+	    {
+		    return (uint)rand.Next(5, 8);
+	    }
+
+	    if (waveIndex < 25u)
+	    {
+		    return (uint)rand.Next(8, 12);
+	    }
+
+	    return (uint)rand.Next(9, 15);
+    }
+
+    private static List<uint> GenerateRandomMonsters(uint waveIndex)
+    {
+	    uint total = GenerateMonsterCount(waveIndex);
+	    uint m1Count = 0u, m2Count = 0u, m3Count = 0u;
+	    MonsterWave wave = new MonsterWave(new MonsterConfig(1u, m1Count), new MonsterConfig(2u, m2Count),
+		    new MonsterConfig(3u, m3Count));
+	    return wave.AllMonsters;
     }
 }

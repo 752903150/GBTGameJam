@@ -51,7 +51,7 @@ public class SkillAdditionSystem
 	private SkillAddition defenseAddition;
 	private SkillAddition attSpeedAddition;
 
-	public SkillAdditionSystem(uint lDamage, uint lDefense, uint lAttSpeed)
+	private SkillAdditionSystem(uint lDamage, uint lDefense, uint lAttSpeed)
 	{
 		damageAddition = new SkillAddition(lDamage);
 		defenseAddition = new SkillAddition(lDefense);
@@ -61,8 +61,12 @@ public class SkillAdditionSystem
 		damageAddition.IncreasePerLevel = data.DamageIncreasePerLevel;
 		defenseAddition.IncreasePerLevel = data.DefenseIncreasePerLevel;
 		attSpeedAddition.IncreasePerLevel = data.AttackSpeedIncreasePerLevel;
+	}
 
-		Instance = this;
+	public static SkillAdditionSystem CreateInstance(uint lDamage, uint lDefense, uint lAttSpeed)
+	{
+		Instance = new SkillAdditionSystem(lDamage, lDefense, lAttSpeed);
+		return Instance;
 	}
 
 	public void AddDamageLevel()
@@ -95,19 +99,22 @@ public class SkillAdditionSystem
 		attSpeedAddition.Level--;
 	}
 	
-	public float DamageLevel
+	public uint DamageLevel
 	{
 		get => damageAddition.Level;
+		set => damageAddition.Level = value;
 	}
 	
-	public float DefenseLevel
+	public uint DefenseLevel
 	{
 		get => defenseAddition.Level;
+		set => defenseAddition.Level = value;
 	}
 
-	public float AttackSpeedLevel
+	public uint AttackSpeedLevel
 	{
 		get => attSpeedAddition.Level;
+		set => attSpeedAddition.Level = value;
 	}
 
 	public float DamageIncrease

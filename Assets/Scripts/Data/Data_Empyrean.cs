@@ -32,31 +32,31 @@ namespace DataCs
 			(
 				new MonsterWave(new MonsterConfig(1u, 1u)),
 				new MonsterWave(new MonsterConfig(1u, 2u)),
-				new MonsterWave(new MonsterConfig(1u, 2u))
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 1u))
 			);
 			
 			result.MonstersInLevels[1] = new LevelMonsterWaves
 			(
 				new MonsterWave(new MonsterConfig(2u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u))
+				new MonsterWave(new MonsterConfig(1u, 3u), new MonsterConfig(2u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 3u), new MonsterConfig(2u, 2u)),
+				new MonsterWave(new MonsterConfig(3u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(3u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 2u), new MonsterConfig(3u, 2u))
 			);
 			
 			result.MonstersInLevels[2] = new LevelMonsterWaves
 			(
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u)),
-				new MonsterWave(new MonsterConfig(1u, 1u))
+				new MonsterWave(new MonsterConfig(1u, 1u), new MonsterConfig(2u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 4u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 3u)),
+				new MonsterWave(new MonsterConfig(1u, 3u), new MonsterConfig(2u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 1u), new MonsterConfig(3u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 1u), new MonsterConfig(2u, 2u), new MonsterConfig(3u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 2u), new MonsterConfig(2u, 1u), new MonsterConfig(3u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 4u), new MonsterConfig(3u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 5u), new MonsterConfig(2u, 1u), new MonsterConfig(3u, 1u))
 			);
 
 			return result;
