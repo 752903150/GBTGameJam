@@ -42,26 +42,22 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-
             curr_wave = 0;
 
             cuur_level = (int)obj;
             all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
-
             SkillAdditionSystem.CreateInstance(0,0,0);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
             EventManagerSystem.Instance.Add2(Data_EventName.BackMenu_str, OnBackMenu);
             Enity1 = m_Contorller.GetData("Enity1") as GameObject;
             Enity1?.SetActive(true);
-
             Spawn1 = m_Contorller.GetData("Spawn1") as GameObject;
             Spawn2 = m_Contorller.GetData("Spawn2") as GameObject;
             Spawn3 = m_Contorller.GetData("Spawn3") as GameObject;
             Spawn4 = m_Contorller.GetData("Spawn4") as GameObject;
             Spawn5 = m_Contorller.GetData("Spawn5") as GameObject;
             Spawn6 = m_Contorller.GetData("Spawn6") as GameObject;
-
             Spawns = new List<EnemySpawn>();
 
             Spawns.Add(Spawn1.GetComponent<EnemySpawn>());
@@ -70,7 +66,6 @@ namespace MyGameFrameWork
             Spawns.Add(Spawn4.GetComponent<EnemySpawn>());
             Spawns.Add(Spawn5.GetComponent<EnemySpawn>());
             Spawns.Add(Spawn6.GetComponent<EnemySpawn>());
-
             Player = m_Contorller.GetData("Player") as GameObject;
             HPBarCanvas = m_Contorller.GetData("HPBarCanvas") as GameObject;
 
@@ -79,11 +74,9 @@ namespace MyGameFrameWork
             Tower3 = m_Contorller.GetData("Tower3") as GameObject;
             Tower4 = m_Contorller.GetData("Tower4") as GameObject;
             Tower5 = m_Contorller.GetData("Tower5") as GameObject;
-
             CreateTower();
             CreateEnemy();
             Player.GetComponent<PlayerMove>().PlayerInit();
-            
             //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
             CreateMainUI();
         }
@@ -98,6 +91,7 @@ namespace MyGameFrameWork
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
             EventManagerSystem.Instance.Delete2(Data_EventName.BackMenu_str, OnBackMenu);
+            Spawns.Clear();
         }
 
         void CreateMainUI()

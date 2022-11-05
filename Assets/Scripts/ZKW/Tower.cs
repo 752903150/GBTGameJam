@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour
 
     public void init(ETurrutType eTurrutType,int level)
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver2);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOver2);
         turrutType = eTurrutType;
@@ -44,8 +44,12 @@ public class Tower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HpBar!=null)
+        if (HpBar != null)
+        {
+            HpBar.size = 1f;
             HpBarMove();
+        }
+            
     }
 
     void CreateHPBar()
@@ -119,5 +123,6 @@ public class Tower : MonoBehaviour
         Destroy(HpBar.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
     }
 }
