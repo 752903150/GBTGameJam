@@ -27,14 +27,19 @@ public class PlayerMove : MonoBehaviour
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
         Player = GetComponent<Transform>();
-        speed = 8f;
-        distance = 1f;
-        directs = new Vector2[4]
+        speed = 5f;
+        distance = 0.5f;
+        directs = new Vector2[8]
         {
             new Vector2(0, 1),
             new Vector2(0,-1),
             new Vector2(1, 0),
             new Vector2(-1,0),
+
+            new Vector2(1,1),
+            new Vector2(-1,-1),
+            new Vector2(1,-1),
+            new Vector2(-1,1)
         };
         layermask = (1 << 7) | (1 << 10);
     }
@@ -51,7 +56,7 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         RaycastHit2D hit;
-        temp = Player.localPosition;
+        temp = Vector3.zero;
         temp2.x = Player.localPosition.x;
         temp2.y = Player.localPosition.y;
         if (Input.GetKey(KeyCode.W))
@@ -112,7 +117,26 @@ public class PlayerMove : MonoBehaviour
                 //Debug.Log("CrushD");
             }
         }
-        Player.localPosition = temp;
+
+        for (int i = 0; i < 8; i++)
+        {
+            hit = Physics2D.Raycast(this.transform.localPosition, directs[i], distance, layermask);
+            if (hit.collider)
+            {
+                if (directs[i].x * temp.x > 0f)
+                {
+                    //temp.y += temp.x;
+                    temp.x = 0;
+                }
+                else if (directs[i].y * temp.y > 0f)
+                {
+                    //temp.x += temp.y;
+                    temp.y = 0;
+                }
+                break;
+            }
+        }
+        Player.localPosition += temp;
     }
 
     public void Injure(float DPS)

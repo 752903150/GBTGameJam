@@ -17,6 +17,12 @@ namespace MyGameFrameWork
         public GameObject Spawn5;
         public GameObject Spawn6;
 
+        public GameObject Tower1;
+        public GameObject Tower2;
+        public GameObject Tower3;
+        public GameObject Tower4;
+        public GameObject Tower5;
+
         public GameObject HPBarCanvas;
         private void Awake()
         {
@@ -37,6 +43,12 @@ namespace MyGameFrameWork
             sceneStateC.SetData("Spawn5", Spawn5);
             sceneStateC.SetData("Spawn6", Spawn6);
             sceneStateC.SetData("HPBarCanvas", HPBarCanvas);
+
+            sceneStateC.SetData("Tower1", Tower1);
+            sceneStateC.SetData("Tower2", Tower2);
+            sceneStateC.SetData("Tower3", Tower3);
+            sceneStateC.SetData("Tower4", Tower4);
+            sceneStateC.SetData("Tower5", Tower5);
         }
 
         // Update is called once per frame

@@ -21,6 +21,9 @@ public class EnemyMove : MonoBehaviour
 
     float distance;
     float attack_distance;
+    float attack_tower_distance;
+    float attack_big_tower_distance;
+    float follow_distance;
 
     int layermask;
     private Camera cam;
@@ -38,6 +41,8 @@ public class EnemyMove : MonoBehaviour
     Vector2 rv2;
 
     int attack_mode;
+
+    Vector3 follow_location;
     
     void Start()
     {
@@ -47,7 +52,7 @@ public class EnemyMove : MonoBehaviour
         rv2.y = ry;
         isDead = false;
         isAttack = false;
-        attack_mode = 3;//mode 1 = small 2 = big 3 = player;
+        attack_mode = 1;//mode 1 = small 2 = big 3 = player;
         GetComponent<CircleCollider2D>().enabled = true;
 
         MaxHp = 10;
@@ -56,7 +61,10 @@ public class EnemyMove : MonoBehaviour
         cam = Camera.main;
 
         distance = 0.5f;
-        attack_distance = 1.5f;
+        attack_distance = 1f;
+        follow_distance = 3f;
+        attack_tower_distance = 4.5f;
+        attack_big_tower_distance = 5f;
         ts = GetComponent<Transform>();
         directs = new Vector2[8]
         {
@@ -77,8 +85,22 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Attack(Player.localPosition);
-        Move(Player.localPosition);
+        Select();
+
+        if (attack_mode == 1)
+        {
+            follow_location = Tower1.transform.localPosition;
+        }
+        else if(attack_mode == 2)
+        {
+            follow_location = BigTower2.transform.localPosition;
+        }
+        else
+        {
+            follow_location = Player.localPosition;
+        }
+        Attack(follow_location);
+        Move(follow_location);
         HpBarMove();
         HpBar.value = 1f;
         
@@ -102,6 +124,26 @@ public class EnemyMove : MonoBehaviour
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
     }
 
+    void Select()
+    {
+        if (attack_mode == 3)
+        {
+            return;
+        }
+        Vector3 direct = Player.localPosition - this.transform.position;
+        if (follow_distance * follow_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x)
+        {
+            attack_mode = 3;
+        }
+        if (attack_mode == 1)//当前攻击塔
+        {
+            if (Tower1.isDead)//小塔死了
+            {
+                attack_mode = 2;//攻击主塔
+            }
+        }
+    }
+
     void Attack(Vector3 pos)
     {
         if (isDead || isAttack)
@@ -109,22 +151,28 @@ public class EnemyMove : MonoBehaviour
             return;
         }
         Vector3 direct = pos - this.transform.position;
-        if (attack_distance * attack_distance > direct.z* direct.z+ direct.y* direct.y+ direct.x* direct.x)
+        Debug.Log(direct.z * direct.z + direct.y * direct.y + direct.x * direct.x);
+        if(attack_big_tower_distance * attack_big_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x)
+        {
+            if (attack_mode == 2)
+            {
+                AttackTower(BigTower2);
+            }
+        }
+        if(attack_tower_distance * attack_tower_distance > direct.z * direct.z + direct.y * direct.y + direct.x * direct.x)
+        {
+            if (attack_mode == 1)
+            {
+                AttackTower(Tower1);
+            }
+        }
+        else if (attack_distance * attack_distance > direct.z* direct.z+ direct.y* direct.y+ direct.x* direct.x)
         {
             if (attack_mode == 3)
             {
                 Attack(Player.gameObject);
             }
-            else if(attack_mode == 2)
-            {
-                //Attack(Tower1.gameObject);
-            }
-            else
-            {
-                //Attack
-            }
         }
-        
     }
 
     void Move(Vector3 pos)
@@ -166,7 +214,7 @@ public class EnemyMove : MonoBehaviour
     {
         var playerScreenPos = cam.WorldToScreenPoint(this.transform.position);
         //再把人物坐标Y加一个高度给到人物
-        HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 70f, playerScreenPos.z);
+        HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 55f, playerScreenPos.z);
 
     }
 
@@ -237,6 +285,24 @@ public class EnemyMove : MonoBehaviour
             isAttack = false;
         });
 
+    }
+
+    void AttackTower(Tower tower)
+    {
+        Debug.Log("AttackTower");
+        isAttack = true;
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            tower.Injure(1);// -= DPS;
+            //EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
+        });
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            isAttack = false;
+        });
     }
 
     void GameOver(IEventArgs eventArgs)

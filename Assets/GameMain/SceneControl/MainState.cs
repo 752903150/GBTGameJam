@@ -20,6 +20,12 @@ namespace MyGameFrameWork
         GameObject Spawn6;
         GameObject Player;
 
+        GameObject Tower1;
+        GameObject Tower2;
+        GameObject Tower3;
+        GameObject Tower4;
+        GameObject Tower5;
+
         List<EnemySpawn> Spawns;
 
         GameObject HPBarCanvas;
@@ -68,9 +74,16 @@ namespace MyGameFrameWork
             Player = m_Contorller.GetData("Player") as GameObject;
             HPBarCanvas = m_Contorller.GetData("HPBarCanvas") as GameObject;
 
+            Tower1 = m_Contorller.GetData("Tower1") as GameObject;
+            Tower2 = m_Contorller.GetData("Tower2") as GameObject;
+            Tower3 = m_Contorller.GetData("Tower3") as GameObject;
+            Tower4 = m_Contorller.GetData("Tower4") as GameObject;
+            Tower5 = m_Contorller.GetData("Tower5") as GameObject;
+
+            CreateTower();
             CreateEnemy();
             Player.GetComponent<PlayerMove>().PlayerInit();
-
+            
             //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
             CreateMainUI();
         }
@@ -99,7 +112,11 @@ namespace MyGameFrameWork
 
         void CreateTower()
         {
-
+            Tower1.GetComponent<Tower>().init(ETurrutType.Normal, cuur_level);
+            Tower2.GetComponent<Tower>().init(ETurrutType.Normal, cuur_level);
+            Tower3.GetComponent<Tower>().init(ETurrutType.Normal, cuur_level);
+            Tower4.GetComponent<Tower>().init(ETurrutType.Normal, cuur_level);
+            Tower5.GetComponent<Tower>().init(ETurrutType.Center, cuur_level);
         }
 
         void CreateEnemySpawn()
@@ -123,7 +140,7 @@ namespace MyGameFrameWork
 
             Enity1.SetActive(false);
 
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,"∫‹“≈∫∂£¨ƒ˙ ß∞‹¡À£°");
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,"ƒ˙ ß∞‹¡À");
             //HPBarCanvas.
         }
 
