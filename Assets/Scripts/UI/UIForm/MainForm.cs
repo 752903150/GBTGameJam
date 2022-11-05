@@ -63,7 +63,7 @@ public partial class MainForm : UIForm
 
         m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
         m_txtHP.text = ((int)CurrPlayerHp).ToString();
-
+		m_scrollbarInjure.value = 1f;
     }
 
     void GameOver(IEventArgs eventArgs)

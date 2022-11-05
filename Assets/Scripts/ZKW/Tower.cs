@@ -46,7 +46,7 @@ public class Tower : MonoBehaviour
     {
         if (HpBar != null)
         {
-            HpBar.size = 1f;
+            HpBar.value = 1f;
             HpBarMove();
         }
             
