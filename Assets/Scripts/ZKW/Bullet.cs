@@ -94,13 +94,20 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void SetDirect(Vector3 Direct,PlayerMove pm)
+    public void SetDirect(Vector3 Direct,PlayerMove pm,float speed)
     {
         direct = Direct;
         direct.z = 0;
         direct = Vector3.Normalize(direct);
+        Debug.Log(direct);
+        if (direct == Vector3.zero)
+        {
+            direct.x = 1;
+            direct.y = -1;
+        }
         curr_time = 0f;
         this.pm = pm;
+        this.speed = speed;
     }
 
     void Back()

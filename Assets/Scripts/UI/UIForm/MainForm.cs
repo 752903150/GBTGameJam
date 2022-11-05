@@ -60,6 +60,11 @@ public partial class MainForm : UIForm
 		{
 			CurrPlayerHp = 0;
         }
+		if (CurrPlayerHp >= PlayerHp)
+		{
+			CurrPlayerHp = PlayerHp;
+
+        }
 
         m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
         m_txtHP.text = ((int)CurrPlayerHp).ToString();

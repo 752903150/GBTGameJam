@@ -18,16 +18,33 @@ public class Tower : MonoBehaviour
     private Scrollbar HpBar;
 
     public GameObject Canva;
+    int curr_level;
+
+    float curr_time;
+    float shot_time;
+
+    public PlayerMove pm;
+
+    float fire_distance;
+    float fire_distance_big;
     // Start is called before the first frame update
     void Start()
     {
         
         isDead = false;
         isGameOver = false;
+        curr_time = 0f;
+        shot_time = 1f;
+        fire_distance = 3.5f;
+        fire_distance_big = 5.5f;
     }
 
     public void init(ETurrutType eTurrutType,int level)
     {
+        curr_time = 0f;
+        shot_time = 1f;
+        fire_distance = 3.5f;
+        fire_distance_big = 5.5f;
         gameObject.SetActive(true);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver2);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOver2);
@@ -49,7 +66,13 @@ public class Tower : MonoBehaviour
             HpBar.value = 1f;
             HpBarMove();
         }
-            
+        curr_time += Time.deltaTime;
+        if (curr_time >= shot_time)
+        {
+            AutoInjure();
+            FireWork();
+            curr_time = 0;
+        }   
     }
 
     void CreateHPBar()
@@ -124,5 +147,79 @@ public class Tower : MonoBehaviour
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
+    }
+
+    void AutoInjure()
+    {
+        float DPS = TOOLS.GetTurrutConsumeSpeed(turrutType, (uint)curr_level);
+
+        CurrHp -= DPS;
+
+        HpBar.size = CurrHp / (float)MaxHP;
+        if (CurrHp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    void FireWork()
+    {
+        Vector3 d = pm.gameObject.transform.position-this.transform.position;
+        float distance = (d.x * d.x)+(d.y+d.y)+(d.z*d.z);
+        float DPS = TOOLS.GetTurrutConsumeSpeed(turrutType, (uint)curr_level);
+        
+        if (turrutType == ETurrutType.Center)
+        {
+            if(distance< fire_distance_big* fire_distance_big)
+            {
+                Debug.Log("func1");
+                float currPer = CurrHp / MaxHP;
+                float PlayerHpPer = pm.CurrPlayerHp / pm.PlayerHp;
+                if(currPer< PlayerHpPer&& pm.CurrPlayerHp-DPS>0f)
+                {
+                    CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
+                    pm.Injure(DPS);
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
+                }
+                else if(CurrHp-DPS > 0f)
+                {
+                    //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
+                    pm.Injure(-DPS);
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
+                    CurrHp -= DPS;
+
+                    HpBar.size = CurrHp / (float)MaxHP;
+                    if (CurrHp <= 0)
+                    {
+                        Dead();
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (distance < fire_distance * fire_distance)
+            {
+                Debug.Log("func2");
+                float currPer = CurrHp / MaxHP;
+                float PlayerHpPer = pm.CurrPlayerHp / pm.PlayerHp;
+                if (currPer < PlayerHpPer && pm.CurrPlayerHp - DPS > 0f)
+                {
+                    CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
+                    pm.Injure(DPS);
+                }
+                else if (CurrHp - DPS > 0f)
+                {
+                    pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp + DPS);
+                    CurrHp -= DPS;
+
+                    HpBar.size = CurrHp / (float)MaxHP;
+                    if (CurrHp <= 0)
+                    {
+                        Dead();
+                    }
+                }
+            }
+        }
     }
 }

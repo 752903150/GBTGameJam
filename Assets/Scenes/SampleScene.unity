@@ -237,6 +237,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3140917008955488769, guid: 80c83cda80747f5499652124fcb2f781, type: 3}
   m_PrefabInstance: {fileID: 1960804380}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &59865433 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3140917008955488773, guid: 80c83cda80747f5499652124fcb2f781, type: 3}
+  m_PrefabInstance: {fileID: 1960804380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59865431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96801539d77bc0a469c38213b05721f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &130839967
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +791,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3743707781055424300, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
+      propertyPath: pm
+      value: 
+      objectReference: {fileID: 59865433}
+    - target: {fileID: 3743707781055424300, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
       propertyPath: Canva
       value: 
       objectReference: {fileID: 45963096}
@@ -791,6 +806,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3743707781217250810, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
+      propertyPath: pm
+      value: 
+      objectReference: {fileID: 59865433}
     - target: {fileID: 3743707781217250810, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
       propertyPath: Canva
       value: 
@@ -812,9 +831,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3743707781545587109, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
+      propertyPath: pm
+      value: 
+      objectReference: {fileID: 59865433}
+    - target: {fileID: 3743707781545587109, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
       propertyPath: Canva
       value: 
       objectReference: {fileID: 45963096}
+    - target: {fileID: 3743707781675552676, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
+      propertyPath: pm
+      value: 
+      objectReference: {fileID: 59865433}
     - target: {fileID: 3743707781675552676, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
       propertyPath: Canva
       value: 
@@ -827,6 +854,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3743707781839883522, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
+      propertyPath: pm
+      value: 
+      objectReference: {fileID: 59865433}
     - target: {fileID: 3743707781839883522, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
       propertyPath: Canva
       value: 

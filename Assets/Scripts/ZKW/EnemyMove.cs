@@ -131,6 +131,7 @@ public class EnemyMove : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        transform.localEulerAngles = Vector3.zero;
         Tower1 = stower;
         BigTower2 = btower;
         Player = player;
@@ -296,8 +297,6 @@ public class EnemyMove : MonoBehaviour
 
     public void Injure(float DPS)
     {
-        Debug.Log(DPS);
-        Debug.Log(MaxHp);
         CurrHp-=DPS;
         if (CurrHp <= 0)
         {
@@ -317,6 +316,9 @@ public class EnemyMove : MonoBehaviour
 
     void Dead()
     {
+        Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
+        transform.DOLocalRotate(endv, 0.5f);
+        an.SetBool("isAttack", false);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         GetComponent<CircleCollider2D>().enabled = false;

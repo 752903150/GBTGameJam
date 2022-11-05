@@ -133,6 +133,7 @@ public class EnemyMove2 : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        transform.localEulerAngles = Vector3.zero;
         Debug.Log("INIT2");
         Tower1 = stower;
         BigTower2 = btower;
@@ -217,7 +218,6 @@ public class EnemyMove2 : MonoBehaviour
 
     void Move(Vector3 pos)
     {
-        Debug.Log("Move");
         if (isDead || isAttack)
         {
             return;
@@ -307,6 +307,31 @@ public class EnemyMove2 : MonoBehaviour
 
     void Dead()
     {
+        Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
+        transform.DOLocalRotate(endv, 0.5f);
+        an.SetBool("isAttack", false);
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+        isDead = true;
+        //GetComponent<CircleCollider2D>().enabled = false;
+        Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            if (!isGameOver)
+            {
+                Destroy(HpBar.gameObject);
+                Destroy(this.gameObject);
+                //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+                //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
+                //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
+                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(0));
+            }
+        })
+        .SetDelay(1f);
+    }
+
+    void DeadSelf()
+    {
+        an.SetBool("isAttack", false);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         //GetComponent<CircleCollider2D>().enabled = false;
@@ -412,7 +437,7 @@ public class EnemyMove2 : MonoBehaviour
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => {
             if(isBoom)
-                Dead();
+                DeadSelf();
             else
             {
                 isAttack = false;

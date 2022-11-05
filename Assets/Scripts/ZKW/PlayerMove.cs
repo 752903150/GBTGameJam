@@ -22,7 +22,6 @@ public class PlayerMove : MonoBehaviour
     int layermask;
 
     bool isDead;
-    bool isMove;
     public Animator animator;
     // Start is called before the first frame update
     void Start()
