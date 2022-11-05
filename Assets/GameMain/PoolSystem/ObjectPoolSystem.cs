@@ -24,6 +24,7 @@ namespace MyGameFrameWork
         static Dictionary<string, Queue<Texture>> TexturePool = new Dictionary<string, Queue<Texture>>();//Œ∆¿Ì≥ÿ
         public bool ReBackGameObjectPool(int id, GameObject obj)
         {
+            //Debug.Log("Back:"+ id.ToString());
             if (obj == null)
             {
                 return false;

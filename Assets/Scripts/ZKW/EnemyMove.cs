@@ -10,6 +10,7 @@ using static UnityEditor.PlayerSettings;
 
 public class EnemyMove : MonoBehaviour
 {
+    
     // Start is called before the first frame update
     public float speed = 20f;
     Transform ts;
@@ -32,11 +33,12 @@ public class EnemyMove : MonoBehaviour
 
     bool isDead;
     bool isAttack;
+    bool isGameOver;
 
     Vector2 rv2;
 
     int attack_mode;
-
+    
     void Start()
     {
         float rx = Random.Range(0, 1);
@@ -69,7 +71,7 @@ public class EnemyMove : MonoBehaviour
             new Vector2(-1,1)
         };
         layermask = (1 << 7) | (1 << 10);
-        CreateHPBar();
+        //CreateHPBar();
     }
 
     // Update is called once per frame
@@ -90,11 +92,14 @@ public class EnemyMove : MonoBehaviour
         Canva = canva;
         isDead = false;
         isAttack = false;
+        isGameOver = false;
         GetComponent<CircleCollider2D>().enabled = true;
         CreateHPBar();
         HpBar.size = 1f;
         MaxHp = 10;
         CurrHp = MaxHp;
+
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
     }
 
     void Attack(Vector3 pos)
@@ -106,10 +111,8 @@ public class EnemyMove : MonoBehaviour
         Vector3 direct = pos - this.transform.position;
         if (attack_distance * attack_distance > direct.z* direct.z+ direct.y* direct.y+ direct.x* direct.x)
         {
-            
             if (attack_mode == 3)
             {
-                Debug.Log("Attack3");
                 Attack(Player.gameObject);
             }
             else if(attack_mode == 2)
@@ -200,13 +203,17 @@ public class EnemyMove : MonoBehaviour
 
     void Dead()
     {
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         GetComponent<CircleCollider2D>().enabled = false;
         Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
-            ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
-            ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
+            if (!isGameOver)
+            {
+                ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+                ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
+            }
         })
         .SetDelay(1f);
     }
@@ -214,7 +221,7 @@ public class EnemyMove : MonoBehaviour
     void Attack(GameObject Player)
     {
         float DPS = TOOLS.GetMonsterDps(1, Player.GetComponent<PlayerMove>().CurrPlayerHp);
-        
+        //Debug.Log(DPS);
         isAttack = true;
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
@@ -228,5 +235,14 @@ public class EnemyMove : MonoBehaviour
         {
             isAttack = false;
         });
+
+    }
+
+    void GameOver(IEventArgs eventArgs)
+    {
+        isGameOver = true;
+        //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
+        ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+        ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
     }
 }

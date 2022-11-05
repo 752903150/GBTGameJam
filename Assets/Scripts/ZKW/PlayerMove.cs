@@ -18,9 +18,12 @@ public class PlayerMove : MonoBehaviour
 
     Vector2[] directs;
     int layermask;
+
+    bool isDead;
     // Start is called before the first frame update
     void Start()
     {
+        isDead = false;
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
         Player = GetComponent<Transform>();
@@ -34,6 +37,14 @@ public class PlayerMove : MonoBehaviour
             new Vector2(-1,0),
         };
         layermask = (1 << 7) | (1 << 10);
+    }
+
+    public void PlayerInit()
+    {
+        isDead = false;
+        transform.localPosition = new Vector3(2.22f, 0, 0);
+        PlayerHp = TOOLS.GetPlayerMaxHp();
+        CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
     }
 
     // Update is called once per frame
@@ -107,9 +118,12 @@ public class PlayerMove : MonoBehaviour
     public void Injure(float DPS)
     {
         CurrPlayerHp -= DPS;
-        
-        if (CurrPlayerHp == 0)
+        //Debug.Log(CurrPlayerHp);
+        if (CurrPlayerHp <= 0 && !isDead)
         {
+            CurrPlayerHp = 0;
+            isDead = true;
+            Debug.Log("Dead");
             EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());
         }
     }

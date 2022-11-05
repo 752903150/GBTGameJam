@@ -11,6 +11,7 @@ public partial class MainForm : UIForm
     float PlayerHp;
     float CurrPlayerHp;
 
+
     public override void Awake()
 	{
 		base.Awake();
@@ -51,8 +52,15 @@ public partial class MainForm : UIForm
 	{
 		PlayerInjureEventArgs playerInjureEventArgs = eventArgs as PlayerInjureEventArgs;
 
-        m_scrollbarInjure.size = playerInjureEventArgs.DPS / PlayerHp;
-        m_txtHP.text = ((int)playerInjureEventArgs.DPS).ToString();
+		CurrPlayerHp -= playerInjureEventArgs.DPS;
+
+		if (CurrPlayerHp <= 0)
+		{
+			CurrPlayerHp = 0;
+        }
+
+        m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
+        m_txtHP.text = ((int)CurrPlayerHp).ToString();
 
     }
 

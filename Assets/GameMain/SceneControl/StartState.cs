@@ -38,7 +38,8 @@ namespace MyGameFrameWork
 
         private void OnStartGame(IEventArgs eventArgs)//游戏开始
         {
-            m_Contorller.SetState("MainState", null);
+            m_Contorller.SetState("MenuState", null);
+
         }
 
         private void OnDevelopers(IEventArgs eventArgs)//开发者界面
