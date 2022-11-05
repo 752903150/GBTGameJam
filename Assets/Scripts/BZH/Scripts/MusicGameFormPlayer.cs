@@ -12,6 +12,7 @@ public class MusicGameFormPlayer : MonoBehaviour
 
 	private AudioSource source;
 
+	[SerializeField]
 	private AudioSource backupSource;
 
 	private Timer timer;
@@ -102,12 +103,23 @@ public class MusicGameFormPlayer : MonoBehaviour
     {
 	    var sources = GetComponents<AudioSource>();
 	    source = sources[0];
-	    backupSource = sources[1];
+
+	    if (playOnStart)
+	    {
+		    Invoke("Play", 2.0f);
+	    }
+
+	    //Debug.Log(durationPerBeat);
+	    
     }
 
     // Update is called once per frame
     void Update()
     {
+	    if (Mathf.Round(Beat) == 5)
+	    {
+		    Debug.LogWarning("5Beat");
+	    }
 	    //Displayer.text = $"{Beat}\n{Section}\n{Section * molecule}\n{BeatInSection}";
     }
 
@@ -142,6 +154,8 @@ public class MusicGameFormPlayer : MonoBehaviour
     public void Play()
     {
 	    Debug.LogWarning("Play");
+	    source.time = 0.0f;
+	    source.volume = 1.0f;
 	    source.clip = realClip;
 	    if (playDelay > 0.0f)
 	    {
@@ -152,6 +166,8 @@ public class MusicGameFormPlayer : MonoBehaviour
 	    {
 		    source.PlayDelayed(PlayDelayInSeconds);
 	    }
+	    
+	    TimerManager.GetTimerManager().SetTimer(() => Debug.LogWarning(Mathf.Round(Beat)), durationPerBeat, durationPerBeat);
 	    
 	    //TimerManager.GetTimerManager().SetTimer(AddBomb, 0.0f, addEvent.BeginTime, 1L);
 	    //TimerManager.GetTimerManager().SetTimer(AddBeat, durationPerBeat, 0.0f, 32L);
