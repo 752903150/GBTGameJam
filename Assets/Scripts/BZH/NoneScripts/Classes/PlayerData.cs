@@ -83,16 +83,17 @@ public class PlayerData
 		if (currHp <= 0.0f) return 0.0f;
 		
 		float actuallyCaused = dmg * (1.0f - currDefense);
-		//Debug.LogError(actuallyCaused);
+		Debug.LogError(actuallyCaused);
 		if (GetHpState(currHp) == EPlayerHpState.Overheating)
 		{
 			var data = Data_Empyrean.GetDefaultObject();
 			actuallyCaused *=
 				Random.Range(data.MinDamageIncreaseWhenOverheating, data.MaxDamageIncreaseWhenOverheating);
 		}
-		//Debug.LogError(actuallyCaused);
+		Debug.LogError(actuallyCaused);
 		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
-		//Debug.LogError(actuallyCaused);
+		Debug.LogError(actuallyCaused);
 		return actuallyCaused;
+		
 	}
 }

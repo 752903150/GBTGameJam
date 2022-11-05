@@ -57,12 +57,39 @@ public static class TOOLS
 		    .ApplyDamage(originalDamage * (1.0f + SkillAdditionSystem.Instance.DamageIncrease), monsterCurrHp, monsterCurrDefense);
     }
 
+    [Obsolete("此接口已废弃，请使用GetMonsterToPlayerDps和GetMonsterToTurrutDps")]
     public static float GetMonsterDps(uint monsterId, float playerCurrHp)//Take damage from monsters
     {
 	    MonsterData monsterData = GetMonsterDataById(monsterId);
 
 	    return playerData.ApplyDamage(monsterData.Damage, playerCurrHp,
 		    playerData.InitialDefense + SkillAdditionSystem.Instance.DefenseIncrease, monsterData);
+    }
+
+    public static float GetMonsterToPlayerDps(uint monsterId, float playerCurrHp)
+    {
+	    MonsterData monsterData = GetMonsterDataById(monsterId);
+
+	    return playerData.ApplyDamage(monsterData.Damage, playerCurrHp,
+		    playerData.InitialDefense + SkillAdditionSystem.Instance.DefenseIncrease, monsterData);
+    }
+
+    public static float GetMonsterToTurrutDps(uint monsterId, float turrutCurrHp)
+    {
+	    if (turrutCurrHp <= 0.0f)
+	    {
+		    return 0.0f;
+	    }
+	    
+	    MonsterData monsterData = GetMonsterDataById(monsterId);
+	    float dmg = monsterData.Damage;
+	    if (monsterId == 3u)
+	    {
+		    dmg *= 2.0f;
+	    }
+
+	    float actuallyCaused = Mathf.Clamp(dmg, 0.0f, turrutCurrHp);
+	    return actuallyCaused;
     }
 
     public static float GetPlayerMaxHp()//Gain player health
