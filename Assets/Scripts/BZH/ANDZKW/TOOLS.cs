@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DataCs;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
+using Random = UnityEngine.Random;
 
 
 public static class TOOLS
@@ -121,6 +122,9 @@ public static class TOOLS
     {
 	    uint total = GenerateMonsterCount(waveIndex);
 	    uint m1Count = 0u, m2Count = 0u, m3Count = 0u;
+	    m3Count = (uint)Random.Range(0.0f, 0.2f * total);
+	    m2Count = (uint)Random.Range(0.1f * total, 4.5f);
+	    m1Count = total - m2Count - m3Count;
 	    MonsterWave wave = new MonsterWave(new MonsterConfig(1u, m1Count), new MonsterConfig(2u, m2Count),
 		    new MonsterConfig(3u, m3Count));
 	    return wave.AllMonsters;

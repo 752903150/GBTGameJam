@@ -6,163 +6,163 @@ using UnityEngine.Events;
 namespace MyGameFrameWork
 {
     /// <summary>
-    /// ÊÂ¼ş¹ÜÀíÏµÍ³
+    /// äº‹ä»¶ç®¡ç†ç³»ç»Ÿ
     /// </summary>
     public class EventManagerSystem
     {
-        static Dictionary<string, IEventInfo> UnityActionDic = new Dictionary<string, IEventInfo>();//ÊÂ¼ş×¢²á×Öµä
+        static Dictionary<string, IEventInfo> UnityActionDic = new Dictionary<string, IEventInfo>();//äº‹ä»¶æ³¨å†Œå­—å…¸
         private EventManagerSystem() { }
-        //µ¥ÀıÄ£Ê½
+        //å•ä¾‹æ¨¡å¼
         private static EventManagerSystem instance = new EventManagerSystem();
         public static EventManagerSystem Instance
         {
             get { return instance; }
         }
         /// <summary>
-        /// ÎŞ²Î×¢²á·½·¨
+        /// æ— å‚æ³¨å†Œæ–¹æ³•
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Add(string EventName, UnityAction Action)
         {
-            //Debug.Log(EventName+" Ìí¼Ó³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName+" æ·»åŠ æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo).action += Action;
             }
-            else//Ã»ÓĞ°üº¬ÔòĞèÒª×¢²á
+            else//æ²¡æœ‰åŒ…å«åˆ™éœ€è¦æ³¨å†Œ
             {
                 UnityActionDic.Add(EventName, new EventInfo(Action));
             }
         }
         /// <summary>
-        /// ÎŞ²ÎÈ¡Ïû×¢²áº¯Êı
+        /// æ— å‚å–æ¶ˆæ³¨å†Œå‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Delete(string EventName, UnityAction Action)
         {
-            //Debug.Log(EventName + " É¾³ı³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " åˆ é™¤æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo).action -= Action;
             }
         }
         /// <summary>
-        /// ÎŞ²Î´¥·¢º¯Êı
+        /// æ— å‚è§¦å‘å‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         public void Invoke(string EventName)
         {
-            //Debug.Log(EventName + " µ÷ÓÃ³É¹¦!");
+            //Debug.Log(EventName + " è°ƒç”¨æˆåŠŸ!");
 
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
-                (UnityActionDic[EventName] as EventInfo).action.Invoke();//µ÷ÓÃ
+                (UnityActionDic[EventName] as EventInfo).action.Invoke();//è°ƒç”¨
             }
         }
         /// <summary>
-        /// Ò»²Î×¢²á·½·¨
+        /// ä¸€å‚æ³¨å†Œæ–¹æ³•
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Add<T>(string EventName, UnityAction<T> Action)
         {
-            //Debug.Log(EventName + " Ìí¼Ó³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " æ·»åŠ æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<T>).action += Action;
             }
-            else//Ã»ÓĞ°üº¬ÔòĞèÒª×¢²á
+            else//æ²¡æœ‰åŒ…å«åˆ™éœ€è¦æ³¨å†Œ
             {
                 UnityActionDic.Add(EventName, new EventInfo<T>(Action));
             }
         }
         /// <summary>
-        /// Ò»²ÎÈ¡Ïû×¢²áº¯Êı
+        /// ä¸€å‚å–æ¶ˆæ³¨å†Œå‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Delete<T>(string EventName, UnityAction<T> Action)
         {
-            //Debug.Log(EventName + " É¾³ı³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " åˆ é™¤æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<T>).action -= Action;
             }
         }
         /// <summary>
-        /// Ò»²Î´¥·¢º¯Êı
+        /// ä¸€å‚è§¦å‘å‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         public void Invoke<T>(string EventName, T val)
         {
-            //Debug.Log(EventName + " µ÷ÓÃ³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " è°ƒç”¨æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
-                (UnityActionDic[EventName] as EventInfo<T>).action.Invoke(val);//µ÷ÓÃ
+                (UnityActionDic[EventName] as EventInfo<T>).action.Invoke(val);//è°ƒç”¨
             }
         }
         /// <summary>
-        /// ¶ş²Î×¢²á·½·¨
+        /// äºŒå‚æ³¨å†Œæ–¹æ³•
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Add<T1, T2>(string EventName, UnityAction<T1, T2> Action)
         {
-            //Debug.Log(EventName + " Ìí¼Ó³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " æ·»åŠ æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<T1, T2>).action += Action;
             }
-            else//Ã»ÓĞ°üº¬ÔòĞèÒª×¢²á
+            else//æ²¡æœ‰åŒ…å«åˆ™éœ€è¦æ³¨å†Œ
             {
                 UnityActionDic.Add(EventName, new EventInfo<T1, T2>(Action));
             }
         }
         /// <summary>
-        /// ¶ş²ÎÈ¡Ïû×¢²áº¯Êı
+        /// äºŒå‚å–æ¶ˆæ³¨å†Œå‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Delete<T1, T2>(string EventName, UnityAction<T1, T2> Action)
         {
-            //Debug.Log(EventName + " É¾³ı³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " åˆ é™¤æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<T1, T2>).action -= Action;
             }
         }
         /// <summary>
-        /// ¶ş²Î´¥·¢º¯Êı
+        /// äºŒå‚è§¦å‘å‡½æ•°
         /// </summary>
         /// <param name="EventName"></param>
         public void Invoke<T1, T2>(string EventName, T1 val1, T2 val2)
         {
-            //Debug.Log(EventName + " µ÷ÓÃ³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " è°ƒç”¨æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
-                (UnityActionDic[EventName] as EventInfo<T1, T2>).action.Invoke(val1, val2);//µ÷ÓÃ
+                (UnityActionDic[EventName] as EventInfo<T1, T2>).action.Invoke(val1, val2);//è°ƒç”¨
             }
             else
             {
-                Debug.Log("Ã»ÓĞ" + EventName + "Õâ¸öÊÂ¼ş");
+                Debug.Log("æ²¡æœ‰" + EventName + "è¿™ä¸ªäº‹ä»¶");
             }
         }
 
         /// <summary>
-        /// Ö§³ÖÈÎÒâĞÎÊ½ÈÎÒâ¸öÊıµÄ²ÎÊı
+        /// æ”¯æŒä»»æ„å½¢å¼ä»»æ„ä¸ªæ•°çš„å‚æ•°
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Add2(string EventName, UnityAction<IEventArgs> Action)
         {
-            //Debug.Log(EventName + " Ìí¼Ó³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " æ·»åŠ æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<IEventArgs>).action += Action;
             }
-            else//Ã»ÓĞ°üº¬ÔòĞèÒª×¢²á
+            else//æ²¡æœ‰åŒ…å«åˆ™éœ€è¦æ³¨å†Œ
             {
                 UnityActionDic.Add(EventName, new EventInfo<IEventArgs>(Action));
             }
@@ -170,35 +170,35 @@ namespace MyGameFrameWork
 
 
         /// <summary>
-        /// ÈÎÒâ²ÎÊıÉ¾³ı
+        /// ä»»æ„å‚æ•°åˆ é™¤
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="Action"></param>
         public void Delete2(string EventName, UnityAction<IEventArgs> Action)
         {
-            //Debug.Log(EventName + " É¾³ı³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " åˆ é™¤æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
                 (UnityActionDic[EventName] as EventInfo<IEventArgs>).action -= Action;
             }
         }
 
         /// <summary>
-        /// ÈÎÒâ²ÎÊıµ÷ÓÃ
+        /// ä»»æ„å‚æ•°è°ƒç”¨
         /// </summary>
         /// <param name="EventName"></param>
         /// <param name="val"></param>
         public void Invoke2(string EventName, IEventArgs val)
         {
-            //Debug.Log(EventName + " µ÷ÓÃ³É¹¦!");
-            if (UnityActionDic.ContainsKey(EventName))//±íÊ¾ÒÑ¾­°üº¬¸ÃÊÂ¼ş
+            //Debug.Log(EventName + " è°ƒç”¨æˆåŠŸ!");
+            if (UnityActionDic.ContainsKey(EventName))//è¡¨ç¤ºå·²ç»åŒ…å«è¯¥äº‹ä»¶
             {
-                (UnityActionDic[EventName] as EventInfo<IEventArgs>).action.Invoke(val);//µ÷ÓÃ
+                (UnityActionDic[EventName] as EventInfo<IEventArgs>).action.Invoke(val);//è°ƒç”¨
             }
         }
 
         /// <summary>
-        /// Çå¿ÕÕû¸ö×¢²á±í
+        /// æ¸…ç©ºæ•´ä¸ªæ³¨å†Œè¡¨
         /// </summary>
         public void Clean()
         {

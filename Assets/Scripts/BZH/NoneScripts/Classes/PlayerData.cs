@@ -80,15 +80,19 @@ public class PlayerData
 	/// <returns>实际应造成的伤害</returns>
 	public float ApplyDamage(float dmg, float currHp, float currDefense, MonsterData damageTaker)
 	{
+		if (currHp <= 0.0f) return 0.0f;
+		
 		float actuallyCaused = dmg * (1.0f - currDefense);
+		//Debug.LogError(actuallyCaused);
 		if (GetHpState(currHp) == PlayerHpState.Overheating)
 		{
 			var data = Data_Empyrean.GetDefaultObject();
 			actuallyCaused *=
 				Random.Range(data.MinDamageIncreaseWhenOverheating, data.MaxDamageIncreaseWhenOverheating);
 		}
-    
-		actuallyCaused = Mathf.Clamp(actuallyCaused, currHp, 9999.0f);
+		//Debug.LogError(actuallyCaused);
+		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
+		//Debug.LogError(actuallyCaused);
 		return actuallyCaused;
 	}
 }

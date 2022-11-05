@@ -13,7 +13,7 @@ namespace MyGameFrameWork
             get { return m_StateName; }
             set { m_StateName = value; }
         }
-        protected SceneStateC m_Contorller = null;//×´Ì¬¿ØÖÆÆ÷
+        protected SceneStateC m_Contorller = null;//çŠ¶æ€æ§åˆ¶å™¨
 
         public ISceneState() { }
 
