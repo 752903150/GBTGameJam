@@ -31,6 +31,8 @@ public static class TOOLS
 	{
 		return monsterIdMap[id];
 	}
+
+	public static float GetPlayerInitialHp() => PlayerData.GetDefaultObject().InitialHp;
 	
     public static float GetPlayerDps(PlayerHpState stateWhenFire, uint monsterId, float monsterCurrHp, float monsterCurrDefense)//Attack monster damage
     {
@@ -79,7 +81,7 @@ public static class TOOLS
         };
     }
 
-    public static List<List<uint>> GetFirstMonsters()
+    public static List<List<uint>> GetFirstMonsters(uint level, uint waveCount)
     {
         List<List<uint>> monsters = new List<List<uint>>();
 
@@ -111,6 +113,8 @@ public static class TOOLS
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMB);
         list.Add(EMonster.EMC);*/
+        
+        
 
         return monsters;
     }

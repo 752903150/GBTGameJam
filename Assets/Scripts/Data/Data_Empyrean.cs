@@ -10,6 +10,8 @@ namespace DataCs
 
 		public MonsterData[] MonsterDatas;
 
+		public LevelMonsterWaves[] MonstersInLevels;
+
 		public static Data_Empyrean GetDefaultObject()
 		{
 			var result = new Data_Empyrean();
@@ -24,6 +26,38 @@ namespace DataCs
 				new MonsterData("寒冰射手", 100.0f, 5, 1, 0.0f, 55.0f),
 			};
 
+			result.MonstersInLevels = new LevelMonsterWaves[3];
+
+			result.MonstersInLevels[0] = new LevelMonsterWaves
+			(
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 2u)),
+				new MonsterWave(new MonsterConfig(1u, 2u))
+			);
+			
+			result.MonstersInLevels[1] = new LevelMonsterWaves
+			(
+				new MonsterWave(new MonsterConfig(2u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u))
+			);
+			
+			result.MonstersInLevels[2] = new LevelMonsterWaves
+			(
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u)),
+				new MonsterWave(new MonsterConfig(1u, 1u))
+			);
 
 			return result;
 		}
