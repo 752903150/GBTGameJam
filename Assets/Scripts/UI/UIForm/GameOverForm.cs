@@ -17,8 +17,12 @@ public partial class GameOverForm : UIForm
 	public override void OnOpen(System.Object obj)
 	{
 		base.OnOpen(obj);
-		RegisterEvent(); 
-	}
+		RegisterEvent();
+
+		string des = (string)obj;
+		m_txtDeadDic.text = des;
+
+    }
 
 	public override void OnClose()
 	{

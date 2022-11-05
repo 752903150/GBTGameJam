@@ -28,6 +28,8 @@ namespace MyGameFrameWork
 
             //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
+            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
+            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
             EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
             CreateMainUI();
         }
@@ -41,6 +43,10 @@ namespace MyGameFrameWork
         {
             /*EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);*/
+            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
+            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
+            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
+            EventManagerSystem.Instance.Delete2(Data_EventName.BackStartGame_str, OnBackStartGame);
         }
 
         void CreateMainUI()
@@ -50,7 +56,17 @@ namespace MyGameFrameWork
 
         void OpenLevel1(IEventArgs eventArgs)
         {
-            m_Contorller.SetState("MainState");
+            m_Contorller.SetState("MainState",0);
+        }
+
+        void OpenLevel2(IEventArgs eventArgs)
+        {
+            m_Contorller.SetState("MainState", 1);
+        }
+
+        void OpenLevel3(IEventArgs eventArgs)
+        {
+            m_Contorller.SetState("MainState", 2);
         }
 
         private void OnBackStartGame(IEventArgs eventArgs)

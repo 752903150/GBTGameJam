@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/5 11:02:50
+//CreateTime：2022/11/5 13:11:45
 namespace DataCs
 {
 	public static class Data_EventName
@@ -27,6 +27,8 @@ namespace DataCs
 		public static string OpenLevel3_str = "OpenLevel3";
 
 		public static string BackMenu_str = "BackMenu";
+
+		public static string GameOK_str = "GameOK";
 
 	}
 }

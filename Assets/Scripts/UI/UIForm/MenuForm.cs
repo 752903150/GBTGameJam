@@ -51,12 +51,12 @@ public partial class MenuForm : UIForm
 	}
 	private void OnBtnLevel2()
 	{
-        EventManagerSystem.Instance.Invoke2(Data_EventName.OpenLevel1_str, OpenLevel1EventArgs.Create());
+        EventManagerSystem.Instance.Invoke2(Data_EventName.OpenLevel2_str, OpenLevel2EventArgs.Create());
         UISystem.Instance.CloseUIForm(Data_UIFormID.key_MenuForm, this);
     }
 	private void OnBtnLevel3()
 	{
-        EventManagerSystem.Instance.Invoke2(Data_EventName.OpenLevel1_str, OpenLevel1EventArgs.Create());
+        EventManagerSystem.Instance.Invoke2(Data_EventName.OpenLevel3_str, OpenLevel3EventArgs.Create());
         UISystem.Instance.CloseUIForm(Data_UIFormID.key_MenuForm, this);
     }
 	private void OnBtnBack()

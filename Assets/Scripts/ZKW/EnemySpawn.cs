@@ -25,54 +25,22 @@ public class EnemySpawn : MonoBehaviour
     {
         spawn_time = 1f;
         curr_time = 1f;
-        queueMonsters = new Queue<int>();
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
     }
 
     public void SpawnPlanA()
     {
-        isDead = false;
-        queueMonsters.Enqueue(0);
-        queueMonsters.Enqueue(0);
-        queueMonsters.Enqueue(0);
-        queueMonsters.Enqueue(0);
-        queueMonsters.Enqueue(0);
-        /*seq = DOTween.Sequence();
-        seq.AppendInterval(1f);
-        seq.AppendCallback(() =>
-        {
-            if(!isDead)
-                CreateEnemyA();
-        });
-
-        seq.AppendInterval(1f);
-        seq.AppendCallback(() =>
-        {
-            if (!isDead)
-                CreateEnemyA();
-        });
-
-        seq.AppendInterval(1f);
-        seq.AppendCallback(() =>
-        {
-            if (!isDead)
-                CreateEnemyA();
-        });
-
-        seq.AppendInterval(1f);
-        seq.AppendCallback(() =>
-        {
-            if (!isDead)
-                CreateEnemyA();
-        });
-
-        seq.AppendInterval(1f);
-        seq.AppendCallback(() =>
-        {
-            if (!isDead)
-                CreateEnemyA();
-        });*/
     }
+
+    public void SpawnPlan(int id)
+    {
+        isDead = false;
+        if (queueMonsters == null)
+            queueMonsters = new Queue<int>();
+        queueMonsters.Enqueue(id);
+    }
+
+
     public void CreateEnemyA()
     {
         int id = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID;
@@ -98,10 +66,18 @@ public class EnemySpawn : MonoBehaviour
         if (curr_time >= spawn_time)
         {
             curr_time = 0f;
-            if (queueMonsters.Count != 0)
+            if (queueMonsters!=null && queueMonsters.Count != 0)
             {
                 int id = queueMonsters.Dequeue();
-                if (id == 0)
+                if (id == 1)
+                {
+                    CreateEnemyA();
+                }
+                if (id == 2)
+                {
+                    CreateEnemyA();
+                }
+                if (id == 3)
                 {
                     CreateEnemyA();
                 }
@@ -115,5 +91,9 @@ public class EnemySpawn : MonoBehaviour
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
         //DOTween.Kill(seq.id);
         isDead = true;
+        if (queueMonsters != null)
+        {
+            queueMonsters.Clear();
+        }
     }
 }

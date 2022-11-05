@@ -13,8 +13,22 @@ namespace MyGameFrameWork
 
         GameObject Enity1;
         GameObject Spawn1;
+        GameObject Spawn2;
+        GameObject Spawn3;
+        GameObject Spawn4;
+        GameObject Spawn5;
+        GameObject Spawn6;
         GameObject Player;
+
+        List<EnemySpawn> Spawns;
+
         GameObject HPBarCanvas;
+
+        int curr_wave;
+        int last_enemy;
+
+        int cuur_level;
+        int all_wave;
         public MainState(SceneStateC c) : base(c)
         {
             this.StateName = "MainState";
@@ -22,6 +36,12 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
+
+            curr_wave = 0;
+
+            cuur_level = (int)obj;
+            all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
+
             SkillAdditionSystem.CreateInstance(0,0,0);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
@@ -30,10 +50,25 @@ namespace MyGameFrameWork
             Enity1?.SetActive(true);
 
             Spawn1 = m_Contorller.GetData("Spawn1") as GameObject;
+            Spawn2 = m_Contorller.GetData("Spawn2") as GameObject;
+            Spawn3 = m_Contorller.GetData("Spawn3") as GameObject;
+            Spawn4 = m_Contorller.GetData("Spawn4") as GameObject;
+            Spawn5 = m_Contorller.GetData("Spawn5") as GameObject;
+            Spawn6 = m_Contorller.GetData("Spawn6") as GameObject;
+
+            Spawns = new List<EnemySpawn>();
+
+            Spawns.Add(Spawn1.GetComponent<EnemySpawn>());
+            Spawns.Add(Spawn2.GetComponent<EnemySpawn>());
+            Spawns.Add(Spawn3.GetComponent<EnemySpawn>());
+            Spawns.Add(Spawn4.GetComponent<EnemySpawn>());
+            Spawns.Add(Spawn5.GetComponent<EnemySpawn>());
+            Spawns.Add(Spawn6.GetComponent<EnemySpawn>());
+
             Player = m_Contorller.GetData("Player") as GameObject;
             HPBarCanvas = m_Contorller.GetData("HPBarCanvas") as GameObject;
 
-            Spawn1.GetComponent<EnemySpawn>().SpawnPlanA();
+            CreateEnemy();
             Player.GetComponent<PlayerMove>().PlayerInit();
 
             //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
@@ -72,20 +107,52 @@ namespace MyGameFrameWork
 
         }
 
+        void CreateEnemy()
+        {
+            List<uint> Monsters  = TOOLS.GetFirstMonsters((uint)cuur_level, (uint)curr_wave);
+            last_enemy = Monsters.Count;
+            for (int i = 0; i < Monsters.Count; i++)
+            {
+                Spawns[i % Spawns.Count].SpawnPlan((int)Monsters[i]);
+            }
+        }
+
         void GameOver(IEventArgs eventArgs)
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
 
             Enity1.SetActive(false);
 
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm);
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,"很遗憾，您失败了！");
             //HPBarCanvas.
+        }
+
+        void GameOverOK()
+        {
+            Enity1.SetActive(false);
+
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, "恭喜通过第"+(cuur_level+1).ToString()+"关！");
         }
 
         void KillMonster(IEventArgs eventArgs)
         {
             KillMonsterEventArgs killMonsterEventArgs = (KillMonsterEventArgs)eventArgs;
             int killWave = killMonsterEventArgs.Wave;
+            last_enemy--;
+            if (last_enemy == 0)
+            {
+                curr_wave++;
+                if(curr_wave< all_wave)
+                {
+                    CreateEnemy();
+                }
+                else
+                {
+                    GameOverOK();
+                    EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOK_str, GameOKEventArgs.Create(cuur_level));
+                }
+                
+            }
         }
 
         private void OnBackMenu(IEventArgs eventArgs)
