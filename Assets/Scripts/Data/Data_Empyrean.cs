@@ -12,6 +12,10 @@ namespace DataCs
 
 		public LevelMonsterWaves[] MonstersInLevels;
 
+		public TurrutData[] CenterTurrutDatas;
+
+		public TurrutData[] NormalTurrutDatas;
+
 		public static Data_Empyrean GetDefaultObject()
 		{
 			var result = new Data_Empyrean();
@@ -58,6 +62,50 @@ namespace DataCs
 				new MonsterWave(new MonsterConfig(1u, 4u), new MonsterConfig(3u, 2u)),
 				new MonsterWave(new MonsterConfig(1u, 5u), new MonsterConfig(2u, 1u), new MonsterConfig(3u, 1u))
 			);
+
+			result.CenterTurrutDatas = new TurrutData[3]
+			{
+				new TurrutData
+				(
+					2000.0f,
+					15.0f,
+					30.0f
+				),
+				new TurrutData
+				(
+					1200.0f,
+					15.0f,
+					25.0f
+				),
+				new TurrutData
+				(
+					1400.0f,
+					12.0f,
+					20.0f
+				),
+			};
+			
+			result.NormalTurrutDatas = new TurrutData[3]
+			{
+				new TurrutData
+				(
+					750.0f,
+					7.5f,
+					12.0f
+				),
+				new TurrutData
+				(
+					400.0f,
+					4.0f,
+					10.0f
+				),
+				new TurrutData
+				(
+					500.0f,
+					4.0f,
+					8.0f
+				),
+			};
 
 			return result;
 		}

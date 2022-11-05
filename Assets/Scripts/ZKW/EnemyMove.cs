@@ -165,7 +165,7 @@ public class EnemyMove : MonoBehaviour
     void HpBarMove()
     {
         var playerScreenPos = cam.WorldToScreenPoint(this.transform.position);
-        //ÔÙ°ÑÈËÎï×ø±êY¼ÓÒ»¸ö¸ß¶È¸øµ½ÈËÎï
+        //å†æŠŠäººç‰©åæ ‡YåŠ ä¸€ä¸ªé«˜åº¦ç»™åˆ°äººç‰©
         HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 70f, playerScreenPos.z);
 
     }

@@ -13,6 +13,7 @@ public static class TOOLS
 	private static Dictionary<uint, MonsterData> monsterIdMap;
 
 	private static Data_Empyrean empyreanData;
+	private static PlayerData playerData;
 
 	static TOOLS()
 	{
@@ -25,6 +26,7 @@ public static class TOOLS
 			{4u, data.MonsterDatas[3]},
 		};
 		empyreanData = Data_Empyrean.GetDefaultObject();
+		playerData = PlayerData.GetDefaultObject();
 	}
 
 	/// <summary>
@@ -37,17 +39,16 @@ public static class TOOLS
 		return monsterIdMap[id];
 	}
 
-	public static float GetPlayerInitialHp() => PlayerData.GetDefaultObject().InitialHp;
+	public static float GetPlayerInitialHp() => playerData.InitialHp;
 	
-    public static float GetPlayerDps(PlayerHpState stateWhenFire, uint monsterId, float monsterCurrHp, float monsterCurrDefense)//Attack monster damage
+    public static float GetPlayerDps(EPlayerHpState stateWhenFire, uint monsterId, float monsterCurrHp, float monsterCurrDefense)//Attack monster damage
     {
-	    PlayerData playerData = PlayerData.GetDefaultObject();
 	    float originalDamage = playerData.NormalDamage;
-	    if (stateWhenFire == PlayerHpState.Fever)
+	    if (stateWhenFire == EPlayerHpState.Fever)
 	    {
 		    originalDamage = playerData.FeverDamage;
 	    }
-	    else if (stateWhenFire == PlayerHpState.Overheating)
+	    else if (stateWhenFire == EPlayerHpState.Overheating)
 	    {
 		    originalDamage = playerData.OverheatingDamage;
 	    }
@@ -59,7 +60,6 @@ public static class TOOLS
     public static float GetMonsterDps(uint monsterId, float playerCurrHp)//Take damage from monsters
     {
 	    MonsterData monsterData = GetMonsterDataById(monsterId);
-	    PlayerData playerData = PlayerData.GetDefaultObject();
 
 	    return playerData.ApplyDamage(monsterData.Damage, playerCurrHp,
 		    playerData.InitialDefense + SkillAdditionSystem.Instance.DefenseIncrease, monsterData);
@@ -67,12 +67,56 @@ public static class TOOLS
 
     public static float GetPlayerMaxHp()//Gain player health
     {
-	    return PlayerData.GetDefaultObject().MaxHp;
+	    return playerData.MaxHp;
+    }
+
+    public static EPlayerHpState GetPlayerHpState(float playerCurrHp)
+    {
+	    return playerData.GetHpState(playerCurrHp);
     }
 
     public static int GetMonsterExp(uint monsterId)//Get Moster Exp
     {
 	    return GetMonsterDataById(monsterId).OfferedExp;
+    }
+
+    private static TurrutData GetTurrutData(ETurrutType turrutType, uint level)
+    {
+	    if (turrutType == ETurrutType.Center)
+	    {
+		    return empyreanData.CenterTurrutDatas[level];
+	    }
+
+	    return empyreanData.NormalTurrutDatas[level];
+    }
+
+    public static void GetTurrutHps(ETurrutType turrutType, uint level, out float maxHp, out float initialHp)
+    {
+	    TurrutData turrutData = GetTurrutData(turrutType, level);
+	    maxHp = turrutData.MaxHp;
+	    initialHp = turrutData.InitialHp;
+    }
+
+    /// <summary>
+    /// 获取塔耗血速度
+    /// </summary>
+    /// <param name="turrutType">塔类型：中心或普通型</param>
+    /// <param name="level">关卡序号，从0开始</param>
+    /// <returns></returns>
+    public static float GetTurrutConsumeSpeed(ETurrutType turrutType, uint level)
+    {
+	    return GetTurrutData(turrutType, level).ConsumeSpeed;
+    }
+    
+    /// <summary>
+    /// 获取塔热传递速度
+    /// </summary>
+    /// <param name="turrutType">塔类型：中心或普通型</param>
+    /// <param name="level">关卡序号，从0开始</param>
+    /// <returns></returns>
+    public static float GetTurrutConduceSpeed(ETurrutType turrutType, uint level)
+    {
+	    return GetTurrutData(turrutType, level).ConduceSpeed;
     }
 
     public static string[] GetDialoguefirstlevel()//Get the dialogue from the first level
