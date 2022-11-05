@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerMove : MonoBehaviour
 {
+    public EPlayerHpState playerState;
+
     Transform Player;
 
     public float PlayerHp;
@@ -26,6 +28,7 @@ public class PlayerMove : MonoBehaviour
         isDead = false;
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
+        playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
         Player = GetComponent<Transform>();
         speed = 5f;
         distance = 0.5f;
@@ -50,6 +53,7 @@ public class PlayerMove : MonoBehaviour
         transform.localPosition = new Vector3(2.22f, 0, 0);
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
+        playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
     }
 
     // Update is called once per frame
@@ -142,10 +146,12 @@ public class PlayerMove : MonoBehaviour
     public void Injure(float DPS)
     {
         CurrPlayerHp -= DPS;
+        playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
         //Debug.Log(CurrPlayerHp);
         if (CurrPlayerHp <= 0 && !isDead)
         {
             CurrPlayerHp = 0;
+            playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
             isDead = true;
             Debug.Log("Dead");
             EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());

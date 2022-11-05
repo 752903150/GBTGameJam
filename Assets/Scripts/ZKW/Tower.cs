@@ -23,11 +23,13 @@ public class Tower : MonoBehaviour
     {
         
         isDead = false;
-        EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
+        isGameOver = false;
     }
 
     public void init(ETurrutType eTurrutType,int level)
     {
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver2);
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOver2);
         turrutType = eTurrutType;
         cam = Camera.main;
         isGameOver = false;
@@ -63,6 +65,7 @@ public class Tower : MonoBehaviour
         temp.transform.SetParent(Canva.transform);
         HpBar = temp.GetComponent<Scrollbar>();
         HpBar.value = 1f;
+        HpBar.size = 1f;
     }
 
     void HpBarMove()
@@ -98,6 +101,8 @@ public class Tower : MonoBehaviour
         {
             isDead = true;
             this.gameObject.SetActive(false);
+            EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
+            EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
             ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
             if(turrutType == ETurrutType.Center)
             {
@@ -106,14 +111,12 @@ public class Tower : MonoBehaviour
         }
     }
 
-    void GameOver(IEventArgs eventArgs)
+    void GameOver2(IEventArgs eventArgs)
     {
-
-        if (!isGameOver)
-        {
-            isGameOver = true;
-            //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
-            ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
-        }
+        isGameOver = true;
+        //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
+        Destroy(HpBar.gameObject);
+        //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
     }
 }

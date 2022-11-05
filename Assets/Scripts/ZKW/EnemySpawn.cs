@@ -60,6 +60,25 @@ public class EnemySpawn : MonoBehaviour
         temp.GetComponent<EnemyMove>().init(smallTower,BigTower,Player, Canvas);
     }
 
+    public void CreateEnemyB()
+    {
+        int id = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyB].ID;
+        GameObject temp;
+        if (ObjectPoolSystem.Instance.TestGameObjectPool(id))
+        {
+            temp = ObjectPoolSystem.Instance.GetGameObjectFormPool(id);
+        }
+        else
+        {
+            string path = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyB].path;
+            temp = GameObject.Instantiate((GameObject)Resources.Load(path));
+        }
+        temp.SetActive(true);
+        temp.transform.SetParent(RootParent.transform);
+        temp.transform.localPosition = this.gameObject.transform.localPosition;
+        temp.GetComponent<EnemyMove2>().init(smallTower, BigTower, Player, Canvas);
+    }
+
     private void Update()
     {
         curr_time += Time.deltaTime;
@@ -75,7 +94,7 @@ public class EnemySpawn : MonoBehaviour
                 }
                 if (id == 2)
                 {
-                    CreateEnemyA();
+                    CreateEnemyB();
                 }
                 if (id == 3)
                 {

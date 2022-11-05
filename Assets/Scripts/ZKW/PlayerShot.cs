@@ -9,11 +9,14 @@ public class PlayerShot : MonoBehaviour
     public GameObject AllBullet;
     float curr_shot_time;
     public float shot_time;
+
+    PlayerMove pm;
     // Start is called before the first frame update
     void Start()
     {
         //shot_time = 1f;
         curr_shot_time = 1f;
+        pm = GetComponent<PlayerMove>();
     }
 
     // Update is called once per frame
@@ -27,7 +30,6 @@ public class PlayerShot : MonoBehaviour
                 Shot1();
                 curr_shot_time = 0f;
             }
-            
         }
     }
 
@@ -48,6 +50,6 @@ public class PlayerShot : MonoBehaviour
         temp.SetActive(true);
         temp.transform.SetParent(AllBullet.transform);
         temp.transform.localPosition = this.transform.localPosition;
-        temp.GetComponent<Bullet>().SetDirect(pos - this.transform.localPosition);
+        temp.GetComponent<Bullet>().SetDirect(pos - this.transform.localPosition, pm);
     }
 }

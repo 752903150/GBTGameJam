@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
+//CreateTime：2022/11/5 19:05:13
 namespace DataCs
 {
 	public struct Data_GameObjectID_Struct
@@ -30,6 +30,8 @@ namespace DataCs
 			{"Tower",new Data_GameObjectID_Struct("Tower",1005,"ZKW/Enity/Tower")},
 			{"Wall",new Data_GameObjectID_Struct("Wall",1006,"ZKW/Enity/Wall")},
 			{"EnemyAObj",new Data_GameObjectID_Struct("EnemyAObj",1007,"ZKW/Enity/EnemyAObj")},
+			{"EnemyB",new Data_GameObjectID_Struct("EnemyB",1008,"ZKW/Enity/EnemyB")},
+			{"EnemyC",new Data_GameObjectID_Struct("EnemyC",1009,"ZKW/Enity/EnemyC")},
 		};
 		public static string key_FireBullet = "FireBullet";
 		public static string key_HPBar = "HPBar";
@@ -39,6 +41,8 @@ namespace DataCs
 		public static string key_Tower = "Tower";
 		public static string key_Wall = "Wall";
 		public static string key_EnemyAObj = "EnemyAObj";
+		public static string key_EnemyB = "EnemyB";
+		public static string key_EnemyC = "EnemyC";
 	}
 }
 

@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
     float curr_time;
     int layermask;
     bool isDead;
+
+    PlayerMove pm;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +56,27 @@ public class Bullet : MonoBehaviour
                 if(hit.collider.tag == "Enemy" && !isDead)
                 {
                     isDead = true;
-                    hit.collider.gameObject.GetComponent<EnemyMove>().Injure();
+
+                    EnemyMove em = hit.collider.gameObject.GetComponent<EnemyMove>();
+                    if (em != null)
+                    {
+                        float DPS = TOOLS.GetPlayerDps(pm.playerState, 1, em.CurrHp, em.CurrDenfense);
+                        em.Injure(DPS);
+                    }
+                    else
+                    {
+                        EnemyMove2 em2 = hit.collider.gameObject.GetComponent<EnemyMove2>();
+                        if (em2 != null)
+                        {
+                            
+                            float DPS2 = TOOLS.GetPlayerDps(pm.playerState, 1, em2.CurrHp, em2.CurrDenfense);
+                            em2.Injure(DPS2);
+                        }
+                    }
+
+                    //hit.collider.gameObject.GetComponent<EnemyMove>()?.Injure();
+                    //hit.collider.gameObject.GetComponent<EnemyMove2>()?.Injure();
+                    //hit.collider.gameObject.GetComponent<EnemyMove>()?.Injure();
                 }
                 Back();
             }
@@ -62,12 +84,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void SetDirect(Vector3 Direct)
+    public void SetDirect(Vector3 Direct,PlayerMove pm)
     {
         direct = Direct;
         direct.z = 0;
         direct = Vector3.Normalize(direct);
         curr_time = 0f;
+        this.pm = pm;
     }
 
     void Back()

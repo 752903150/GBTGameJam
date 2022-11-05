@@ -138,15 +138,22 @@ namespace MyGameFrameWork
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
 
-            Enity1.SetActive(false);
-
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,"您失败了");
-            //HPBarCanvas.
+            
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(0.2f);
+            seq.AppendCallback(() => {
+                Enity1.SetActive(false);
+            });
         }
 
         void GameOverOK()
         {
-            Enity1.SetActive(false);
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(0.2f);
+            seq.AppendCallback(() => {
+                Enity1.SetActive(false);
+            });
 
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, "恭喜通过第"+(cuur_level+1).ToString()+"关！");
         }
