@@ -64,4 +64,9 @@ public class LevelMonsterWaves
 	{
 		get => monsterWaves[waveIndex].AllMonsters;
 	}
+
+	public static implicit operator int(LevelMonsterWaves waves)
+	{
+		return waves.WavesCount;
+	}
 }

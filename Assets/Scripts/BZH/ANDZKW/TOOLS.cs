@@ -130,6 +130,11 @@ public static class TOOLS
         };
     }
 
+    public static int GetMonsterWaves(uint level)
+    {
+	    return empyreanData.MonstersInLevels[level];
+    }
+
     public static List<uint> GetFirstMonsters(uint level, uint waveIndex)
     {
 	    if (level < 2u)
