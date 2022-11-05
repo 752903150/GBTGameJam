@@ -22,9 +22,12 @@ public class PlayerMove : MonoBehaviour
     int layermask;
 
     bool isDead;
+    bool isMove;
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         isDead = false;
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
@@ -65,6 +68,7 @@ public class PlayerMove : MonoBehaviour
         temp2.y = Player.localPosition.y;
         if (Input.GetKey(KeyCode.W))
         {
+            animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[0],Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[0], distance, layermask);
             if (!hit.collider)
@@ -80,6 +84,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
+            animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[3], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[3], distance, layermask);
             if (!hit.collider)
@@ -95,6 +100,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
+            animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[1], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[1], distance, layermask);
             if (!hit.collider)
@@ -110,6 +116,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
+            animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[2], Color.blue, distance);
             hit = Physics2D.Raycast(temp2, directs[2], distance, layermask);
             if (!hit.collider)
