@@ -211,23 +211,23 @@ public static class TOOLS
 	    System.Random rand = new System.Random();
 	    if (waveIndex < 15u)
 	    {
-		    return (uint)rand.Next(5, 8);
+		    return (uint)rand.Next(4, 6);
 	    }
 
 	    if (waveIndex < 25u)
 	    {
-		    return (uint)rand.Next(8, 12);
+		    return (uint)rand.Next(5, 8);
 	    }
 
-	    return (uint)rand.Next(9, 15);
+	    return (uint)rand.Next(7, 10);
     }
 
     private static List<uint> GenerateRandomMonsters(uint waveIndex)
     {
 	    uint total = GenerateMonsterCount(waveIndex);
 	    uint m1Count = 0u, m2Count = 0u, m3Count = 0u;
-	    m3Count = (uint)Random.Range(0.0f, 0.2f * total);
-	    m2Count = (uint)Random.Range(0.1f * total, 4.5f);
+	    m3Count = (uint)Random.Range(0.0f, 0.3f * total);
+	    m2Count = (uint)Random.Range(0.1f * total, 2.5f);
 	    m1Count = total - m2Count - m3Count;
 	    MonsterWave wave = new MonsterWave(new MonsterConfig(1u, m1Count), new MonsterConfig(2u, m2Count),
 		    new MonsterConfig(3u, m3Count));
