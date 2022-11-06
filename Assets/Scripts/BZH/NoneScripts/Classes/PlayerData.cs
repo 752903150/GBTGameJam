@@ -61,12 +61,13 @@ public class PlayerData
 	public EPlayerHpState GetHpState(float currHp)
 	{
 		float hpPercentage = currHp / MaxHp;
+		//Debug.Log(hpPercentage);
 		uint result = 0u;
 		float[] kvps = Data_Empyrean.GetDefaultObject().PlayerStateChangedKvps;
 		do
 		{
 			if (hpPercentage == 0.0f) break;
-			result <<= 1;
+			result = 1u;
 			if (hpPercentage < kvps[0]) break;
 			result <<= 1;
 			if (hpPercentage < kvps[1]) break;
@@ -75,7 +76,6 @@ public class PlayerData
 			result <<= 1;
     
 		} while (false);
-    
 		return (EPlayerHpState)result;
 	}
     
