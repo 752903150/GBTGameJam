@@ -194,8 +194,7 @@ namespace MyGameFrameWork
             {
                 curr_wave++;
                 
-                Debug.Log(curr_wave);
-                Debug.Log(all_wave);
+                
                 if (curr_wave< all_wave)
                 {
                     CreateEnemy();
@@ -248,6 +247,7 @@ namespace MyGameFrameWork
                 max_exp = TOOLS.GetRequiredExp(player_level);
             }
             m_Contorller.SetData("lastSkill", lastSkill + addSkill);
+            //Debug.Log(lastSkill + addSkill);
             lastSkill += addSkill;
         }
 
