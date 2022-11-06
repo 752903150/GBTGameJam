@@ -4,7 +4,6 @@ using UnityEngine;
 using DataCs;
 using MyGameFrameWork;
 using DG.Tweening;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerShot : MonoBehaviour
 {
