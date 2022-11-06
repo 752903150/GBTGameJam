@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +5,6 @@ using UnityEngine;
 using DataCs;
 using MyGameFrameWork;
 using DG.Tweening;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerShot : MonoBehaviour
 {
@@ -256,5 +254,3 @@ public class PlayerShot : MonoBehaviour
         curr_shot_time = 0.1f;
     }
 }
-
-#endif
