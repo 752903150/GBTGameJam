@@ -41,15 +41,15 @@ public class PlayerData
 	{
 		return new PlayerData
 		(
-			570.0f,
+			620.0f,
 			0.0f,
 			72.0f,
-			32.0f,
-			75.0f,
-			4.0f,
-			5.0f,
+			34.0f,
+			66.0f,
 			3.0f,
-			8.0f
+			4.0f,
+			2.0f,
+			6.0f
 		);
 	}
     
@@ -101,7 +101,7 @@ public class PlayerData
 		}
 		//Debug.LogWarning(actuallyCaused);
 		actuallyCaused = Mathf.Clamp(actuallyCaused, 0.0f, currHp);
-		//Debug.LogError(actuallyCaused);
+		Debug.LogError(actuallyCaused);
 		return actuallyCaused;
 		
 	}

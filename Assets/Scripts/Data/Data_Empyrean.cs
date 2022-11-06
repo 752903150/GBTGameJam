@@ -28,9 +28,9 @@ namespace DataCs
 			result.MaxDamageIncreaseWhenOverheating = 8.0f;
 			result.MonsterDatas = new[]
 			{
-				new MonsterData("近战法师", 220.0f, 5, 22.0f, 0.0f, 30.0f),
-				new MonsterData("自爆冰怪", 120.0f, 8, 12.0f, 0.0f, 75.0f),
-				new MonsterData("冰石巨兽", 400.0f, 12, 30.0f, 0.0f, 21.0f),
+				new MonsterData("近战法师", 210.0f, 5, 23.0f, 0.0f, 30.0f),
+				new MonsterData("自爆冰怪", 100.0f, 8, 18.0f, 0.0f, 69.0f),
+				new MonsterData("冰石巨兽", 400.0f, 12, 30.0f, 0.1f, 18.0f),
 				new MonsterData("寒冰射手", 100.0f, 5, 1, 0.0f, 55.0f),
 			};
 
@@ -71,21 +71,21 @@ namespace DataCs
 			{
 				new TurrutData
 				(
-					2000.0f,
-					15.0f,
-					30.0f
-				),
-				new TurrutData
-				(
-					1600.0f,
-					15.0f,
-					25.0f
+					2200.0f,
+					12.0f,
+					40.0f
 				),
 				new TurrutData
 				(
 					1400.0f,
 					12.0f,
-					20.0f
+					35.0f
+				),
+				new TurrutData
+				(
+					1600.0f,
+					9.0f,
+					30.0f
 				),
 			};
 			
@@ -94,20 +94,20 @@ namespace DataCs
 				new TurrutData
 				(
 					750.0f,
-					7.5f,
-					12.0f
+					5.0f,
+					20.0f
 				),
 				new TurrutData
 				(
-					400.0f,
-					4.0f,
-					10.0f
+					600.0f,
+					2.5f,
+					17.0f
 				),
 				new TurrutData
 				(
-					500.0f,
-					4.0f,
-					8.0f
+					870.0f,
+					2.5f,
+					15.0f
 				),
 			};
 
