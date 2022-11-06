@@ -5,6 +5,20 @@ using MyGameFrameWork;
 using UnityEngine.UI;
 using DataCs;
 
+
+public class MainFormStruct
+{
+	public float MaxTowerHp;
+	public int level;
+	public int curr_exp;
+	public MainFormStruct(float MaxTowerHp, int level, int curr_exp)
+	{
+		this.MaxTowerHp = MaxTowerHp;
+		this.level = level;
+		this.curr_exp = curr_exp;
+	}
+}
+
 //CreateTime：2022/11/5 9:14:01
 public partial class MainForm : UIForm
 {
@@ -19,6 +33,9 @@ public partial class MainForm : UIForm
 
 	float MaxTowerY;
 	float MinTowerY;
+
+	int level;
+	int curr_exp;
 
 
     public override void Awake()
@@ -39,8 +56,17 @@ public partial class MainForm : UIForm
         RegisterEvent();
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
-		MainTowerHp = (float)obj;
-		CurrMainTowerHp = MainTowerHp;
+		MainFormStruct temp = (MainFormStruct)obj;
+        MainTowerHp = temp.MaxTowerHp;
+		level = temp.level;
+		curr_exp = temp.curr_exp;
+        int max_exp = TOOLS.GetRequiredExp(level);
+
+        m_txtCurrExp.text = curr_exp.ToString() + "/" + max_exp.ToString();
+        m_txtCurrLevel.text = level.ToString();
+
+        CurrMainTowerHp = MainTowerHp;
+
 
 		//m_scrollbarInjure.value = 1f;
 		//m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
@@ -62,6 +88,7 @@ public partial class MainForm : UIForm
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOK);
 		EventManagerSystem.Instance.Add2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
+		EventManagerSystem.Instance.Add2(Data_EventName.AddExp_str, AddExp);
     }
 
 	private void ReleaseEvent()
@@ -70,6 +97,7 @@ public partial class MainForm : UIForm
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOK);
         EventManagerSystem.Instance.Delete2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
+        EventManagerSystem.Instance.Delete2(Data_EventName.AddExp_str, AddExp);
     }
 
 	void PlayerInjure(IEventArgs eventArgs)
@@ -93,6 +121,39 @@ public partial class MainForm : UIForm
         m_txtHP.text = ((int)CurrPlayerHp).ToString();
 		//m_scrollbarInjure.value = 1f;
     }
+
+	void AddExp(IEventArgs eventArgs)
+	{
+		AddExpEventArgs addExpEventArgs = eventArgs as AddExpEventArgs;
+		int exp = addExpEventArgs.exp;
+
+		int max_exp = TOOLS.GetRequiredExp(level);
+
+        if (exp + curr_exp >= max_exp)
+        {
+            level++;
+			curr_exp = exp + curr_exp - max_exp;
+
+        }
+		else
+		{
+			curr_exp += exp;
+
+        }
+
+        max_exp = TOOLS.GetRequiredExp(level);
+
+        while (curr_exp >= max_exp)
+		{
+			level++;
+			curr_exp -= max_exp;
+            max_exp = TOOLS.GetRequiredExp(level);
+        }
+
+		m_txtCurrExp.text = curr_exp.ToString() + "/" + max_exp.ToString();
+		m_txtCurrLevel.text = level.ToString();
+
+	}
 
 	void MainTowerInjure(IEventArgs eventArgs)
 	{

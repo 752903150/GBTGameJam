@@ -35,6 +35,11 @@ namespace MyGameFrameWork
 
         int cuur_level;
         int all_wave;
+
+        int player_level = 0;
+        int player_exp = 0;
+
+        PlayerMove pm;
         public MainState(SceneStateC c) : base(c)
         {
             this.StateName = "MainState";
@@ -65,6 +70,7 @@ namespace MyGameFrameWork
             Spawns.Add(Spawn5.GetComponent<EnemySpawn>());
             Spawns.Add(Spawn6.GetComponent<EnemySpawn>());
             Player = m_Contorller.GetData("Player") as GameObject;
+            pm = Player.GetComponent<PlayerMove>();
             HPBarCanvas = m_Contorller.GetData("HPBarCanvas") as GameObject;
 
             Tower1 = m_Contorller.GetData("Tower1") as GameObject;
@@ -73,6 +79,7 @@ namespace MyGameFrameWork
             Tower4 = m_Contorller.GetData("Tower4") as GameObject;
             Tower5 = m_Contorller.GetData("Tower5") as GameObject;
 
+            
             curr_wave = 0;
             cuur_level = (int)obj;
             all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
@@ -102,7 +109,7 @@ namespace MyGameFrameWork
             float MainTowerHp;
             float MainTowerHp2;
             TOOLS.GetTurrutHps(ETurrutType.Center, (uint)cuur_level, out MainTowerHp, out MainTowerHp2);
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm, MainTowerHp);
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm, new MainFormStruct(MainTowerHp, player_level, player_exp));
         }
 
         void CreatePlayer()
@@ -168,19 +175,25 @@ namespace MyGameFrameWork
             Enity1?.SetActive(true);
             CreateTower();
             CreateEnemy();
-            Player.GetComponent<PlayerMove>().PlayerInit();
+            pm.PlayerInit();
             CreateMainUI();
         }
 
         void KillMonster(IEventArgs eventArgs)
         {
+            
             KillMonsterEventArgs killMonsterEventArgs = (KillMonsterEventArgs)eventArgs;
             int killWave = killMonsterEventArgs.Wave;
             last_enemy--;
+            PlayerAddHp((uint)killWave);
+            PlayerAddExp((uint)killWave);
             if (last_enemy == 0)
             {
                 curr_wave++;
-                if(curr_wave< all_wave)
+                
+                Debug.Log(curr_wave);
+                Debug.Log(all_wave);
+                if (curr_wave< all_wave)
                 {
                     CreateEnemy();
                 }
@@ -191,6 +204,44 @@ namespace MyGameFrameWork
                 }
                 
             }
+        }
+
+        void PlayerAddHp(uint id)
+        {
+            float DPS = TOOLS.GetMonsterOfferedHp(id);
+            pm.Injure(-DPS);
+            EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
+
+        }
+
+        void PlayerAddExp(uint id)
+        {
+            int exp = TOOLS.GetMonsterExp(id);
+            EventManagerSystem.Instance.Invoke2(Data_EventName.AddExp_str, AddExpEventArgs.Create(exp));
+
+            int max_exp = TOOLS.GetRequiredExp(player_level);
+
+            if (exp + player_exp >= max_exp)
+            {
+                player_level++;
+                player_exp = exp + player_exp - max_exp;
+
+            }
+            else
+            {
+                player_exp += exp;
+
+            }
+
+            max_exp = TOOLS.GetRequiredExp(player_level);
+
+            while (player_exp >= max_exp)
+            {
+                player_level++;
+                player_exp -= max_exp;
+                max_exp = TOOLS.GetRequiredExp(player_level);
+            }
+
         }
 
         private void OnBackMenu(IEventArgs eventArgs)

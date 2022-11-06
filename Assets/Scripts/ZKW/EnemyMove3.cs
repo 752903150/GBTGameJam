@@ -235,9 +235,6 @@ public class EnemyMove3 : MonoBehaviour
         Vector3 direct5 = BigTower2.transform.localPosition - this.transform.position;
         Vector3 direct6 = Player.localPosition - this.transform.position;
 
-        Debug.Log(attack1);
-        Debug.Log(v3dis(direct1));
-
         if (attack1 > v3dis(direct1))
         {
             AttackTower(Tower1);
@@ -394,7 +391,7 @@ public class EnemyMove3 : MonoBehaviour
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
-                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(0));
+                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(3));
             }
         })
         .SetDelay(1f);

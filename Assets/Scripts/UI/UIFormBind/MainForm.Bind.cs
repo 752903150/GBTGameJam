@@ -4,7 +4,7 @@ using UnityEngine;
 using MyGameFrameWork;
 using UnityEngine.UI;
 
-//CreateTime：2022/11/6 7:49:14
+//CreateTime：2022/11/6 8:46:34
 public partial class MainForm
 {
 	private AutoBind autoBind;
@@ -16,6 +16,10 @@ public partial class MainForm
 	private Image m_imgSubImg;
 	private Image m_imgTowerHp;
 	private Image m_imgTowerSubImg;
+	private Text m_txtCurrLevelDes;
+	private Text m_txtCurrLevel;
+	private Text m_txtCurrExpDes;
+	private Text m_txtCurrExp;
 
 	private void InitComponent()
 	{
@@ -28,6 +32,10 @@ public partial class MainForm
 		m_imgSubImg = autoBind.itemList[5].obj.GetComponent<Image>();
 		m_imgTowerHp = autoBind.itemList[6].obj.GetComponent<Image>();
 		m_imgTowerSubImg = autoBind.itemList[7].obj.GetComponent<Image>();
+		m_txtCurrLevelDes = autoBind.itemList[8].obj.GetComponent<Text>();
+		m_txtCurrLevel = autoBind.itemList[9].obj.GetComponent<Text>();
+		m_txtCurrExpDes = autoBind.itemList[10].obj.GetComponent<Text>();
+		m_txtCurrExp = autoBind.itemList[11].obj.GetComponent<Text>();
 	}
 }
 
