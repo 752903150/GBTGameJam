@@ -118,9 +118,9 @@ public class Tower : MonoBehaviour
         var playerScreenPos = cam.WorldToScreenPoint(this.transform.position);
         //再把人物坐标Y加一个高度给到人物
         if(turrutType==ETurrutType.Normal)
-            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 130f, playerScreenPos.z);
+            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 90f, playerScreenPos.z);
         else
-            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 130f, playerScreenPos.z);
+            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 90f, playerScreenPos.z);
     }
 
     public void Injure(int monsterID)
@@ -236,7 +236,7 @@ public class Tower : MonoBehaviour
     {
         Vector3 d = pm.gameObject.transform.position-this.transform.position;
         float distance = (d.x * d.x)+(d.y+d.y)+(d.z*d.z);
-        float DPS = TOOLS.GetTurrutConsumeSpeed(turrutType, (uint)curr_level);
+        float DPS = TOOLS.GetTurrutConduceSpeed(turrutType, (uint)curr_level);
         
         if (turrutType == ETurrutType.Center)
         {

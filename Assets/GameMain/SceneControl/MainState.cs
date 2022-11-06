@@ -163,8 +163,12 @@ namespace MyGameFrameWork
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
             Debug.Log("GameOver");
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,new GameOverStruct("您失败了",true,cuur_level));
+            //UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,new GameOverStruct("您失败了",true,cuur_level));
             Enity1.SetActive(false);
+            if (cuur_level == 2)
+            {
+                m_Contorller.SetState("AllGameOverState", null);
+            }
             /*Sequence seq = DOTween.Sequence();
             seq.AppendInterval(0.1f);
             seq.AppendCallback(() => {
@@ -181,12 +185,7 @@ namespace MyGameFrameWork
                 Enity1.SetActive(false);
             });*/
             Enity1.SetActive(false);
-            if (cuur_level == 2)
-            {
-                m_Contorller.SetState("AllGameOverState", null);
-            }
-            //UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, new GameOverStruct("恭喜通过第" + (cuur_level + 1).ToString() + "关", false,cuur_level));
-            
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, new GameOverStruct("恭喜通过第" + (cuur_level + 1).ToString() + "关", false, cuur_level));
         }
 
         void OnNextLevel(IEventArgs eventArgs)
