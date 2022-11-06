@@ -42,16 +42,14 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-            curr_wave = 0;
-
-            cuur_level = (int)obj;
-            all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
+           
             SkillAdditionSystem.CreateInstance(0,0,0);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
             EventManagerSystem.Instance.Add2(Data_EventName.BackMenu_str, OnBackMenu);
+            EventManagerSystem.Instance.Add2(Data_EventName.NextLevel_str, OnNextLevel);
             Enity1 = m_Contorller.GetData("Enity1") as GameObject;
-            Enity1?.SetActive(true);
+            
             Spawn1 = m_Contorller.GetData("Spawn1") as GameObject;
             Spawn2 = m_Contorller.GetData("Spawn2") as GameObject;
             Spawn3 = m_Contorller.GetData("Spawn3") as GameObject;
@@ -74,10 +72,14 @@ namespace MyGameFrameWork
             Tower3 = m_Contorller.GetData("Tower3") as GameObject;
             Tower4 = m_Contorller.GetData("Tower4") as GameObject;
             Tower5 = m_Contorller.GetData("Tower5") as GameObject;
+
+            curr_wave = 0;
+            cuur_level = (int)obj;
+            all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
+            Enity1?.SetActive(true);
             CreateTower();
             CreateEnemy();
             Player.GetComponent<PlayerMove>().PlayerInit();
-            //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
             CreateMainUI();
         }
 
@@ -91,12 +93,16 @@ namespace MyGameFrameWork
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
             EventManagerSystem.Instance.Delete2(Data_EventName.BackMenu_str, OnBackMenu);
+            EventManagerSystem.Instance.Delete2(Data_EventName.NextLevel_str, OnNextLevel);
             Spawns.Clear();
         }
 
         void CreateMainUI()
         {
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm);
+            float MainTowerHp;
+            float MainTowerHp2;
+            TOOLS.GetTurrutHps(ETurrutType.Center, (uint)cuur_level, out MainTowerHp, out MainTowerHp2);
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm, MainTowerHp);
         }
 
         void CreatePlayer()
@@ -132,7 +138,7 @@ namespace MyGameFrameWork
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
 
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,"您失败了");
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,new GameOverStruct("您失败了",true,cuur_level));
             
             Sequence seq = DOTween.Sequence();
             seq.AppendInterval(0.2f);
@@ -149,7 +155,21 @@ namespace MyGameFrameWork
                 Enity1.SetActive(false);
             });
 
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, "恭喜通过第"+(cuur_level+1).ToString()+"关！");
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, new GameOverStruct("恭喜通过第" + (cuur_level + 1).ToString() + "关", false,cuur_level));
+        }
+
+        void OnNextLevel(IEventArgs eventArgs)
+        {
+            NextLevelEventArgs nextLevelEventArgs = (NextLevelEventArgs)eventArgs;
+            int level = nextLevelEventArgs.Level;
+            curr_wave = 0;
+            cuur_level = level;
+            all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
+            Enity1?.SetActive(true);
+            CreateTower();
+            CreateEnemy();
+            Player.GetComponent<PlayerMove>().PlayerInit();
+            CreateMainUI();
         }
 
         void KillMonster(IEventArgs eventArgs)

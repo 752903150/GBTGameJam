@@ -15,7 +15,7 @@ public class Tower : MonoBehaviour
     public float CurrHp;
 
     private Camera cam;
-    private Scrollbar HpBar;
+    private TowerHpBar HpBar;
 
     public GameObject Canva;
     int curr_level;
@@ -53,21 +53,28 @@ public class Tower : MonoBehaviour
         isGameOver = false;
         isDead = false;
         TOOLS.GetTurrutHps(eTurrutType, (uint)level, out MaxHP, out CurrHp);//»ñÈ¡ÑªÁ¿
-        CreateHPBar();
-        HpBarMove();
 
+        if (turrutType != ETurrutType.Center)
+        {
+            CreateHPBar();
+            HpBarMove();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (HpBar != null)
+        if(turrutType != ETurrutType.Center)
         {
-            HpBar.value = 1f;
-            HpBarMove();
+            if (HpBar != null)
+            {
+                //HpBar.SetHp(1f);// = 1f;
+                HpBarMove();
+            }
         }
+        
         curr_time += Time.deltaTime;
-        if (curr_time >= shot_time)
+        if (curr_time >= shot_time &&!isGameOver)
         {
             AutoInjure();
             FireWork();
@@ -91,9 +98,9 @@ public class Tower : MonoBehaviour
         }
         temp.SetActive(true);
         temp.transform.SetParent(Canva.transform);
-        HpBar = temp.GetComponent<Scrollbar>();
-        HpBar.value = 1f;
-        HpBar.size = 1f;
+        HpBar = temp.GetComponent<TowerHpBar>();
+        HpBar.SetMaxHp(MaxHP, CurrHp);
+        HpBar.SetHp(1f);
     }
 
     void HpBarMove()
@@ -116,7 +123,44 @@ public class Tower : MonoBehaviour
 
         CurrHp-= DPS;
 
-        HpBar.size = CurrHp / (float)MaxHP;
+        if(turrutType == ETurrutType.Center)
+        {
+            EventManagerSystem.Instance.Invoke2(Data_EventName.MainTowerInjure_str, MainTowerInjureEventArgs.Create(DPS));
+        }
+        else
+        {
+            //HpBar.size = CurrHp / (float)MaxHP;
+            HpBar.SetHp(CurrHp / MaxHP);
+        }
+        if (CurrHp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    public void Injure(float DPS)
+    {
+        CurrHp -= DPS;
+
+        if (CurrHp <= 0)
+        {
+            CurrHp = 0;
+        }
+        if(CurrHp >= MaxHP)
+        {
+            CurrHp = MaxHP;
+        }
+
+        if (turrutType == ETurrutType.Center)
+        {
+            //Debug.Log("Func1");
+            EventManagerSystem.Instance.Invoke2(Data_EventName.MainTowerInjure_str, MainTowerInjureEventArgs.Create(DPS));
+        }
+        else
+        {
+            //Debug.Log("Func2");
+            HpBar.SetHp(CurrHp / MaxHP);
+        }
         if (CurrHp <= 0)
         {
             Dead();
@@ -131,7 +175,9 @@ public class Tower : MonoBehaviour
             this.gameObject.SetActive(false);
             EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
             EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
-            ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+            if (turrutType != ETurrutType.Center)
+                Destroy(HpBar.gameObject);
+            //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
             if(turrutType == ETurrutType.Center)
             {
                 EventManagerSystem.Instance.Invoke2(Data_EventName.GameOver_str, GameOverEventArgs.Create());
@@ -143,7 +189,8 @@ public class Tower : MonoBehaviour
     {
         isGameOver = true;
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
-        Destroy(HpBar.gameObject);
+        if (turrutType != ETurrutType.Center)
+            Destroy(HpBar.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
@@ -155,7 +202,14 @@ public class Tower : MonoBehaviour
 
         CurrHp -= DPS;
 
-        HpBar.size = CurrHp / (float)MaxHP;
+        if (turrutType == ETurrutType.Center)
+        {
+            EventManagerSystem.Instance.Invoke2(Data_EventName.MainTowerInjure_str, MainTowerInjureEventArgs.Create(DPS));
+        }
+        else
+        {
+            HpBar.SetHp(CurrHp / MaxHP);
+        }
         if (CurrHp <= 0)
         {
             Dead();
@@ -172,13 +226,14 @@ public class Tower : MonoBehaviour
         {
             if(distance< fire_distance_big* fire_distance_big)
             {
-                Debug.Log("func1");
+                
                 float currPer = CurrHp / MaxHP;
                 float PlayerHpPer = pm.CurrPlayerHp / pm.PlayerHp;
                 if(currPer< PlayerHpPer&& pm.CurrPlayerHp-DPS>0f)
                 {
-                    CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
+                    //CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
                     pm.Injure(DPS);
+                    Injure(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
                 }
                 else if(CurrHp-DPS > 0f)
@@ -186,13 +241,15 @@ public class Tower : MonoBehaviour
                     //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
                     pm.Injure(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
+                    Injure(DPS);/*
+                    
                     CurrHp -= DPS;
 
                     HpBar.size = CurrHp / (float)MaxHP;
                     if (CurrHp <= 0)
                     {
                         Dead();
-                    }
+                    }*/
                 }
             }
         }
@@ -200,24 +257,28 @@ public class Tower : MonoBehaviour
         {
             if (distance < fire_distance * fire_distance)
             {
-                Debug.Log("func2");
                 float currPer = CurrHp / MaxHP;
                 float PlayerHpPer = pm.CurrPlayerHp / pm.PlayerHp;
                 if (currPer < PlayerHpPer && pm.CurrPlayerHp - DPS > 0f)
                 {
-                    CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
-                    pm.Injure(DPS);
+                    //CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
+                    pm.Injure(-DPS);
+                    Injure(DPS);
+                    //EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
                 }
                 else if (CurrHp - DPS > 0f)
                 {
-                    pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp + DPS);
+                    //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
+                    pm.Injure(DPS);
+                    Injure(-DPS);/*
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
                     CurrHp -= DPS;
 
                     HpBar.size = CurrHp / (float)MaxHP;
                     if (CurrHp <= 0)
                     {
                         Dead();
-                    }
+                    }*/
                 }
             }
         }

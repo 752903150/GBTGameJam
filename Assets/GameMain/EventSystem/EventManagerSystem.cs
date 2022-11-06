@@ -193,7 +193,7 @@ namespace MyGameFrameWork
             //Debug.Log(EventName + " 调用成功!");
             if (UnityActionDic.ContainsKey(EventName))//表示已经包含该事件
             {
-                (UnityActionDic[EventName] as EventInfo<IEventArgs>).action.Invoke(val);//调用
+                (UnityActionDic[EventName] as EventInfo<IEventArgs>)?.action.Invoke(val);//调用
             }
         }
 

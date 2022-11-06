@@ -89,7 +89,6 @@ public class PlayerData
 	/// <returns>实际应造成的伤害</returns>
 	public float ApplyDamage(float dmg, float currHp, float currDefense, MonsterData damageTaker)
 	{
-		Debug.LogWarning("PlayerData.ApplyDamage");
 		if (currHp <= 0.0f) return 0.0f;
 		
 		float actuallyCaused = dmg * (1.0f - currDefense);

@@ -28,7 +28,6 @@ public class MonsterData
 	/// <returns>实际应造成的伤害</returns>
 	public virtual float ApplyDamage(float dmg, float currHp, float currDefense)
 	{
-		Debug.LogError("MonsterData.ApplyDamage");
 		if (currHp <= 0.0f)
 		{
 			return 0.0f;

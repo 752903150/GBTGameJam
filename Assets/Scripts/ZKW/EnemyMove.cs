@@ -26,7 +26,7 @@ public class EnemyMove : MonoBehaviour
 
     int layermask;
     private Camera cam;
-    private Scrollbar HpBar;
+    private TowerHpBar HpBar;
 
     public GameObject Canva;
 
@@ -125,7 +125,6 @@ public class EnemyMove : MonoBehaviour
         Attack(follow_location);
         Move(follow_location);
         HpBarMove();
-        HpBar.value = 1f;
 
     }
 
@@ -164,11 +163,12 @@ public class EnemyMove : MonoBehaviour
         OBJASp.enabled = isAttack;
         isGameOver = false;
         GetComponent<CircleCollider2D>().enabled = true;
-        CreateHPBar();
-        HpBar.size = 1f;
+        
         MaxHp = TOOLS.GetMonsterDataById(1).MaxHp;
         CurrHp = MaxHp;
         CurrDenfense = TOOLS.GetMonsterDataById(1).InitialDefense;
+
+        CreateHPBar();
 
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
     }
@@ -291,8 +291,10 @@ public class EnemyMove : MonoBehaviour
         }
         temp.SetActive(true);
         temp.transform.SetParent(Canva.transform);
-        HpBar = temp.GetComponent<Scrollbar>();
-        HpBar.value = 1f;
+        HpBar = temp.GetComponent<TowerHpBar>();
+        HpBar.SetMaxHp(MaxHp, CurrHp);
+        HpBar.SetHp(1f);
+
     }
 
     public void Injure(float DPS)
@@ -300,17 +302,13 @@ public class EnemyMove : MonoBehaviour
         CurrHp-=DPS;
         if (CurrHp <= 0)
         {
-            HpBar.size = CurrHp / MaxHp;
+            HpBar.SetHp(0f);
             CurrHp = 0;
+            Dead();
         }
         else
         {
-            HpBar.size = CurrHp / MaxHp;
-        }
-        
-        if (CurrHp == 0)
-        {
-            Dead();
+            HpBar.SetHp(CurrHp / MaxHp);
         }
     }
 

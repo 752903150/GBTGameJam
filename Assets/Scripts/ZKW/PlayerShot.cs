@@ -41,14 +41,14 @@ public class PlayerShot : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Shot3();
+                
                 if (pm.playerState == EPlayerHpState.Freezing)
                 {
-                    Shot3();
+                    Shot1();
                 }
                 else if(pm.playerState == EPlayerHpState.Normal)
                 {
-                    Shot3();
+                    Shot2();
                 }
                 else if(pm.playerState == EPlayerHpState.Fever)
                 {
@@ -56,9 +56,12 @@ public class PlayerShot : MonoBehaviour
                 }
                 else if(pm.playerState == EPlayerHpState.Overheating)
                 {
-                    Shot3();
+                    Shot4();
                 }
-                
+                else
+                {
+                    Shot1();
+                }
                 
             }
             else if(isAttack)

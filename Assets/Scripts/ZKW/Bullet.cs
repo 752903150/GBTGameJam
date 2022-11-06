@@ -99,7 +99,6 @@ public class Bullet : MonoBehaviour
         direct = Direct;
         direct.z = 0;
         direct = Vector3.Normalize(direct);
-        Debug.Log(direct);
         if (direct == Vector3.zero)
         {
             direct.x = 1;

@@ -11,6 +11,15 @@ public partial class MainForm : UIForm
     float PlayerHp;
     float CurrPlayerHp;
 
+	float MainTowerHp;
+	float CurrMainTowerHp;
+
+	float MaxX;
+	float MinX;
+
+	float MaxTowerY;
+	float MinTowerY;
+
 
     public override void Awake()
 	{
@@ -21,13 +30,24 @@ public partial class MainForm : UIForm
 	public override void OnOpen(System.Object obj)
 	{
 		base.OnOpen(obj);
-		RegisterEvent();
+		MaxX = 985f;
+		MinX = 720f;
+
+		MaxTowerY = 377f;
+		MinTowerY = 129f;
+
+        RegisterEvent();
         PlayerHp = TOOLS.GetPlayerMaxHp();
         CurrPlayerHp = PlayerData.GetDefaultObject().InitialHp;
+		MainTowerHp = (float)obj;
+		CurrMainTowerHp = MainTowerHp;
 
-		m_scrollbarInjure.value = 1f;
-		m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
-		m_txtHP.text = ((int)CurrPlayerHp).ToString();
+		//m_scrollbarInjure.value = 1f;
+		//m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
+		SetTowerHp(1F);
+        SetHp(CurrPlayerHp / PlayerHp);
+        m_txtHP.text = ((int)CurrPlayerHp).ToString();
+        m_txtTowerHP.text = ((int)CurrMainTowerHp).ToString();
     }
 
 	public override void OnClose()
@@ -41,6 +61,7 @@ public partial class MainForm : UIForm
 		EventManagerSystem.Instance.Add2(Data_EventName.PlayerInjure_str, PlayerInjure);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
         EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOK);
+		EventManagerSystem.Instance.Add2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
     }
 
 	private void ReleaseEvent()
@@ -48,6 +69,7 @@ public partial class MainForm : UIForm
         EventManagerSystem.Instance.Delete2(Data_EventName.PlayerInjure_str, PlayerInjure);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOK);
+        EventManagerSystem.Instance.Delete2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
     }
 
 	void PlayerInjure(IEventArgs eventArgs)
@@ -66,9 +88,35 @@ public partial class MainForm : UIForm
 
         }
 
-        m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
+		//m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
+		SetHp(CurrPlayerHp / PlayerHp);
         m_txtHP.text = ((int)CurrPlayerHp).ToString();
-		m_scrollbarInjure.value = 1f;
+		//m_scrollbarInjure.value = 1f;
+    }
+
+	void MainTowerInjure(IEventArgs eventArgs)
+	{
+		
+
+		MainTowerInjureEventArgs mainTowerInjureEventArgs = (MainTowerInjureEventArgs)eventArgs;
+		float DPS = mainTowerInjureEventArgs.DPS;
+        //Debug.Log("TowerInjure:"+DPS.ToString());
+
+        CurrMainTowerHp -= DPS;
+
+        if (CurrMainTowerHp <= 0)
+        {
+            CurrMainTowerHp = 0;
+        }
+        if (CurrMainTowerHp >= MainTowerHp)
+        {
+            CurrMainTowerHp = MainTowerHp;
+
+        }
+        //m_scrollbarInjure.size = CurrPlayerHp / PlayerHp;
+        SetTowerHp(CurrMainTowerHp / MainTowerHp);
+        m_txtTowerHP.text = ((int)CurrMainTowerHp).ToString();
+        //m_scrollbarInjure.value = 1f;
     }
 
     void GameOver(IEventArgs eventArgs)
@@ -81,6 +129,21 @@ public partial class MainForm : UIForm
     {
         
         UISystem.Instance.CloseUIForm(Data_UIFormID.key_MainForm, this);
+    }
+
+	void SetHp(float pre)
+	{
+		Vector3 temp = m_imgSubImg.rectTransform.anchoredPosition;
+		temp.x = pre * (MaxX - MinX) + MinX;
+		m_imgSubImg.rectTransform.anchoredPosition = temp;
+
+    }
+
+	void SetTowerHp(float pre)
+	{
+        Vector3 temp = m_imgTowerSubImg.rectTransform.anchoredPosition;
+        temp.y = pre * (MaxTowerY - MinTowerY) + MinTowerY;
+        m_imgTowerSubImg.rectTransform.anchoredPosition = temp;
     }
 }
 

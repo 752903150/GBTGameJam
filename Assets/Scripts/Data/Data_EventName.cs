@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/5 19:05:13
+//CreateTime：2022/11/6 1:40:57
 namespace DataCs
 {
 	public static class Data_EventName
@@ -29,6 +29,10 @@ namespace DataCs
 		public static string BackMenu_str = "BackMenu";
 
 		public static string GameOK_str = "GameOK";
+
+		public static string NextLevel_str = "NextLevel";
+
+		public static string MainTowerInjure_str = "MainTowerInjure";
 
 	}
 }
