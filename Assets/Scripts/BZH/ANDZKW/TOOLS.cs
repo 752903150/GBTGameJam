@@ -102,6 +102,11 @@ public static class TOOLS
 	    return playerData.GetHpState(playerCurrHp);
     }
 
+    public static int GetRequiredExp(int playerCurrLevel)
+    {
+	    return empyreanData.BasicRequiredExp + playerCurrLevel * empyreanData.RequiredExpIncreasePerLevel;
+    }
+
     public static int GetMonsterExp(uint monsterId)//Get Moster Exp
     {
 	    return GetMonsterDataById(monsterId).OfferedExp;
