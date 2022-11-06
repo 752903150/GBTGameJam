@@ -674,6 +674,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &525438762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2680469874284402373, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+  m_PrefabInstance: {fileID: 3657619433408752531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &528462332 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6912689750295814898, guid: 00c9723caa8c40341b761282c9dbaac1, type: 3}
@@ -1055,6 +1060,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3657619432770428086, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
   m_PrefabInstance: {fileID: 3657619433408752531}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &993477979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 361376604515560724, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+  m_PrefabInstance: {fileID: 3657619433408752531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1044709164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3140917008955488770, guid: 80c83cda80747f5499652124fcb2f781, type: 3}
@@ -1312,6 +1322,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3743707780587397455, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
   m_PrefabInstance: {fileID: 863863639}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1485631611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6691636403599341492, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+  m_PrefabInstance: {fileID: 3657619433408752531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1542206305 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3743707781055424289, guid: b0b61ae8caa22b7409e7543fbcc5632e, type: 3}
@@ -1347,6 +1362,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1619122431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6014666370196286172, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+  m_PrefabInstance: {fileID: 3657619433408752531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1645832736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1464,6 +1484,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5819896247345666087, guid: 7904feeb2bb84474a81d11ad38ad1adb, type: 3}
   m_PrefabInstance: {fileID: 237833893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1714075139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3504267710948965870, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+  m_PrefabInstance: {fileID: 3657619433408752531}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1715803154
 PrefabInstance:
@@ -1783,6 +1808,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4280734764881461794, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5043872693653097472, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
       propertyPath: Enity1
       value: 
@@ -1887,5 +1916,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameMain
       objectReference: {fileID: 0}
+    - target: {fileID: 8669659269374168269, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: MusicManagers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: EffectManagers.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: MusicManagers.Array.data[1]
+      value: 
+      objectReference: {fileID: 993477979}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: EffectManagers.Array.data[6]
+      value: 
+      objectReference: {fileID: 1619122431}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: EffectManagers.Array.data[7]
+      value: 
+      objectReference: {fileID: 1485631611}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: EffectManagers.Array.data[8]
+      value: 
+      objectReference: {fileID: 1714075139}
+    - target: {fileID: 8760316796192277939, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}
+      propertyPath: EffectManagers.Array.data[9]
+      value: 
+      objectReference: {fileID: 525438762}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a97b6f6d31a0130448b17c32825b5070, type: 3}

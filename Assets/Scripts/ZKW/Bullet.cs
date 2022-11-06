@@ -69,6 +69,7 @@ public class Bullet : MonoBehaviour
                     {
                         float DPS = TOOLS.GetPlayerDps(pm.playerState, 1, em.CurrHp, em.CurrDenfense);
                         em.Injure(DPS);
+                        //SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireHit);
                     }
                     else
                     {
@@ -78,6 +79,7 @@ public class Bullet : MonoBehaviour
                             
                             float DPS2 = TOOLS.GetPlayerDps(pm.playerState, 2, em2.CurrHp, em2.CurrDenfense);
                             em2.Injure(DPS2);
+                            //SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireHit);
                         }
                         else
                         {
@@ -87,6 +89,7 @@ public class Bullet : MonoBehaviour
 
                                 float DPS3 = TOOLS.GetPlayerDps(pm.playerState, 3, em3.CurrHp, em3.CurrDenfense);
                                 em3.Injure(DPS3);
+                                
                             }
                         }
                     }

@@ -15,3 +15,8 @@ Swoosh,1008,Audio/Effect/Swoosh
 FireBurning,1009,Audio/Effect/FireBurning
 FireShining,1010,Audio/Effect/FireShining
 GameBgm,1011,Audio/Effect/GameBgm
+FireHit,1012,Audio/Effect/FireHit
+TurrDestroyed,1013,Audio/Effect/TurrDestroyed
+PlayerInjured,1014,Audio/Effect/PlayerInjured
+PlayerDie,1015,Audio/Effect/PlayerDie
+Monster2Bomb,1016,Audio/Effect/Monster2Bomb

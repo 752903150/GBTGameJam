@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/6 11:20:44
+//CreateTime：2022/11/6 12:31:57
 namespace DataCs
 {
 	public struct Data_AudioID_Struct
@@ -34,6 +34,11 @@ namespace DataCs
 			{"FireBurning",new Data_AudioID_Struct("FireBurning",1009,"Audio/Effect/FireBurning")},
 			{"FireShining",new Data_AudioID_Struct("FireShining",1010,"Audio/Effect/FireShining")},
 			{"GameBgm",new Data_AudioID_Struct("GameBgm",1011,"Audio/Effect/GameBgm")},
+			{"FireHit",new Data_AudioID_Struct("FireHit",1012,"Audio/Effect/FireHit")},
+			{"TurrDestroyed",new Data_AudioID_Struct("TurrDestroyed",1013,"Audio/Effect/TurrDestroyed")},
+			{"PlayerInjured",new Data_AudioID_Struct("PlayerInjured",1014,"Audio/Effect/PlayerInjured")},
+			{"PlayerDie",new Data_AudioID_Struct("PlayerDie",1015,"Audio/Effect/PlayerDie")},
+			{"Monster2Bomb",new Data_AudioID_Struct("Monster2Bomb",1016,"Audio/Effect/Monster2Bomb")},
 		};
 		public static string key_Bright_Beginning = "Bright_Beginning";
 		public static string key_Dark_Journey = "Dark_Journey";
@@ -47,6 +52,11 @@ namespace DataCs
 		public static string key_FireBurning = "FireBurning";
 		public static string key_FireShining = "FireShining";
 		public static string key_GameBgm = "GameBgm";
+		public static string key_FireHit = "FireHit";
+		public static string key_TurrDestroyed = "TurrDestroyed";
+		public static string key_PlayerInjured = "PlayerInjured";
+		public static string key_PlayerDie = "PlayerDie";
+		public static string key_Monster2Bomb = "Monster2Bomb";
 	}
 }
 

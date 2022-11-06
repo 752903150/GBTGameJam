@@ -41,7 +41,7 @@ public class PlayerShot : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                
+                SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireShining);
                 if (pm.playerState == EPlayerHpState.Freezing)
                 {
                     Shot1();

@@ -49,7 +49,9 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-           
+
+
+            SoundSystem.Instance.StopMusic(Data_AudioID.key_GameBgm);
             SkillAdditionSystem.CreateInstance(0,0,0);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
@@ -100,6 +102,7 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
+            SoundSystem.Instance.PlayMusic(Data_AudioID.key_GameBgm);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
             EventManagerSystem.Instance.Delete2(Data_EventName.BackMenu_str, OnBackMenu);

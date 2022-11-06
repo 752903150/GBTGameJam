@@ -7,16 +7,26 @@ namespace MyGameFrameWork
 {
     public class StartState : ISceneState
     {
+
+        bool isFisrtStart ;
+
         public StartState(SceneStateC c) : base(c)
         {
+            isFisrtStart = false;
             this.StateName = "StartState";
         }
 
         public override void StateBegin(System.Object obj)
         {
             //开始时
+            if (!isFisrtStart)
+            {
+                SoundSystem.Instance.PlayMusic(Data_AudioID.key_GameBgm);//播放音乐
+                
+                isFisrtStart = true;
+            }
+
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_StartGameForm);//打开UI
-            SoundSystem.Instance.PlayMusic(Data_AudioID.key_Solemn_Place);//播放音乐
             EventManagerSystem.Instance.Add2(Data_EventName.StartGame_str, OnStartGame);
             EventManagerSystem.Instance.Add2(Data_EventName.ExitGame_str, OnExitGame);
             EventManagerSystem.Instance.Add2(Data_EventName.Developer_str, OnDevelopers);
@@ -30,7 +40,7 @@ namespace MyGameFrameWork
         public override void StateEnd()
         {
             //结束时
-            SoundSystem.Instance.StopMusic(Data_AudioID.key_Solemn_Place);//结束音乐
+            //SoundSystem.Instance.StopMusic(Data_AudioID.key_GameBgm);//结束音乐
             EventManagerSystem.Instance.Delete2(Data_EventName.StartGame_str, OnStartGame);
             EventManagerSystem.Instance.Delete2(Data_EventName.ExitGame_str, OnExitGame);
             EventManagerSystem.Instance.Delete2(Data_EventName.Developer_str, OnDevelopers);

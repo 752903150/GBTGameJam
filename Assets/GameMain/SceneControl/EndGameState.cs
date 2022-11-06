@@ -15,7 +15,7 @@ namespace MyGameFrameWork
         public override void StateBegin(System.Object obj)
         {
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_DeveloperForm);
-            SoundSystem.Instance.PlayMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
+            //SoundSystem.Instance.PlayMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
             EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
         }
 
@@ -27,7 +27,7 @@ namespace MyGameFrameWork
         public override void StateEnd()
         {
 
-            SoundSystem.Instance.StopMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
+            //SoundSystem.Instance.StopMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
         }
 
         private void OnBackStartGame(IEventArgs eventArgs)

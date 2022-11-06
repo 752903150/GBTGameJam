@@ -57,8 +57,14 @@ public class EnemyMove : MonoBehaviour
     float isDead_curr_time;
     float isDead_time;
 
+    float injure_currtime;
+    float injure_time;
+
     void Start()
     {
+        injure_currtime = 1f;
+        injure_time = 0.5f;
+
         an = GetComponent<Animator>();
         //OBJAnimator = transform.Find("GameObject").gameObject.GetComponent<Animator>();
         //OBJASp = transform.Find("GameObject").gameObject.GetComponent<SpriteRenderer>();
@@ -111,6 +117,9 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        injure_currtime += Time.deltaTime;
+
+
         if (isDead)
         {
             isDead_curr_time+=Time.deltaTime;
@@ -149,6 +158,9 @@ public class EnemyMove : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        injure_currtime = 1f;
+        injure_time = 0.5f;
+
         isDead_curr_time = 0f;
         isDead_time = 1.2f;
         transform.localEulerAngles = Vector3.zero;
@@ -320,7 +332,14 @@ public class EnemyMove : MonoBehaviour
 
     public void Injure(float DPS)
     {
-        CurrHp-=DPS;
+        if (injure_currtime >= injure_time)
+        {
+            injure_currtime = 0f;
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireHit);
+        }
+        
+
+        CurrHp -=DPS;
         if (CurrHp <= 0)
         {
             HpBar.SetHp(0f);
@@ -413,17 +432,24 @@ public class EnemyMove : MonoBehaviour
              {
                  OBJAnimator.enabled = true;
                  OBJASp.enabled = true;
-                 SubObj.transform.localPosition = pos;
+                 
                  if (attack_mode == 1)
                  {
+                     Vector3 temp3 = pos;
+                     temp3.y -= 0.4f;
+                     SubObj.transform.localPosition = temp3;
                      pos = Tower1.transform.localPosition;
                  }
                  else if (attack_mode == 2)
                  {
+                     Vector3 temp3 = pos;
+                     temp3.y -= 1.1f;
+                     SubObj.transform.localPosition = temp3;
                      pos = BigTower2.transform.localPosition;
                  }
                  else
                  {
+                     SubObj.transform.localPosition = pos;
                      pos = Player.localPosition;
                  }
                  Vector3 direct = pos - this.transform.position;

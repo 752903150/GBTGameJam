@@ -73,7 +73,7 @@ namespace MyGameFrameWork
             {
                 if (!musics[i].isPlaying)
                 {
-                    if (ObjectPoolSystem.Instance.TestUIFormPool(id))
+                    if (ObjectPoolSystem.Instance.TestAudioClipPool(id))
                     {
                         AudioClip temp = ObjectPoolSystem.Instance.GetAudioClipFormPool(id);
                         if (temp != null)
@@ -85,7 +85,6 @@ namespace MyGameFrameWork
                     }
                     else
                     {
-
                         AudioClip temp = Resources.Load<AudioClip>(path);
                         musics[i].clip = temp;
                         musics[i].Play();

@@ -1,3 +1,4 @@
+using DataCs;
 using DG.Tweening;
 using MyGameFrameWork;
 using System.Collections;
@@ -22,11 +23,22 @@ public class PlayerMove : MonoBehaviour
     Vector2[] directs;
     int layermask;
 
+    bool isMove;
     bool isDead;
     public Animator animator;
+
+    float injure_currtime;
+    float injure_time;
+
+    float move_curr_time;
+    float move_time;
     // Start is called before the first frame update
     void Start()
     {
+        move_curr_time = 1f;
+        move_time = 0.1f;
+        injure_currtime = 1f;
+        injure_time = 1f;
         transform.localEulerAngles = Vector3.zero;
         animator = GetComponent<Animator>();
         isDead = false;
@@ -53,6 +65,11 @@ public class PlayerMove : MonoBehaviour
 
     public void PlayerInit()
     {
+        move_curr_time = 1f;
+        move_time = 0.1f;
+
+        injure_currtime = 1f;
+        injure_time = 1f;
         transform.localEulerAngles = Vector3.zero;
         isDead = false;
         transform.localPosition = new Vector3(2.22f, 0, 0);
@@ -64,12 +81,19 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        move_curr_time += Time.deltaTime;
+
+        injure_currtime+=Time.deltaTime;
+
         RaycastHit2D hit;
         temp = Vector3.zero;
         temp2.x = Player.localPosition.x;
         temp2.y = Player.localPosition.y;
         if (Input.GetKey(KeyCode.W))
         {
+            isMove = true;
+            move_curr_time = 0f;
+            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[0],Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[0], distance, layermask);
@@ -86,6 +110,9 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
+            isMove = true;
+            move_curr_time = 0f;
+            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[3], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[3], distance, layermask);
@@ -102,6 +129,9 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
+            isMove = true;
+            move_curr_time = 0f;
+            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[1], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[1], distance, layermask);
@@ -118,7 +148,10 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
+            isMove = true;
+            move_curr_time = 0f;
             animator.SetBool("isMove", true);
+            //Debug.Log("Move");
             Debug.DrawRay(Player.localPosition, directs[2], Color.blue, distance);
             hit = Physics2D.Raycast(temp2, directs[2], distance, layermask);
             if (!hit.collider)
@@ -129,6 +162,13 @@ public class PlayerMove : MonoBehaviour
             {
                 //Debug.Log("CrushD");
             }
+        }
+
+        if(isMove && move_curr_time >= move_time)
+        {
+            //Debug.Log("No Move");
+            isMove = false;
+            animator.SetBool("isMove", false);
         }
 
         for (int i = 0; i < 8; i++)
@@ -149,16 +189,24 @@ public class PlayerMove : MonoBehaviour
                 break;
             }
         }
+
+
         Player.localPosition += temp;
     }
 
     public void Injure(float DPS)
     {
+        if (injure_currtime >= injure_time && DPS>0)
+        {
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_PlayerInjured);
+            injure_currtime = 0f;
+        }
         CurrPlayerHp -= DPS;
         playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
         //Debug.Log(CurrPlayerHp);
         if (CurrPlayerHp <= 0 && !isDead)
         {
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_PlayerDie);
             CurrPlayerHp = 0;
             playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
             isDead = true;

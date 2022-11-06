@@ -59,8 +59,15 @@ public class EnemyMove2 : MonoBehaviour
     float isDead_curr_time;
     float isDead_time;
 
+    float injure_currtime;
+    float injure_time;
+
     void Start()
     {
+
+         injure_currtime = 1f;
+         injure_time = 0.5f;
+
         an = GetComponent<Animator>();
         //OBJAnimator = transform.Find("GameObject").gameObject.GetComponent<Animator>();
         //OBJASp = transform.Find("GameObject").gameObject.GetComponent<SpriteRenderer>();
@@ -114,6 +121,8 @@ public class EnemyMove2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        injure_currtime +=Time.deltaTime;
+
         if (isDead)
         {
             isDead_curr_time += Time.deltaTime;
@@ -155,6 +164,9 @@ public class EnemyMove2 : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        injure_currtime = 1f;
+        injure_time = 0.5f;
+
         isDead_curr_time = 0f;
         isDead_time = 1.2f;
         transform.localEulerAngles = Vector3.zero;
@@ -313,6 +325,11 @@ public class EnemyMove2 : MonoBehaviour
 
     public void Injure(float DPS)
     {
+        if (injure_currtime >= injure_time)
+        {
+            injure_currtime = 0f;
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireHit);
+        }
         CurrHp -= DPS;
         if (CurrHp <= 0)
         {
@@ -331,7 +348,7 @@ public class EnemyMove2 : MonoBehaviour
     {
         Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
         transform.DOLocalRotate(endv, 0.5f);
-        an.SetBool("isAttack", false);
+        //an.SetBool("isAttack", false);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         //GetComponent<CircleCollider2D>().enabled = false;
@@ -354,11 +371,11 @@ public class EnemyMove2 : MonoBehaviour
 
     void DeadSelf()
     {
-        an.SetBool("isAttack", false);
+        //an.SetBool("isAttack", false);
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         //GetComponent<CircleCollider2D>().enabled = false;
-        Sequence seq = DOTween.Sequence();
+       /* Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
             if (!isGameOver)
@@ -372,7 +389,7 @@ public class EnemyMove2 : MonoBehaviour
                 
             }
         })
-        .SetDelay(1f);
+        .SetDelay(1f);*/
     }
 
     void Attack(GameObject Player)
@@ -461,7 +478,10 @@ public class EnemyMove2 : MonoBehaviour
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => {
             if(isBoom)
+            {
+                SoundSystem.Instance.PlayEffect(Data_AudioID.key_Monster2Bomb);
                 DeadSelf();
+            }
             else
             {
                 isAttack = false;

@@ -54,10 +54,16 @@ public class Tower : MonoBehaviour
         isDead = false;
         TOOLS.GetTurrutHps(eTurrutType, (uint)level, out MaxHP, out CurrHp);//»ñÈ¡ÑªÁ¿
 
+
+
         if (turrutType != ETurrutType.Center)
         {
             CreateHPBar();
             HpBarMove();
+        }
+        else
+        {
+            SoundSystem.Instance.PlayMusic(Data_AudioID.key_FireBurning);
         }
     }
 
@@ -171,6 +177,8 @@ public class Tower : MonoBehaviour
     {
         if (!isGameOver)
         {
+            Debug.Log("Destory");
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_TurrDestroyed);
             isDead = true;
             this.gameObject.SetActive(false);
             EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
@@ -180,6 +188,7 @@ public class Tower : MonoBehaviour
             //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
             if(turrutType == ETurrutType.Center)
             {
+                SoundSystem.Instance.StopMusic(Data_AudioID.key_FireBurning);
                 EventManagerSystem.Instance.Invoke2(Data_EventName.GameOver_str, GameOverEventArgs.Create());
             }
         }
@@ -187,6 +196,7 @@ public class Tower : MonoBehaviour
 
     void GameOver2(IEventArgs eventArgs)
     {
+        SoundSystem.Instance.StopMusic(Data_AudioID.key_FireBurning);
         isGameOver = true;
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
         if (turrutType != ETurrutType.Center)
@@ -262,16 +272,17 @@ public class Tower : MonoBehaviour
                 if (currPer < PlayerHpPer && pm.CurrPlayerHp - DPS > 0f)
                 {
                     //CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
-                    pm.Injure(-DPS);
-                    Injure(DPS);
-                    //EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
+                    pm.Injure(DPS);
+                    Injure(-DPS);
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
                 }
                 else if (CurrHp - DPS > 0f)
                 {
                     //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
-                    pm.Injure(DPS);
-                    Injure(-DPS);/*
+                    pm.Injure(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
+                    Injure(DPS);/*
+                    
                     CurrHp -= DPS;
 
                     HpBar.size = CurrHp / (float)MaxHP;

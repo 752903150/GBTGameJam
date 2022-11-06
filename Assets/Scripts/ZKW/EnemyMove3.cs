@@ -62,8 +62,14 @@ public class EnemyMove3 : MonoBehaviour
 
     float isDead_curr_time;
     float isDead_time;
+
+    float injure_currtime;
+    float injure_time;
     void Start()
     {
+        injure_currtime = 1f;
+        injure_time = 0.5f;
+
         an = GetComponent<Animator>();
         //OBJAnimator = transform.Find("GameObject").gameObject.GetComponent<Animator>();
         //OBJASp = transform.Find("GameObject").gameObject.GetComponent<SpriteRenderer>();
@@ -117,6 +123,8 @@ public class EnemyMove3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        injure_currtime += Time.deltaTime;
+
         if (isDead)
         {
             isDead_curr_time += Time.deltaTime;
@@ -159,6 +167,10 @@ public class EnemyMove3 : MonoBehaviour
 
     public void init(Tower tower1, Tower tower2, Tower tower3, Tower tower4, Tower btower, Transform player, GameObject canva)
     {
+
+        injure_currtime = 1f;
+        injure_time = 0.5f;
+
         isDead_curr_time = 0f;
         isDead_time = 1.2f;
         transform.localEulerAngles = Vector3.zero;
@@ -382,6 +394,11 @@ public class EnemyMove3 : MonoBehaviour
 
     public void Injure(float DPS)
     {
+        if (injure_currtime >= injure_time)
+        {
+            injure_currtime = 0f;
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_FireHit);
+        }
         CurrHp -= DPS;
         if (CurrHp <= 0)
         {
