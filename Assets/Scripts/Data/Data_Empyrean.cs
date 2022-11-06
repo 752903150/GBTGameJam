@@ -77,7 +77,7 @@ namespace DataCs
 				),
 				new TurrutData
 				(
-					1200.0f,
+					1600.0f,
 					15.0f,
 					25.0f
 				),
