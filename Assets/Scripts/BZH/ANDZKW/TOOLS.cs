@@ -102,6 +102,24 @@ public static class TOOLS
 	    return playerData.GetHpState(playerCurrHp);
     }
 
+    public static float GetAttackSpeed(EPlayerHpState playerHpState)
+    {
+	    if (playerHpState == EPlayerHpState.Dead)
+	    {
+		    return 0.0f;
+	    }
+	    if (playerHpState == EPlayerHpState.Freezing)
+	    {
+		    return playerData.SlowedAttSpeed;
+	    }
+	    if (playerHpState == EPlayerHpState.Overheating)
+	    {
+		    return playerData.FastAttSpeed;
+	    }
+
+	    return playerData.NormalAttSpeed;
+    }
+
     public static int GetRequiredExp(int playerCurrLevel)
     {
 	    return empyreanData.BasicRequiredExp + playerCurrLevel * empyreanData.RequiredExpIncreasePerLevel;
@@ -174,6 +192,10 @@ public static class TOOLS
 
     public static int GetMonsterWaves(uint level)
     {
+	    if (level == 2u)
+	    {
+		    return int.MaxValue;
+	    }
 	    return empyreanData.MonstersInLevels[level];
     }
 
