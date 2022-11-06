@@ -24,12 +24,14 @@ namespace MyGameFrameWork
                 SoundSystem.Instance.PlayMusic(Data_AudioID.key_GameBgm);//播放音乐
                 
                 isFisrtStart = true;
+
+                EventManagerSystem.Instance.Add2(Data_EventName.StartGame_str, OnStartGame);
+                EventManagerSystem.Instance.Add2(Data_EventName.ExitGame_str, OnExitGame);
+                EventManagerSystem.Instance.Add2(Data_EventName.Developer_str, OnDevelopers);
             }
 
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_StartGameForm);//打开UI
-            EventManagerSystem.Instance.Add2(Data_EventName.StartGame_str, OnStartGame);
-            EventManagerSystem.Instance.Add2(Data_EventName.ExitGame_str, OnExitGame);
-            EventManagerSystem.Instance.Add2(Data_EventName.Developer_str, OnDevelopers);
+            
         }
 
         public override void StateUpdate()
@@ -41,9 +43,9 @@ namespace MyGameFrameWork
         {
             //结束时
             //SoundSystem.Instance.StopMusic(Data_AudioID.key_GameBgm);//结束音乐
-            EventManagerSystem.Instance.Delete2(Data_EventName.StartGame_str, OnStartGame);
-            EventManagerSystem.Instance.Delete2(Data_EventName.ExitGame_str, OnExitGame);
-            EventManagerSystem.Instance.Delete2(Data_EventName.Developer_str, OnDevelopers);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.StartGame_str, OnStartGame);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.ExitGame_str, OnExitGame);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.Developer_str, OnDevelopers);
         }
 
         private void OnStartGame(IEventArgs eventArgs)//游戏开始

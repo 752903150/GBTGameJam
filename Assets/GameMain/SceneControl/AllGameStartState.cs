@@ -5,25 +5,25 @@ using DataCs;
 
 namespace MyGameFrameWork
 {
-    public class EndGameState : ISceneState
+    public class AllGameStartState : ISceneState
     {
-        bool isFirst;
-        public EndGameState(SceneStateC c) : base(c)
+        bool isFisrt;
+        public AllGameStartState(SceneStateC c) : base(c)
         {
-            this.StateName = "EndGameState";
-            isFirst = true;
+            this.StateName = "AllGameStartState";
+            isFisrt = true;
         }
 
         public override void StateBegin(System.Object obj)
         {
-            if (isFirst)
+            if (isFisrt)
             {
+                isFisrt = false;
                 EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
-                isFirst = false;
             }
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_DeveloperForm);
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_AllGameStartForm);
             //SoundSystem.Instance.PlayMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
-            
+           
         }
 
         public override void StateUpdate()
@@ -33,8 +33,7 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
-
-            //SoundSystem.Instance.StopMusic(Data_AudioID.key_Dark_Journey);//≤•∑≈“Ù¿÷
+            //EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
         }
 
         private void OnBackStartGame(IEventArgs eventArgs)

@@ -5,23 +5,25 @@ using DataCs;
 
 namespace MyGameFrameWork
 {
-    public class EndGameState : ISceneState
+    public class AllGameOverState : ISceneState
     {
+
         bool isFirst;
-        public EndGameState(SceneStateC c) : base(c)
+        public AllGameOverState(SceneStateC c) : base(c)
         {
-            this.StateName = "EndGameState";
-            isFirst = true;
+            this.StateName = "AllGameOverState";
+            isFirst = false;
         }
 
         public override void StateBegin(System.Object obj)
         {
             if (isFirst)
             {
-                EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
+                EventManagerSystem.Instance.Add2(Data_EventName.Developer_str, OnDevelopers);
                 isFirst = false;
             }
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_DeveloperForm);
+
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_AllGameOverForm);
             //SoundSystem.Instance.PlayMusic(Data_AudioID.key_Dark_Journey);//播放音乐
             
         }
@@ -33,13 +35,13 @@ namespace MyGameFrameWork
 
         public override void StateEnd()
         {
-
+            //EventManagerSystem.Instance.Delete2(Data_EventName.Developer_str, OnDevelopers);
             //SoundSystem.Instance.StopMusic(Data_AudioID.key_Dark_Journey);//播放音乐
         }
 
-        private void OnBackStartGame(IEventArgs eventArgs)
+        private void OnDevelopers(IEventArgs eventArgs)//开发者界面
         {
-            m_Contorller.SetState("StartState", null);
+            m_Contorller.SetState("EndGameState", null);
         }
     }
 }

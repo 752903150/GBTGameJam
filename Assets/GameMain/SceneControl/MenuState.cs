@@ -11,15 +11,27 @@ namespace MyGameFrameWork
     public class MenuState : ISceneState
     {
 
+        bool isFisrt;
+
         GameObject Enity1;
         GameObject HpBarCanvas;
         public MenuState(SceneStateC c) : base(c)
         {
             this.StateName = "MenuState";
+            isFisrt = true;
         }
 
         public override void StateBegin(System.Object obj)
         {
+            if (isFisrt)
+            {
+                isFisrt = false;
+                EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
+                EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
+                EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
+                EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
+                EventManagerSystem.Instance.Add2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);
+            }
             /*SkillAdditionSystem.CreateInstance(0, 0, 0);
             
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
@@ -27,11 +39,7 @@ namespace MyGameFrameWork
             Enity1?.SetActive(true);*/
 
             //HpBarCanvas = m_Contorller.GetData("HpBarCanvas") as GameObject;
-            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
-            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
-            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
-            EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
-            EventManagerSystem.Instance.Add2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);
+            
             CreateMainUI();
         }
 
@@ -44,11 +52,11 @@ namespace MyGameFrameWork
         {
             /*EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);*/
-            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
+            /*EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel1_str, OpenLevel1);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
             EventManagerSystem.Instance.Delete2(Data_EventName.BackStartGame_str, OnBackStartGame);
-            EventManagerSystem.Instance.Delete2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);
+            EventManagerSystem.Instance.Delete2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);*/
         }
 
         void CreateMainUI()
