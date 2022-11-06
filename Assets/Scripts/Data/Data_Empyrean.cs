@@ -95,19 +95,19 @@ namespace DataCs
 				(
 					750.0f,
 					5.0f,
-					20.0f
+					40.0f
 				),
 				new TurrutData
 				(
 					600.0f,
 					2.5f,
-					17.0f
+					35.0f
 				),
 				new TurrutData
 				(
 					870.0f,
 					2.5f,
-					15.0f
+					30.0f
 				),
 			};
 
