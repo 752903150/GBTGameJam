@@ -46,7 +46,7 @@ public class PlayerData
 			72.0f,
 			32.0f,
 			75.0f,
-			8.0f,
+			4.0f,
 			5.0f,
 			3.0f,
 			8.0f
