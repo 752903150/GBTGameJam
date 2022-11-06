@@ -42,21 +42,28 @@ namespace MyGameFrameWork
         int lastSkill;
 
         PlayerMove pm;
+
+        bool isFirst;
         public MainState(SceneStateC c) : base(c)
         {
             this.StateName = "MainState";
+            isFirst = true;
         }
 
         public override void StateBegin(System.Object obj)
         {
-
+            if (isFirst)
+            {
+                isFirst = false;
+                EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
+                EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
+                EventManagerSystem.Instance.Add2(Data_EventName.BackMenu_str, OnBackMenu);
+                EventManagerSystem.Instance.Add2(Data_EventName.NextLevel_str, OnNextLevel);
+            }
 
             SoundSystem.Instance.StopMusic(Data_AudioID.key_GameBgm);
             SkillAdditionSystem.CreateInstance(0,0,0);
-            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
-            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
-            EventManagerSystem.Instance.Add2(Data_EventName.BackMenu_str, OnBackMenu);
-            EventManagerSystem.Instance.Add2(Data_EventName.NextLevel_str, OnNextLevel);
+            
             Enity1 = m_Contorller.GetData("Enity1") as GameObject;
             
             Spawn1 = m_Contorller.GetData("Spawn1") as GameObject;
@@ -83,7 +90,12 @@ namespace MyGameFrameWork
             Tower4 = m_Contorller.GetData("Tower4") as GameObject;
             Tower5 = m_Contorller.GetData("Tower5") as GameObject;
 
-            
+
+
+            /*EventManagerSystem.Instance.Add2(DataCs.Data_EventName.GameOver_str, GameOver);
+            EventManagerSystem.Instance.Add2(DataCs.Data_EventName.KillMonster_str, KillMonster);
+            EventManagerSystem.Instance.Add2(Data_EventName.BackMenu_str, OnBackMenu);
+            EventManagerSystem.Instance.Add2(Data_EventName.NextLevel_str, OnNextLevel);*/
             curr_wave = 0;
             lastSkill = (int)m_Contorller.GetData("lastKill");
             cuur_level = (int)obj;
@@ -103,10 +115,10 @@ namespace MyGameFrameWork
         public override void StateEnd()
         {
             SoundSystem.Instance.PlayMusic(Data_AudioID.key_GameBgm);
-            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
-            EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
-            EventManagerSystem.Instance.Delete2(Data_EventName.BackMenu_str, OnBackMenu);
-            EventManagerSystem.Instance.Delete2(Data_EventName.NextLevel_str, OnNextLevel);
+            //EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.GameOver_str, GameOver);
+            ////EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.KillMonster_str, KillMonster);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.BackMenu_str, OnBackMenu);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.NextLevel_str, OnNextLevel);
             Spawns.Clear();
         }
 
@@ -150,31 +162,34 @@ namespace MyGameFrameWork
         void GameOver(IEventArgs eventArgs)
         {
             GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
-
+            Debug.Log("GameOver");
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm,new GameOverStruct("您失败了",true,cuur_level));
-            
-            Sequence seq = DOTween.Sequence();
-            seq.AppendInterval(0.2f);
+            Enity1.SetActive(false);
+            /*Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(0.1f);
             seq.AppendCallback(() => {
                 Enity1.SetActive(false);
-            });
+            });*/
         }
 
         void GameOverOK()
         {
-            Sequence seq = DOTween.Sequence();
-            seq.AppendInterval(0.2f);
+            Debug.Log("GameOK");
+            /*Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(0.1f);
             seq.AppendCallback(() => {
                 Enity1.SetActive(false);
-            });
+            });*/
 
             UISystem.Instance.OpenUIForm(Data_UIFormID.key_GameOverForm, new GameOverStruct("恭喜通过第" + (cuur_level + 1).ToString() + "关", false,cuur_level));
+            Enity1.SetActive(false);
         }
 
         void OnNextLevel(IEventArgs eventArgs)
         {
             NextLevelEventArgs nextLevelEventArgs = (NextLevelEventArgs)eventArgs;
             int level = nextLevelEventArgs.Level;
+
             curr_wave = 0;
             cuur_level = level;
             all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);

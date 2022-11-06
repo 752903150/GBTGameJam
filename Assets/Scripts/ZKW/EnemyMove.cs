@@ -60,6 +60,8 @@ public class EnemyMove : MonoBehaviour
     float injure_currtime;
     float injure_time;
 
+    bool isDestory;
+
     void Start()
     {
         injure_currtime = 1f;
@@ -130,7 +132,8 @@ public class EnemyMove : MonoBehaviour
                 if (!isGameOver)
                 {
                     EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(1));
-                    Destroy(HpBar.gameObject);
+                    Debug.Log("Destory.HpBar.gameObject");
+                    HpBar.dDestroy();
                     Destroy(SubObj);
                     Destroy(this.gameObject);
                 }
@@ -158,6 +161,8 @@ public class EnemyMove : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        isDestory = false;
+
         injure_currtime = 1f;
         injure_time = 0.5f;
 
@@ -313,15 +318,8 @@ public class EnemyMove : MonoBehaviour
         //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         int id = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID;
         GameObject temp;
-        if (ObjectPoolSystem.Instance.TestGameObjectPool(id))
-        {
-            temp = ObjectPoolSystem.Instance.GetGameObjectFormPool(id);
-        }
-        else
-        {
-            string path = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].path;
-            temp = GameObject.Instantiate((GameObject)Resources.Load(path));
-        }
+        string path = Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].path;
+        temp = GameObject.Instantiate((GameObject)Resources.Load(path));
         temp.SetActive(true);
         temp.transform.SetParent(Canva.transform);
         HpBar = temp.GetComponent<TowerHpBar>();
@@ -354,10 +352,14 @@ public class EnemyMove : MonoBehaviour
 
     void Dead()
     {
+        if (isDead)
+        {
+            return;
+        }
         Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
         transform.DOLocalRotate(endv, 0.5f);
         an.SetBool("isAttack", false);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         GetComponent<CircleCollider2D>().enabled = false;
         /*Sequence seq = DOTween.Sequence();
@@ -366,7 +368,6 @@ public class EnemyMove : MonoBehaviour
             if (!isGameOver)
             {
                 EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(1));
-                Destroy(HpBar.gameObject);
                 Destroy(SubObj);
                 Destroy(this.gameObject);
             }
@@ -408,11 +409,21 @@ public class EnemyMove : MonoBehaviour
 
     void GameOver(IEventArgs eventArgs)
     {
+        Debug.Log("AGameOver!");
+        if (isDead)
+        {
+            return;
+        }
+
         isGameOver = true;
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
-        Destroy(HpBar.gameObject);
+        Debug.Log("Destory.HpBar.gameObject");
+        HpBar.dDestroy();
+
         Destroy(this.gameObject);
         Destroy(SubObj);
+
+
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
@@ -481,5 +492,10 @@ public class EnemyMove : MonoBehaviour
             OBJASp.enabled = isAttack;
         });
     }
-    
+
+    private void OnDestroy()
+    {
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+    }
+
 }

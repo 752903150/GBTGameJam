@@ -346,10 +346,14 @@ public class EnemyMove2 : MonoBehaviour
 
     void Dead()
     {
+        if (isDead)
+        {
+            return;
+        }
         Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
         transform.DOLocalRotate(endv, 0.5f);
         //an.SetBool("isAttack", false);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         //GetComponent<CircleCollider2D>().enabled = false;
         /*Sequence seq = DOTween.Sequence();
@@ -488,5 +492,8 @@ public class EnemyMove2 : MonoBehaviour
             }
         });
     }
-
+    private void OnDestroy()
+    {
+        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+    }
 }

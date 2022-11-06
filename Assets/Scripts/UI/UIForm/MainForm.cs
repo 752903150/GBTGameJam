@@ -41,8 +41,13 @@ public partial class MainForm : UIForm
     public override void Awake()
 	{
 		base.Awake();
-		InitComponent(); 
-	}
+		InitComponent();
+        EventManagerSystem.Instance.Add2(Data_EventName.PlayerInjure_str, PlayerInjure);
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
+        EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOK);
+        EventManagerSystem.Instance.Add2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
+        EventManagerSystem.Instance.Add2(Data_EventName.AddExp_str, AddExp);
+    }
 
 	public override void OnOpen(System.Object obj)
 	{
@@ -84,20 +89,16 @@ public partial class MainForm : UIForm
 
 	private void RegisterEvent()
 	{
-		EventManagerSystem.Instance.Add2(Data_EventName.PlayerInjure_str, PlayerInjure);
-        EventManagerSystem.Instance.Add2(Data_EventName.GameOver_str, GameOver);
-        EventManagerSystem.Instance.Add2(Data_EventName.GameOK_str, GameOK);
-		EventManagerSystem.Instance.Add2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
-		EventManagerSystem.Instance.Add2(Data_EventName.AddExp_str, AddExp);
+		
     }
 
 	private void ReleaseEvent()
 	{
-        EventManagerSystem.Instance.Delete2(Data_EventName.PlayerInjure_str, PlayerInjure);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOK);
-        EventManagerSystem.Instance.Delete2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
-        EventManagerSystem.Instance.Delete2(Data_EventName.AddExp_str, AddExp);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.PlayerInjure_str, PlayerInjure);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOK);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.MainTowerInjure_str, MainTowerInjure);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.AddExp_str, AddExp);
     }
 
 	void PlayerInjure(IEventArgs eventArgs)
@@ -182,7 +183,6 @@ public partial class MainForm : UIForm
 
     void GameOver(IEventArgs eventArgs)
     {
-        GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
 		UISystem.Instance.CloseUIForm(Data_UIFormID.key_MainForm, this);
     }
 

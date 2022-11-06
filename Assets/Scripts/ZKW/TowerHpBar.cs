@@ -12,12 +12,15 @@ public class TowerHpBar : MonoBehaviour
 
     float MaxHp;
     float CurrHp;
+
+    bool isDestory;
     
     private void Start()
     {
         MaxX = 212f;
         MinX = 87f;
         SetHp(1f);
+        isDestory = false;
     }
 
     public void Injure(float DPS)
@@ -52,5 +55,13 @@ public class TowerHpBar : MonoBehaviour
         Vector3 temp = m_imgSubimg.rectTransform.anchoredPosition;
         temp.x = pre * (MaxX - MinX) + MinX;
         m_imgSubimg.rectTransform.anchoredPosition = temp;
+    }
+
+    public void dDestroy()
+    {
+        if (isDestory)
+            return;
+        Destroy(this.gameObject);
+        isDestory = true;
     }
 }

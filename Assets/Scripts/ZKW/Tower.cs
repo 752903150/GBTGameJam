@@ -175,19 +175,21 @@ public class Tower : MonoBehaviour
 
     void Dead()
     {
-        if (!isGameOver)
+        if (!isGameOver && !isDead)
         {
-            Debug.Log("Destory");
-            SoundSystem.Instance.PlayEffect(Data_AudioID.key_TurrDestroyed);
+            //Debug.Log("Destory");
             isDead = true;
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_TurrDestroyed);
+            
             this.gameObject.SetActive(false);
-            EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
-            EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
+            //EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
             if (turrutType != ETurrutType.Center)
                 Destroy(HpBar.gameObject);
             //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
             if(turrutType == ETurrutType.Center)
             {
+                Debug.Log("GameOver");
                 SoundSystem.Instance.StopMusic(Data_AudioID.key_FireBurning);
                 EventManagerSystem.Instance.Invoke2(Data_EventName.GameOver_str, GameOverEventArgs.Create());
             }
@@ -196,14 +198,19 @@ public class Tower : MonoBehaviour
 
     void GameOver2(IEventArgs eventArgs)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         SoundSystem.Instance.StopMusic(Data_AudioID.key_FireBurning);
         isGameOver = true;
         //GameOverEventArgs gameOverEventArgs = (GameOverEventArgs)eventArgs;
         if (turrutType != ETurrutType.Center)
             Destroy(HpBar.gameObject);
         //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
-        EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver2);
+        //EventManagerSystem.Instance.Delete2(Data_EventName.GameOK_str, GameOver2);
     }
 
     void AutoInjure()

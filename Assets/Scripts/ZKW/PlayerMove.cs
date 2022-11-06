@@ -93,7 +93,6 @@ public class PlayerMove : MonoBehaviour
         {
             isMove = true;
             move_curr_time = 0f;
-            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[0],Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[0], distance, layermask);
@@ -112,7 +111,6 @@ public class PlayerMove : MonoBehaviour
         {
             isMove = true;
             move_curr_time = 0f;
-            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[3], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[3], distance, layermask);
@@ -131,7 +129,6 @@ public class PlayerMove : MonoBehaviour
         {
             isMove = true;
             move_curr_time = 0f;
-            Debug.Log("Move");
             animator.SetBool("isMove", true);
             Debug.DrawRay(Player.localPosition, directs[1], Color.blue, distance);
             hit = Physics2D.Raycast(temp2 , directs[1], distance, layermask);
