@@ -398,7 +398,7 @@ public class EnemyMove2 : MonoBehaviour
 
     void Attack(GameObject Player)
     {
-        float DPS = TOOLS.GetMonsterDps(2, Player.GetComponent<PlayerMove>().CurrPlayerHp);
+        float DPS = TOOLS.GetMonsterToPlayerDps(2, Player.GetComponent<PlayerMove>().CurrPlayerHp);
         
         Player.GetComponent<PlayerMove>().Injure(DPS);// -= DPS;
         EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));

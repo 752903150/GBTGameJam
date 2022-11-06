@@ -377,7 +377,7 @@ public class EnemyMove : MonoBehaviour
 
     void Attack(GameObject Player)
     {
-        float DPS = TOOLS.GetMonsterDps(1, Player.GetComponent<PlayerMove>().CurrPlayerHp);
+        float DPS = TOOLS.GetMonsterToPlayerDps(1, Player.GetComponent<PlayerMove>().CurrPlayerHp);
         //Debug.Log(DPS);
         //isAttack = true;
         //an.SetBool("isAttack", isAttack);
@@ -399,7 +399,7 @@ public class EnemyMove : MonoBehaviour
         
         OBJAnimator.enabled = isAttack;
         OBJASp.enabled = isAttack;
-        int DPS = (int)TOOLS.GetMonsterDps(1, tower.CurrHp);
+        int DPS = (int)TOOLS.GetMonsterToTurrutDps(1, tower.CurrHp);
         tower.Injure(1);//
                           //isAttack = false;
 

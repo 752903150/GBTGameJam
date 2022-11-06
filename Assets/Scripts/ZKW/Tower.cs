@@ -125,7 +125,7 @@ public class Tower : MonoBehaviour
 
     public void Injure(int monsterID)
     {
-        float DPS = TOOLS.GetMonsterDps((uint)monsterID, CurrHp);
+        float DPS = TOOLS.GetMonsterToTurrutDps((uint)monsterID, CurrHp);
 
         CurrHp-= DPS;
 
