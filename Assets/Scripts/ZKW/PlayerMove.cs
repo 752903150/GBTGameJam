@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MyGameFrameWork;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.localEulerAngles = Vector3.zero;
         animator = GetComponent<Animator>();
         isDead = false;
         PlayerHp = TOOLS.GetPlayerMaxHp();
@@ -51,6 +53,7 @@ public class PlayerMove : MonoBehaviour
 
     public void PlayerInit()
     {
+        transform.localEulerAngles = Vector3.zero;
         isDead = false;
         transform.localPosition = new Vector3(2.22f, 0, 0);
         PlayerHp = TOOLS.GetPlayerMaxHp();
@@ -160,7 +163,12 @@ public class PlayerMove : MonoBehaviour
             playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
             isDead = true;
             Debug.Log("Dead");
-            EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());
+            Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
+            transform.DOLocalRotate(endv, 0.5f).OnComplete(() =>
+            {
+                EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());
+            });
+            
         }
     }
 }

@@ -56,6 +56,9 @@ public class EnemyMove2 : MonoBehaviour
     //GameObject SubObj;
     bool isBoom;
 
+    float isDead_curr_time;
+    float isDead_time;
+
     void Start()
     {
         an = GetComponent<Animator>();
@@ -65,7 +68,8 @@ public class EnemyMove2 : MonoBehaviour
         //WalkString = "EnemyAWalk";
         //AtttackString = "EnemyAAtack";
 
-
+        isDead_curr_time = 0f;
+        isDead_time = 1.2f;
         float rx = Random.Range(0, 1);
         float ry = Random.Range(0, 1);
         rv2.x = rx;
@@ -110,6 +114,25 @@ public class EnemyMove2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            isDead_curr_time += Time.deltaTime;
+            if (isDead_curr_time >= isDead_time)
+            {
+                isDead_curr_time = 0f;
+
+                if (!isGameOver)
+                {
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(2));
+                    Destroy(HpBar.gameObject);
+                    Destroy(this.gameObject);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
+
+                }
+            }
+        }
         Select();
         Anim();
         if (attack_mode == 1)
@@ -132,6 +155,8 @@ public class EnemyMove2 : MonoBehaviour
 
     public void init(Tower stower, Tower btower, Transform player, GameObject canva)
     {
+        isDead_curr_time = 0f;
+        isDead_time = 1.2f;
         transform.localEulerAngles = Vector3.zero;
         Tower1 = stower;
         BigTower2 = btower;
@@ -310,20 +335,21 @@ public class EnemyMove2 : MonoBehaviour
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         //GetComponent<CircleCollider2D>().enabled = false;
-        Sequence seq = DOTween.Sequence();
+        /*Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
             if (!isGameOver)
             {
+                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(2));
                 Destroy(HpBar.gameObject);
                 Destroy(this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
-                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(2));
+                
             }
         })
-        .SetDelay(1f);
+        .SetDelay(1f);*/
     }
 
     void DeadSelf()
@@ -337,12 +363,13 @@ public class EnemyMove2 : MonoBehaviour
         {
             if (!isGameOver)
             {
+                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(2));
                 Destroy(HpBar.gameObject);
                 Destroy(this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
-                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(2));
+                
             }
         })
         .SetDelay(1f);

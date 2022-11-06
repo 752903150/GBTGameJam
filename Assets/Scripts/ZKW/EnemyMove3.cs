@@ -60,7 +60,8 @@ public class EnemyMove3 : MonoBehaviour
     float curr_time;
     float attack_time;
 
-
+    float isDead_curr_time;
+    float isDead_time;
     void Start()
     {
         an = GetComponent<Animator>();
@@ -71,7 +72,8 @@ public class EnemyMove3 : MonoBehaviour
         //AtttackString = "EnemyAAtack";
         curr_time = 0f;
         attack_time = 1f;
-
+        isDead_curr_time = 0f;
+        isDead_time = 1.2f;
         float rx = Random.Range(0, 1);
         float ry = Random.Range(0, 1);
         rv2.x = rx;
@@ -115,6 +117,26 @@ public class EnemyMove3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            isDead_curr_time += Time.deltaTime;
+            if (isDead_curr_time >= isDead_time)
+            {
+                isDead_curr_time = 0f;
+
+                if (!isGameOver)
+                {
+                    EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(3));
+                    Destroy(HpBar.gameObject);
+                    Destroy(this.gameObject);
+                    //Destroy(SubObj);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
+                    //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
+
+                }
+            }
+        }
         Select();
         Anim();
         if (attack_mode == 1)
@@ -137,6 +159,8 @@ public class EnemyMove3 : MonoBehaviour
 
     public void init(Tower tower1, Tower tower2, Tower tower3, Tower tower4, Tower btower, Transform player, GameObject canva)
     {
+        isDead_curr_time = 0f;
+        isDead_time = 1.2f;
         transform.localEulerAngles = Vector3.zero;
         Tower1 = tower1;
         Tower2 = tower2;
@@ -380,21 +404,22 @@ public class EnemyMove3 : MonoBehaviour
         EventManagerSystem.Instance.Delete2(Data_EventName.GameOver_str, GameOver);
         isDead = true;
         GetComponent<CircleCollider2D>().enabled = false;
-        Sequence seq = DOTween.Sequence();
+        /*Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
             if (!isGameOver)
             {
+                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(3));
                 Destroy(HpBar.gameObject);
                 Destroy(this.gameObject);
                 //Destroy(SubObj);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_HPBar].ID, HpBar.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyA].ID, this.gameObject);
                 //ObjectPoolSystem.Instance.ReBackGameObjectPool(Data_GameObjectID.Dic[DataCs.Data_GameObjectID.key_EnemyAObj].ID, SubObj);
-                EventManagerSystem.Instance.Invoke2(Data_EventName.KillMonster_str, KillMonsterEventArgs.Create(3));
+                
             }
         })
-        .SetDelay(1f);
+        .SetDelay(1f);*/
     }
 
     void Attack(GameObject Player)

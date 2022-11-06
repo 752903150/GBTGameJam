@@ -40,17 +40,11 @@ public partial class SkillTreeForm : UIForm
 	{
 		base.OnOpen(obj);
 		RegisterEvent();
-		Debug.Log(1.51);
 		SkillFormStruct temp = (SkillFormStruct)obj;
-        Debug.Log(1.52);
         LastSkill = temp.LastSkill;
-        Debug.Log(1.53);
         attackSkill = temp.attackSkill;
-        Debug.Log(1.54);
         defenseSkill = temp.defenseSkill;
-        Debug.Log(1.55);
         attackSkillSpeed = temp.attackSkillSpeed;
-        Debug.Log(1.56);
         UpdateDate();
 
     }

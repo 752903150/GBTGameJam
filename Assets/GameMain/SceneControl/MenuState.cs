@@ -78,9 +78,7 @@ namespace MyGameFrameWork
 
         private void OnOpenSkillOpen(IEventArgs eventArgs)
         {
-            Debug.Log(1);
             m_Contorller.SetState("SkillState", null);
-            Debug.Log(2);
         }
 
 
