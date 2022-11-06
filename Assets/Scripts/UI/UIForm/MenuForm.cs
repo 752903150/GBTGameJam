@@ -66,8 +66,9 @@ public partial class MenuForm : UIForm
     }
 	private void OnBtnSkillTree()
 	{
-		
-	}
+		EventManagerSystem.Instance.Invoke2(Data_EventName.OpenSkill_str, OpenSkillEventArgs.Create());
+        UISystem.Instance.CloseUIForm(Data_UIFormID.key_MenuForm, this);
+    }
 
 }
 

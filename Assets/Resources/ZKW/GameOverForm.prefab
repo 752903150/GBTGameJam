@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 296478878030830882}
   - component: {fileID: 8389755248410205571}
   - component: {fileID: 2454850578205171388}
-  - component: {fileID: 6597672292821079150}
+  - component: {fileID: 1092000337435383908}
   m_Layer: 5
   m_Name: GameOverForm
   m_TagString: Untagged
@@ -88,7 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3599d6a2865054a90a5f7e866fa567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6597672292821079150
+  level: 0
+--- !u!114 &1092000337435383908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,26 +98,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 296478878030830885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e12a391d36037c044af5553dc7739c2b, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  Radius: 20
-  TriangleNum: 6
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &296478878065810059
 GameObject:
   m_ObjectHideFlags: 0

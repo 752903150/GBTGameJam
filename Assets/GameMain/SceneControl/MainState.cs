@@ -39,6 +39,8 @@ namespace MyGameFrameWork
         int player_level = 0;
         int player_exp = 0;
 
+        int lastSkill;
+
         PlayerMove pm;
         public MainState(SceneStateC c) : base(c)
         {
@@ -81,6 +83,7 @@ namespace MyGameFrameWork
 
             
             curr_wave = 0;
+            lastSkill = (int)m_Contorller.GetData("lastKill");
             cuur_level = (int)obj;
             all_wave = TOOLS.GetMonsterWaves((uint)cuur_level);
             Enity1?.SetActive(true);
@@ -202,7 +205,6 @@ namespace MyGameFrameWork
                     GameOverOK();
                     EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOK_str, GameOKEventArgs.Create(cuur_level));
                 }
-                
             }
         }
 
@@ -221,9 +223,12 @@ namespace MyGameFrameWork
 
             int max_exp = TOOLS.GetRequiredExp(player_level);
 
+            int addSkill = 0;
+
             if (exp + player_exp >= max_exp)
             {
                 player_level++;
+                addSkill++;
                 player_exp = exp + player_exp - max_exp;
 
             }
@@ -238,10 +243,12 @@ namespace MyGameFrameWork
             while (player_exp >= max_exp)
             {
                 player_level++;
+                addSkill++;
                 player_exp -= max_exp;
                 max_exp = TOOLS.GetRequiredExp(player_level);
             }
-
+            m_Contorller.SetData("lastSkill", lastSkill + addSkill);
+            lastSkill += addSkill;
         }
 
         private void OnBackMenu(IEventArgs eventArgs)

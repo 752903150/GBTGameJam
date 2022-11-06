@@ -72,6 +72,8 @@ namespace MyGameFrameWork
         /// <returns></returns>
         public System.Object GetData(string str)
         {
+            if (!control_data.ContainsKey(str))
+                return 0;
             return control_data[str];
         }
 

@@ -31,6 +31,7 @@ namespace MyGameFrameWork
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
             EventManagerSystem.Instance.Add2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
             EventManagerSystem.Instance.Add2(Data_EventName.BackStartGame_str, OnBackStartGame);
+            EventManagerSystem.Instance.Add2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);
             CreateMainUI();
         }
 
@@ -47,6 +48,7 @@ namespace MyGameFrameWork
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel2_str, OpenLevel2);
             EventManagerSystem.Instance.Delete2(DataCs.Data_EventName.OpenLevel3_str, OpenLevel3);
             EventManagerSystem.Instance.Delete2(Data_EventName.BackStartGame_str, OnBackStartGame);
+            EventManagerSystem.Instance.Delete2(Data_EventName.OpenSkill_str, OnOpenSkillOpen);
         }
 
         void CreateMainUI()
@@ -72,6 +74,13 @@ namespace MyGameFrameWork
         private void OnBackStartGame(IEventArgs eventArgs)
         {
             m_Contorller.SetState("StartState", null);
+        }
+
+        private void OnOpenSkillOpen(IEventArgs eventArgs)
+        {
+            Debug.Log(1);
+            m_Contorller.SetState("SkillState", null);
+            Debug.Log(2);
         }
 
 

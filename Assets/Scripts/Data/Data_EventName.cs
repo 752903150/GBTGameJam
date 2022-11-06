@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/11/6 8:47:59
+//CreateTime：2022/11/6 10:14:27
 namespace DataCs
 {
 	public static class Data_EventName
@@ -35,6 +35,10 @@ namespace DataCs
 		public static string MainTowerInjure_str = "MainTowerInjure";
 
 		public static string AddExp_str = "AddExp";
+
+		public static string SaveSkill_str = "SaveSkill";
+
+		public static string OpenSkill_str = "OpenSkill";
 
 	}
 }

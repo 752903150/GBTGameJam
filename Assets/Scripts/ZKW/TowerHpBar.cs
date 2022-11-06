@@ -15,8 +15,8 @@ public class TowerHpBar : MonoBehaviour
     
     private void Start()
     {
-        MaxX = 253.4f;
-        MinX = 47.35f;
+        MaxX = 212f;
+        MinX = 87f;
         SetHp(1f);
     }
 
