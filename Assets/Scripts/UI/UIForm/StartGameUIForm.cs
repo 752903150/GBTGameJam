@@ -31,6 +31,7 @@ public partial class StartGameUIForm : UIForm
 		m_btnStart.onClick.AddListener(OnBtnStart);
 		m_btnExit.onClick.AddListener(OnBtnExit);
 		m_btnDeveloper.onClick.AddListener(OnBtnDeveloper);
+		m_btnHelper.onClick.AddListener(OnHelper);
 	}
 
 	private void ReleaseEvent()
@@ -38,6 +39,7 @@ public partial class StartGameUIForm : UIForm
 		m_btnStart.onClick.RemoveListener(OnBtnStart);
 		m_btnExit.onClick.RemoveListener(OnBtnExit);
         m_btnDeveloper.onClick.RemoveListener(OnBtnDeveloper);
+        m_btnHelper.onClick.RemoveListener(OnHelper);
     }
 
 	private void OnBtnStart()
@@ -56,5 +58,9 @@ public partial class StartGameUIForm : UIForm
         UISystem.Instance.CloseUIForm(Data_UIFormID.key_StartGameForm, this);
     }
 
+	private void OnHelper()
+	{
+		UISystem.Instance.OpenUIForm(Data_UIFormID.key_HelperForm);
+	}
 }
 

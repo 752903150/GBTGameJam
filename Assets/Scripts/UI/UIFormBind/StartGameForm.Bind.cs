@@ -4,8 +4,8 @@ using UnityEngine;
 using MyGameFrameWork;
 using UnityEngine.UI;
 
-//CreateTime：2022/11/6 11:24:16
-public partial class StartGameUIForm
+//CreateTime：2022/11/6 11:24:03
+public partial class StartGameForm
 {
 	private AutoBind autoBind;
 	private Button m_btnStart;
