@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +21,7 @@ public class PlayerShot : MonoBehaviour
 
     Vector3 temp3;
 
-    Vector3 XAV3;//用于反转
+    Vector3 XAV3;//锟斤拷锟节凤拷转
     Vector3 XBV3;
     // Start is called before the first frame update
     void Start()
@@ -254,3 +256,5 @@ public class PlayerShot : MonoBehaviour
         curr_shot_time = 0.1f;
     }
 }
+
+#endif
