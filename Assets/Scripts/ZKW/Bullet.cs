@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataCs;
+using DG.Tweening;
 
 public class Bullet : MonoBehaviour
 {
+    public Transform SubObj;
+
     float speed;
     Vector3 direct;
     Transform ts;
@@ -19,6 +22,8 @@ public class Bullet : MonoBehaviour
     bool isDead;
 
     PlayerMove pm;
+
+    Vector3 Ok;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +41,8 @@ public class Bullet : MonoBehaviour
         };
         distance = 0.05f;
         layermask = (1 << 7) | (1 << 8) | (1 << 10);
+
+        Ok = new Vector3(0, -1, 0);
     }
 
     // Update is called once per frame
@@ -107,6 +114,18 @@ public class Bullet : MonoBehaviour
         curr_time = 0f;
         this.pm = pm;
         this.speed = speed;
+        
+        //Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
+        //transform.localRotation = Quaternion.Euler()
+        float angle = Vector3.Angle(Ok, direct);
+        if (direct.x < 0)
+        {
+            this.SubObj.localRotation = Quaternion.Euler(new Vector3(0f, 0f, -angle));
+        }
+        else
+        {
+            this.SubObj.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        }
     }
 
     void Back()
