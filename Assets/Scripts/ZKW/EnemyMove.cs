@@ -447,14 +447,14 @@ public class EnemyMove : MonoBehaviour
                  if (attack_mode == 1)
                  {
                      Vector3 temp3 = pos;
-                     temp3.y -= 0.4f;
+                     temp3.y += 1f;
                      SubObj.transform.localPosition = temp3;
                      pos = Tower1.transform.localPosition;
                  }
                  else if (attack_mode == 2)
                  {
                      Vector3 temp3 = pos;
-                     temp3.y -= 1.1f;
+                     temp3.y += 1.8f;
                      SubObj.transform.localPosition = temp3;
                      pos = BigTower2.transform.localPosition;
                  }

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3140917008955488769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.85, y: 0.41, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   playerState: 2
   PlayerHp: 0
   CurrPlayerHp: 0
+  animator: {fileID: 0}
 --- !u!114 &3140917008955488772
 MonoBehaviour:
   m_ObjectHideFlags: 0

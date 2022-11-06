@@ -118,9 +118,9 @@ public class Tower : MonoBehaviour
         var playerScreenPos = cam.WorldToScreenPoint(this.transform.position);
         //再把人物坐标Y加一个高度给到人物
         if(turrutType==ETurrutType.Normal)
-            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y - 20f, playerScreenPos.z);
+            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 130f, playerScreenPos.z);
         else
-            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y - 20f, playerScreenPos.z);
+            HpBar.gameObject.GetComponent<RectTransform>().position = new Vector3(playerScreenPos.x, playerScreenPos.y + 130f, playerScreenPos.z);
     }
 
     public void Injure(int monsterID)
@@ -164,7 +164,7 @@ public class Tower : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Func2");
+            
             HpBar.SetHp(CurrHp / MaxHP);
         }
         if (CurrHp <= 0)
@@ -216,7 +216,6 @@ public class Tower : MonoBehaviour
     void AutoInjure()
     {
         float DPS = TOOLS.GetTurrutConsumeSpeed(turrutType, (uint)curr_level);
-
         CurrHp -= DPS;
 
         if (turrutType == ETurrutType.Center)
@@ -249,14 +248,14 @@ public class Tower : MonoBehaviour
                 if(currPer< PlayerHpPer&& pm.CurrPlayerHp-DPS>0f)
                 {
                     //CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
-                    pm.Injure(DPS);
+                    pm.InjureByTower(DPS);
                     Injure(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
                 }
                 else if(CurrHp-DPS > 0f)
                 {
                     //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
-                    pm.Injure(-DPS);
+                    pm.InjureByTower(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
                     Injure(DPS);/*
                     
@@ -279,14 +278,14 @@ public class Tower : MonoBehaviour
                 if (currPer < PlayerHpPer && pm.CurrPlayerHp - DPS > 0f)
                 {
                     //CurrHp = Mathf.Min(MaxHP, CurrHp + DPS);
-                    pm.Injure(DPS);
+                    pm.InjureByTower(DPS);
                     Injure(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(DPS));
                 }
                 else if (CurrHp - DPS > 0f)
                 {
                     //pm.CurrPlayerHp = Mathf.Min(pm.PlayerHp, pm.CurrPlayerHp+DPS);
-                    pm.Injure(-DPS);
+                    pm.InjureByTower(-DPS);
                     EventManagerSystem.Instance.Invoke2(Data_EventName.PlayerInjure_str, PlayerInjureEventArgs.Create(-DPS));
                     Injure(DPS);/*
                     

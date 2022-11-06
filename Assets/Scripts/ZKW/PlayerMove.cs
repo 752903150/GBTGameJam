@@ -216,4 +216,25 @@ public class PlayerMove : MonoBehaviour
             
         }
     }
+
+    public void InjureByTower(float DPS)
+    {
+        CurrPlayerHp -= DPS;
+        playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
+        //Debug.Log(CurrPlayerHp);
+        if (CurrPlayerHp <= 0 && !isDead)
+        {
+            SoundSystem.Instance.PlayEffect(Data_AudioID.key_PlayerDie);
+            CurrPlayerHp = 0;
+            playerState = TOOLS.GetPlayerHpState(CurrPlayerHp);
+            isDead = true;
+            Debug.Log("Dead");
+            Vector3 endv = transform.localEulerAngles + new Vector3(0, 0, -90);
+            transform.DOLocalRotate(endv, 0.5f).OnComplete(() =>
+            {
+                EventManagerSystem.Instance.Invoke2(DataCs.Data_EventName.GameOver_str, GameOverEventArgs.Create());
+            });
+
+        }
+    }
 }
