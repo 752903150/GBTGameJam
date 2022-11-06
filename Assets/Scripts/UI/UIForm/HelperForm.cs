@@ -17,8 +17,8 @@ public partial class HelperForm : UIForm
 		base.Awake();
 		InitComponent();
 
-        rectTransforms = new RectTransform[7] {
-			m_rect1, m_rect2 , m_rect3 , m_rect4 , m_rect5 , m_rect6 ,m_rect7
+        rectTransforms = new RectTransform[8] {
+			m_rect0,m_rect1, m_rect2 , m_rect3 , m_rect4 , m_rect5 , m_rect6 ,m_rect7
         };
 
 

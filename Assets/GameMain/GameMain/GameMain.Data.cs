@@ -39,7 +39,7 @@ namespace MyGameFrameWork
             sceneStateC.AddState(AllGameOverState.StateName, AllGameOverState);
             sceneStateC.AddState(AllGameStartState.StateName, AllGameStartState);
 
-            sceneStateC.SetState(AllGameStartState.StateName);
+            sceneStateC.SetState(StartState.StateName);
             //sceneStateC.AddState(Data_StateName.MainState_name, MainState);
             //sceneStateC.AddState(Data_StateName.TestState_name, TestState);
         }

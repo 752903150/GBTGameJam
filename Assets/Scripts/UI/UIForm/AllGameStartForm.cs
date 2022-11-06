@@ -25,9 +25,9 @@ public partial class AllGameStartForm : UIForm
 		base.OnOpen(obj);
 		RegisterEvent();
 		curr_time = 0f;
-		time = 0.2f;
+		time = 0.1f;
 		index = 0;
-        des = "asdasdasas\ndasdasasdas\ndasasdasdas\nasdasdasasd\nasdas";
+        des = "你的决心、力量和勇气都会被EMPYREAN的那位审视\n在冰与火的纷争中\n足够炽热的灵魂才会得到那位的赏识\n炽热的火终将融化臻冰\n而这股烈火必将守护我们珍视的一切\n永不熄灭……";
 		m_txtDes.text = "";
     }
 
@@ -50,7 +50,7 @@ public partial class AllGameStartForm : UIForm
             }
 			else
 			{
-				if (index - des.Length > 15)
+				if (index - des.Length > 30)
 				{
 					OnOver();
 
